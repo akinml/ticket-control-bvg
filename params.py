@@ -1,5 +1,7 @@
 import os
 import numpy as np
+import pathlib
+from pathlib import Path
 
 ##################  VARIABLES  ##################
 DATA_SIZE = os.environ.get("DATA_SIZE")
@@ -74,3 +76,6 @@ def validate_env_value(env, valid_options):
 
 for env, valid_options in env_valid_options.items():
     validate_env_value(env, valid_options)
+
+path_main = Path(__file__)
+path_to_data = path_main / "data"

@@ -1,6 +1,3 @@
 pandas
 numpy
-tqdm
-nba_api
-tensorflow
 scikit-learn

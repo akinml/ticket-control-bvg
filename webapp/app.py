@@ -1,10 +1,9 @@
 import streamlit as st
 import pandas as pd
 import random
-from prefect import Flow
+import time
 
 
-@Flow
 def generate_random_coordinates():
     min_lat, max_lat = 52.392166, 52.639004
     min_lon, max_lon = 13.215260, 13.770269
@@ -23,9 +22,22 @@ def generate_random_coordinates_list(num_samples=100):
     return lat_list, lon_list
 
 
-lat_list, lon_list = generate_random_coordinates_list()
+def main():
+    lat_list, lon_list = generate_random_coordinates_list()
+    data = {"Location": ["Berlin"] * 100, "LAT": lat_list, "LON": lon_list}
+    berlin_df = pd.DataFrame(data)
+    datetimenow = time.strftime("%H:%M:%S")
+    st.title(f"BVG Controllers Berlin - {datetimenow}")
+    st.map(berlin_df, zoom=10)
+    # Add a refresh button
+    st.table(berlin_df)
+    output = st.empty()
 
-data = {"Location": ["Berlin"] * 100, "LAT": lat_list, "LON": lon_list}
-berlin_df = pd.DataFrame(data)
-st.map(berlin_df, zoom=10)
-st.table(berlin_df.head())
+    while True:
+        current_time = time.strftime("%Y-%m-%d %H:%M:%S")
+        output.text(f"Last Update: {current_time}")
+        time.sleep(10)
+
+
+if __name__ == "__main__":
+    main()

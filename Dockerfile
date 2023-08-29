@@ -4,4 +4,4 @@ COPY . /app
 RUN python -m pip install --upgrade pip
 RUN pip install -r requirements.txt
 CMD uvicorn ticket-control-bvg.api.fast:app --host 0.0.0.0 --port $PORT
-CMD python /app/webapp/fast.py
+CMD streamlit run /app/webapp/app.py

@@ -1,11 +1,13 @@
-from prefect import flow, task
 import streamlit as st
 import pandas as pd
-import random
 import time
 from modules.rand_data import generate_random_coordinates_list
+from modules.telegramm_update import get_update
 
 # Optional change Mapbox map to plotly Map. https://plotly.com/python/scattermapbox/
+
+df_dummy = get_update()
+output_df = preprocess(df_dummy)
 
 
 def main():

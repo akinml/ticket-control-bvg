@@ -3,10 +3,9 @@ from telethon.sync import TelegramClient
 import datetime
 import pandas as pd
 import config
-from params import *
 
-api_id = config.api_id
-api_hash = config.api_hash
+api_id = 24420176
+api_hash = "9350869041f1e13cb10ecadcb8331367"
 
 
 def get_update():
@@ -28,11 +27,14 @@ def get_update():
                     "date": message.date,
                 }
                 temp_df = pd.DataFrame(data, index=[1])
-                df = df.append(temp_df)
-
-        df["date"] = df["date"].dt.tz_localize(None)
+                df = pd.concat([df, temp_df], axis=0)
 
         # Save the DataFrame to a CSV file
         csv_filename = "data_ext2_{}.csv".format(datetime.date.today())
         df.to_csv(csv_filename, index=False)
         print("CSV file saved as:", csv_filename)
+        return df
+
+
+if __name__ == "__main__":
+    get_update()

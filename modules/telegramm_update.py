@@ -1,8 +1,7 @@
-from prefect import Flow
 from telethon.sync import TelegramClient
 import datetime
 import pandas as pd
-import config
+from params import path_to_data
 
 
 def get_update():
@@ -28,10 +27,12 @@ def get_update():
                 temp_df = pd.DataFrame(data, index=[1])
                 update_df = pd.concat([update_df, temp_df], axis=0)
 
-    database = pd.read_csv("notebooks/data_2018_08.2023.csv")
-    database["comp_key"] = str(database["sender"]) + database["text"] + database["date"]
+    database = pd.read_csv(str(path_to_data) + "/telegram_data.csv")
+    database["comp_key"] = (
+        str(database["sender"]) + database["text"] + str(database["date"])
+    )
     update_df["comp_key"] = (
-        str(update_df["sender"]) + update_df["text"] + update_df["date"]
+        str(update_df["sender"]) + update_df["text"] + str(update_df["date"])
     )
     for key in update_df["comp_key"]:
         if key not in list(database["comp_key"]):
@@ -39,7 +40,8 @@ def get_update():
             database = pd.concat(
                 [database, update_df[update_df["comp_key"] == key]], axis=0
             )
-    database.to_csv("save.csv")
+    database.drop(["Unnamed: 0", "comp_key"], inplace=True, axis=1, errors="ignore")
+    database.to_csv(str(path_to_data) + "/database_telegram.csv")
     return database
 
 

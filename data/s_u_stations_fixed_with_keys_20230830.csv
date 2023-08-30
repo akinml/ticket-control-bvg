@@ -1,0 +1,319 @@
+,station name,lines,area,latitude,longitude,keys
+0,Adenauerplatz,U7,Charlottenburg,52.499722222222225,13.307222222222222,adenauerplatz
+1,Adlershof,"S45, S46, S8, S85, S9",Adlershof,52.43472222222222,13.54138888888889,adlershof
+2,Afrikanische Straße,U6,Wedding,52.56055555555555,13.334166666666667,afrikanische str
+3,Ahrensfelde,S7,Marzahn,52.57166666666667,13.565000000000001,ahrensfelde
+4,Alexanderplatz,"U2, U5, U8, S3, S5, S7, S9",Mitte,52.521388888888886,13.412638888888889,alex
+5,Alt-Mariendorf,U6,Mariendorf,52.439722222222215,13.3875,alt mariendorf
+6,Alt-Reinickendorf,S25,Reinickendorf,52.57777777777778,13.350555555555555,alt reinickendorf
+7,Alt-Tegel,U6,Tegel,52.589444444444446,13.28361111111111,alt tegel
+8,Alt-Tempelhof,U6,Tempelhof,52.46611111111111,13.385555555555555,alt tempelhof
+9,Altglienicke,"S45, S9",Altglienicke,52.407222222222224,13.55888888888889,altglienicke
+10,Altstadt Spandau,U7,Spandau,52.53916666666667,13.205555555555556,altstadt spandau
+11,Amrumer Straße,U9,Wedding,52.54222222222222,13.34888888888889,amrumer str
+12,Anhalter Bahnhof,"S1, S2, S25, S26",Kreuzberg,52.503055555555555,13.381944444444445,anhalter bahnhof
+13,Attilastraße,S2,Tempelhof,52.44777777777777,13.360833333333334,attilastr
+14,Augsburger Straße,U3,Charlottenburg,52.50055555555556,13.336388888888889,augsburger str
+15,Babelsberg,S7,Babelsberg,52.39138888888889,13.092222222222222,babelsberg
+16,Baumschulenweg,"S45, S46, S47, S8, S85, S9",Baumschulenweg,52.4675,13.489722222222222,baumschulenweg
+17,Bayerischer Platz,"U4, U7",Schöneberg,52.48861111111111,13.34,bayerischer platz
+18,Bellevue,"S3, S5, S7, S9",Hansaviertel,52.519999999999996,13.347777777777779,bellevue
+19,Bergfelde,S8,Bergfelde,52.67027777777778,13.320277777777777,bergfelde
+20,Berliner Straße,"U7, U9",Wilmersdorf,52.48722222222222,13.330833333333333,berliner str
+21,Bernau,S2,BernaubeiBerlin,52.67611111111111,13.593055555555557,bernau
+22,Bernau-Friedenstal,S2,BernaubeiBerlin,52.66861111111111,13.564722222222223,bernau friedenstal
+23,Bernauer Straße,U8,Mitte,52.5375,13.396666666666667,bernauer str
+24,Betriebsbahnhof Rummelsburg,S3,Rummelsburg,52.49388888888889,13.497777777777777,betriebsbahnhof rummelsburg
+25,Beusselstraße,"S41, S42",Moabit,52.53444444444444,13.329444444444444,beusselstr
+26,Biesdorf,S5,Biesdorf,52.51305555555555,13.555277777777778,biesdorf
+27,Biesdorf-Süd,U5,Biesdorf,52.499722222222225,13.546388888888888,biesdorf sued
+28,Birkenstein,S5,Dahlwitz-Hoppegarten,52.51583333333333,13.647499999999999,birkenstein
+29,Birkenstraße,U9,Moabit,52.532222222222224,13.34138888888889,birkenstr
+30,Birkenwerder,"S1, S8",Birkenwerder,52.68861111111111,13.28888888888889,birkenwerder
+31,Bismarckstraße,"U2, U7",Charlottenburg,52.51138888888889,13.304722222222223,bismarckstr
+32,Blankenburg,"S2, S8",Blankenburg,52.59138888888889,13.443611111111112,blankenburg
+33,Blankenfelde,S2,Blankenfelde-Mahlow,52.33694444444445,13.416111111111112,blankenfelde
+34,Blaschkoallee,U7,Britz,52.45166666666667,13.449722222222222,blaschkoallee
+35,Blissestraße,U7,Wilmersdorf,52.486666666666665,13.321944444444444,blissestr
+36,Boddinstraße,U8,Neukölln,52.47944444444445,13.425555555555555,boddinstr
+37,Borgsdorf,S1,Borgsdorf,52.71555555555556,13.27638888888889,borgsdorf
+38,Bornholmer Straße,"S1, S2, S25, S26, S8, S85",PrenzlauerBerg,52.55444444444444,13.398055555555555,bornholmer str
+39,Borsigwerke,U6,Tegel,52.581944444444446,13.290833333333333,borsigwerke
+40,Botanischer Garten,S1,Lichterfelde,52.448055555555555,13.307222222222222,botanischer garten
+41,Brandenburger Tor,"U5, S1, S2, S25, S26",Mitte,52.51638888888889,13.380833333333333,brandenburger tor
+42,Breitenbachplatz,U3,Dahlem,52.466944444444444,13.308611111111112,breitenbachplatz
+43,Britz-Süd,U7,Britz,52.437777777777775,13.448333333333334,britz sued
+44,Buch,S2,Buch,52.63583333333333,13.491666666666665,buch
+45,Buckower Chaussee,S2,Marienfelde,52.41027777777778,13.382777777777779,buckower chaussee
+46,Bundesplatz,"U9, S41, S42, S46",Wilmersdorf,52.47819444444444,13.328333333333333,bundesplatz
+47,Bundestag,U5,Tiergarten,52.519999999999996,13.373055555555556,bundestag
+48,Bülowstraße,U2,Schöneberg,52.4975,13.363333333333333,buelowstr
+49,Charlottenburg,"S3, S5, S7, S9",Charlottenburg,52.50472222222222,13.303333333333335,charlottenburg
+50,Cottbusser Platz,U5,Hellersdorf,52.53388888888889,13.596388888888889,cottbusser platz
+51,Dahlem-Dorf,U3,Dahlem,52.4575,13.289722222222222,dahlem dorf
+52,Deutsche Oper,U2,Charlottenburg,52.511944444444445,13.310555555555556,deutsche oper
+53,Eberswalder Straße,U2,Prenzlauer Berg,52.541666666666664,13.412222222222223,eberswalder str
+54,Eichborndamm,S25,Reinickendorf,52.5775,13.316944444444443,eichborndamm
+55,Eichwalde,"S46, S8",Eichwalde,52.37138888888889,13.615277777777777,eichwalde
+56,Eisenacher Straße,U7,Schöneberg,52.489444444444445,13.350277777777777,eisenacher str
+57,Elsterwerdaer Platz,U5,Biesdorf,52.505,13.560555555555556,elsterwerdaer platz
+58,Erkner,S3,Erkner,52.42972222222222,13.751388888888888,erkner
+59,Ernst-Reuter-Platz,U2,Charlottenburg,52.511944444444445,13.322222222222223,ernst reuter platz
+60,Fehrbelliner Platz,"U3, U7",Wilmersdorf,52.49027777777778,13.314166666666667,fehrbelliner platz
+61,Feuerbachstraße,S1,Steglitz,52.46361111111111,13.3325,feuerbachstr
+62,Flughafen BER – Terminal 1-2,"S45, S9",Schönefeld,52.36666666666667,13.503333333333334,flughafen terminal 1 2
+63,Flughafen BER – Terminal 5,"S45, S9",Schönefeld,52.39138888888889,13.512777777777778,flughafen terminal 5
+64,Frankfurter Allee,"U5, S41, S42, S8, S85",Friedrichshain,52.515,13.474444444444444,frankfurter allee
+65,Frankfurter Tor,U5,Friedrichshain,52.51583333333333,13.454166666666666,frankfurter tor
+66,Franz-Neumann-Platz,U8,Reinickendorf,52.56388888888888,13.364166666666666,franz neumann platz
+67,Französische Straße,U6,Mitte,52.514722222222225,13.389166666666666,franzoesische str
+68,Fredersdorf,S5,Fredersdorf-Vogelsdorf,52.52638888888889,13.7625,fredersdorf
+69,Freie Universität,U3,Dahlem,52.45111111111111,13.281944444444445,freie universitaet
+70,Friedenau,S1,Schöneberg,52.47,13.340555555555556,friedenau
+71,Friedrich-Wilhelm-Platz,U9,Friedenau,52.471944444444446,13.32861111111111,friedrich wilhelm platz
+72,Friedrichsfelde,U5,Friedrichsfelde,52.50611111111111,13.512777777777778,friedrichsfelde
+73,Friedrichsfelde Ost,"S5, S7, S75",Berlin-Marzahn,52.51416666666667,13.519722222222223,friedrichsfelde ost
+74,Friedrichshagen,S3,Friedrichshagen,52.4575,13.623333333333333,friedrichshagen
+75,Friedrichstraße,"U6, S1, S2, S25, S26, S3, S5, S7, S9",Mitte,52.52027777777778,13.386944444444444,friedrichstr
+76,Frohnau,S1,Frohnau,52.6325,13.290277777777778,frohnau
+77,Gehrenseestraße,S75,Neu-Hohenschönhausen,52.556666666666665,13.524444444444445,gehrenseestr
+78,Gesundbrunnen,"U8, S1, S2, S25, S26, S41, S42",Gesundbrunnen,52.54861111111111,13.38125,gesundbrunnen
+79,Gleisdreieck,"U1, U3, U2",Kreuzberg,52.498333333333335,13.375277777777779,gleisdreieck
+80,Gneisenaustraße,U7,Kreuzberg,52.49138888888889,13.39611111111111,gneisenaustr
+81,Greifswalder Straße,"S41, S42, S8, S85",PrenzlauerBerg,52.54,13.440555555555555,greifswalder str
+82,Grenzallee,U7,Britz,52.46333333333334,13.443888888888889,grenzallee
+83,Griebnitzsee,S7,Babelsberg,52.394444444444446,13.127222222222223,griebnitzsee
+84,Grunewald,S7,Grunewald,52.48916666666667,13.261388888888888,grunewald
+85,Grünau,"S46, S8, S85",Grünau,52.4125,13.573888888888888,gruenau
+86,Grünbergallee,"S45, S9",Altglienicke,52.399166666666666,13.541666666666666,gruenbergallee
+87,Görlitzer Bahnhof,"U1, U3",Kreuzberg,52.49916666666667,13.428055555555554,goerli
+88,Güntzelstraße,U9,Wilmersdorf,52.49194444444444,13.330833333333333,guentzelstr
+89,Hackescher Markt,"S3, S5, S7, S9",Mitte,52.5225,13.402222222222223,hackescher markt
+90,Halemweg,U7,Charlottenburg-Nord,52.53666666666666,13.286388888888888,halemweg
+91,Halensee,"S41, S42, S46",Halensee,52.49611111111111,13.290555555555555,halensee
+92,Hallesches Tor,"U1, U3, U6",Kreuzberg,52.49777777777778,13.39111111111111,hallesches tor
+93,Hansaplatz,U9,Hansaviertel,52.51777777777777,13.342222222222222,hansaplatz
+94,Haselhorst,U7,Haselhorst,52.538888888888884,13.232777777777779,haselhorst
+95,Hauptbahnhof,"U5, S3, S5, S7, S9",Moabit,52.525,13.369444444444445,hauptbahnhof
+96,Hausvogteiplatz,U2,Mitte,52.51305555555555,13.396666666666667,hausvogteiplatz
+97,Heerstraße,"S3, S9",Westend,52.50861111111111,13.258611111111112,heerstr
+98,Hegermühle,S5,Strausberg,52.54888888888889,13.866666666666667,hegermuehle
+99,Heidelberger Platz,"U3, S41, S42, S46",Wilmersdorf,52.480000000000004,13.311944444444444,heidelberger platz
+100,Heiligensee,S25,Heiligensee,52.624722222222225,13.229166666666666,heiligensee
+101,Heinrich-Heine-Straße,U8,Mitte,52.51027777777778,13.415833333333333,heinrich heine str
+102,Hellersdorf,U5,Hellersdorf,52.53666666666666,13.606388888888889,hellersdorf
+103,Hennigsdorf,S25,Hennigsdorf,52.63805555555555,13.205833333333333,hennigsdorf
+104,Hermannplatz,"U7, U8",Neukölln,52.48722222222222,13.424722222222222,hermannplatz
+105,Hermannstraße,"U8, S41, S42, S45, S46, S47",Neukölln,52.4675,13.431249999999999,hermannstr
+106,Hermsdorf,S1,Hermsdorf,52.617777777777775,13.306944444444445,hermsdorf
+107,Hirschgarten,S3,Friedrichshagen,52.45777777777778,13.603333333333333,hirschgarten
+108,Hohen Neuendorf,"S1, S8",HohenNeuendorf,52.66833333333333,13.286944444444444,hohen neuendorf
+109,Hohenschönhausen,S75,Neu-Hohenschönhausen,52.56638888888889,13.512222222222222,hohenschoenhausen
+110,Hohenzollerndamm,"S41, S42, S46",Halensee,52.48861111111111,13.300277777777778,hohenzollerndamm
+111,Hohenzollernplatz,U3,Wilmersdorf,52.494166666666665,13.324722222222222,hohenzollernplatz
+112,Holzhauser Straße,U6,Tegel,52.575833333333335,13.296111111111111,holzhauser str
+113,Hoppegarten,S5,Dahlwitz-Hoppegarten,52.51833333333333,13.673333333333332,hoppegarten
+114,Humboldthain,"S1, S2, S25, S26",Gesundbrunnen,52.544999999999995,13.379444444444445,humboldthain
+115,Hönow,U5,Hellersdorf,52.538333333333334,13.633888888888889,hoenow
+116,Innsbrucker Platz,"U4, S41, S42, S46",Schöneberg,52.478611111111114,13.34388888888889,innsbrucker platz
+117,Jakob-Kaiser-Platz,U7,Charlottenburg-Nord,52.53666666666666,13.293333333333333,jakob kaiser platz
+118,Jannowitzbrücke,"U8, S3, S5, S7, S9",Mitte,52.515,13.418055555555554,jannowitzbruecke
+119,Johannisthal,"S45, S46, S8, S85, S9",Niederschöneweide,52.446666666666665,13.523888888888889,johannisthal
+120,Johannisthaler Chaussee,U7,Gropiusstadt,52.42944444444444,13.453055555555554,johannisthaler chaussee
+121,Julius-Leber-Brücke,S1,Schöneberg,52.486268888889,13.360211944444,julius leber bruecke
+122,Jungfernheide,"U7, U7, S41, S42",Charlottenburg,52.53055555555555,13.300138888888888,jungfernheide
+123,Kaiserdamm,U2,Westend,52.51,13.282222222222224,kaiserdamm
+124,Kaiserin-Augusta-Straße,U6,Tempelhof,52.46,13.384722222222221,kaiserin augusta str
+125,Karl-Bonhoeffer-Nervenklinik,"U8, S25",Wittenau,52.57833333333333,13.331388888888888,karl bonhoeffer nervenklinik
+126,Karl-Marx-Straße,U7,Neukölln,52.476111111111116,13.439166666666667,karl marx str
+127,Karlshorst,S3,Karlshorst,52.48083333333334,13.525833333333335,karlshorst
+128,Karow,S2,Karow,52.615,13.469166666666666,karow
+129,Kaulsdorf,S5,Kaulsdorf,52.51222222222222,13.590277777777779,kaulsdorf
+130,Kaulsdorf-Nord,U5,Hellersdorf,52.52111111111111,13.58888888888889,kaulsdorf nord
+131,Kienberg,U5,Hellersdorf,52.52861111111111,13.590555555555556,kienberg
+132,Kleistpark,U7,Schöneberg,52.49055555555556,13.360277777777778,kleistpark
+133,Klosterstraße,U2,Mitte,52.51611111111111,13.412222222222223,klosterstr
+134,Kochstraße,U6,Kreuzberg,52.505833333333335,13.390555555555554,kochstr
+135,Konstanzer Straße,U7,Wilmersdorf,52.493611111111115,13.31,konstanzer str
+136,Kottbusser Tor,"U1, U3, U8",Kreuzberg,52.49916666666667,13.418055555555554,kotti
+137,Krumme Lanke,U3,Zehlendorf,52.44333333333333,13.241388888888888,krumme lanke
+138,Kurfürstendamm,"U1, U9",Charlottenburg,52.50416666666667,13.333055555555555,kurfuerstendamm
+139,Kurfürstenstraße,"U1, U3",Tiergarten,52.5,13.361944444444443,kurfuerstenstr
+140,Kurt-Schumacher-Platz,U6,Reinickendorf,52.56333333333333,13.3275,kurt schumacher platz
+141,Köllnische Heide,"S45, S46, S47",Neukölln,52.46944444444445,13.4675,koellnische heide
+142,Königs Wusterhausen,S46,KönigsWusterhausen,52.29666666666667,13.631111111111112,koenigs wusterhausen
+143,Köpenick,S3,Köpenick,52.45861111111111,13.580833333333333,koepenick
+144,Landsberger Allee,"S41, S42, S8, S85",PrenzlauerBerg,52.529444444444444,13.454722222222221,landsberger allee
+145,Lankwitz,S25,Lankwitz,52.438611111111,13.341666666667,lankwitz
+146,Lehnitz,S1,Lehnitz,52.74111111111111,13.26361111111111,lehnitz
+147,Leinestraße,U8,Neukölln,52.47361111111111,13.428055555555554,leinestr
+148,Leopoldplatz,"U6, U9",Wedding,52.546388888888885,13.359166666666667,leopoldplatz
+149,Lichtenberg,"U5, S5, S7, S75",Lichtenberg,52.510555555555555,13.496388888888887,lichtenberg
+150,Lichtenrade,S2,Lichtenrade,52.387146,13.396526,lichtenrade
+151,Lichterfelde Ost,"S25, S26",Lichterfelde,52.43,13.328888888889,lichterfelde ost
+152,Lichterfelde Süd,"S25, S26",Lichterfelde,52.41,13.308611111111,lichterfelde sued
+153,Lichterfelde West,S1,Lichterfelde,52.44333333333333,13.294722222222221,lichterfelde west
+154,Lindauer Allee,U8,Reinickendorf,52.57527777777778,13.339166666666667,lindauer allee
+155,Lipschitzallee,U7,Gropiusstadt,52.42472222222222,13.462777777777777,lipschitzallee
+156,Louis-Lewin-Straße,U5,Hellersdorf,52.538888888888884,13.618333333333334,louis lewin str
+157,Magdalenenstraße,U5,Lichtenberg,52.5125,13.486388888888888,magdalenenstr
+158,Mahlow,S2,Blankenfelde-Mahl,52.360230555556,13.408480555556,mahlow
+159,Mahlsdorf,S5,Mahlsdorf,52.511944444444445,13.61,mahlsdorf
+160,Marienfelde,S2,Marienfelde,52.424166666667,13.374722222222,marienfelde
+161,Marzahn,S7,Marzahn,52.54361111111111,13.54111111111111,marzahn
+162,Mehringdamm,"U6, U7",Kreuzberg,52.49444444444445,13.38861111111111,mehringdamm
+163,Mehrower Allee,S7,Marzahn,52.5575,13.553611111111111,mehrower allee
+164,Mendelssohn-Bartholdy-Park,U2,Kreuzberg,52.50388888888889,13.375,mendelssohn bartholdy park
+165,Messe Nord/ICC,"S41, S42, S46",Charlottenburg,52.507777777777775,13.281666666666668,messe nord/icc
+166,Messe Süd,"S3, S9",Westend,52.49861111111111,13.270277777777778,messe sued
+167,Mexikoplatz,S1,Zehlendorf,52.4375,13.2325,mexikoplatz
+168,Mierendorffplatz,U7,Charlottenburg,52.526666666666664,13.305000000000001,mierendorffplatz
+169,Mohrenstraße,U2,Mitte,52.51166666666666,13.384722222222221,mohrenstr
+170,Moritzplatz,U8,Kreuzberg,52.50361111111111,13.410833333333334,moritzplatz
+171,Museumsinsel,U5,Mitte,52.5175,13.398333333333333,museumsinsel
+172,Märkisches Museum,U2,Mitte,52.511944444444445,13.408888888888889,maerkisches museum
+173,Möckernbrücke,"U1, U3, U7",Kreuzberg,52.49916666666667,13.383055555555556,moeckernbruecke
+174,Mühlenbeck-Mönchmühle,S8,MühlenbeckerLand,52.65472222222222,13.386666666666667,muehlenbeck moenchmuehle
+175,Naturkundemuseum,U6,Mitte,52.53111111111111,13.3825,naturkundemuseum
+176,Nauener Platz,U9,Wedding,52.55166666666666,13.3675,nauener platz
+177,Neu-Westend,U2,Westend,52.51555555555556,13.261111111111111,neu westend
+178,Neuenhagen,S5,NeuenhagenbeiBerlin,52.520833333333336,13.700277777777776,neuenhagen
+179,Neukölln,"U7, S41, S42, S45, S46, S47",Neukölln,52.46944444444445,13.442222222222222,neukoelln
+180,Nikolassee,"S1, S7",Nikolassee,52.431666666666665,13.193333333333333,nikolassee
+181,Nollendorfplatz,"U1, U3, U4, U1, U3, U2",Schöneberg,52.49944444444444,13.35361111111111,nollendorfplatz
+182,Nordbahnhof,"S1, S2, S25, S26",Mitte,52.53194444444444,13.387777777777778,nordbahnhof
+183,Nöldnerplatz,"S5, S7, S75",Rummelsburg,52.50388888888889,13.485277777777776,noeldnerplatz
+184,Nürnberger Platz,U3,Wilmersdorf,52.498333333333335,13.334166666666667,nuernberger platz
+185,Oberspree,S47,Niederschöneweide,52.4525,13.538333333333334,oberspree
+186,Olympia-Stadion,U2,Westend,52.51722222222222,13.25,olympia stadion
+187,Olympiastadion,"S3, S9",Westend,52.51166666666666,13.2425,olympiastadion
+188,Onkel Toms Hütte,U3,Zehlendorf,52.45027777777778,13.253333333333334,onkel toms huette
+189,Oranienburg,S1,Oranienburg,52.75361111111111,13.249722222222221,oranienburg
+190,Oranienburger Straße,"S1, S2, S25, S26",Mitte,52.525046,13.392924,oranienburger str
+191,Oranienburger Tor,U6,Mitte,52.525,13.3875,oranienburger tor
+192,Osdorfer Straße,S25,Lichterfelde,52.41925,13.314555555556,osdorfer str
+193,Oskar-Helene-Heim,U3,Dahlem,52.45027777777778,13.269722222222223,oskar helene heim
+194,Osloer Straße,"U8, U9",Gesundbrunnen,52.55694444444444,13.373333333333333,osloer str
+195,Ostbahnhof,"S3, S5, S7, S75, S9",Friedrichshain,52.51,13.434722222222222,ostbahnhof
+196,Osthafen,U1,Friedrichshain,52.50222222222222,13.446388888888889,osthafen
+197,Ostkreuz,"S3, S41, S42, S5, S7, S75, S8, S85",Friedrichshain,52.503055555555555,13.46888888888889,ostkreuz
+198,Otisstraße,U6,Reinickendorf,52.571111111111115,13.302777777777779,otisstr
+199,Pankow,"U2, S2, S8, S85",Pankow,52.56666666666667,13.411111111111111,pankow
+200,Pankow-Heinersdorf,"S2, S8",Pankow,52.57833333333333,13.429722222222221,pankow heinersdorf
+201,Pankstraße,U8,Gesundbrunnen,52.55222222222222,13.381388888888889,pankstr
+202,Paracelsus-Bad,U8,Reinickendorf,52.57416666666667,13.349166666666667,paracelsus bad
+203,Paradestraße,U6,Tempelhof,52.47805555555556,13.386111111111111,paradestr
+204,Parchimer Allee,U7,Britz,52.44472222222222,13.449722222222222,parchimer allee
+205,Paulsternstraße,U7,Haselhorst,52.53805555555555,13.247777777777777,paulsternstr
+206,Petershagen Nord,S5,PetershagenEggersdorf,52.52916666666667,13.79111111111111,petershagen nord
+207,Pichelsberg,"S3, S9",Westend,52.51027777777778,13.227222222222222,pichelsberg
+208,Platz der Luftbrücke,U6,Kreuzberg,52.48555555555556,13.385833333333332,platz der luftbruecke
+209,Plänterwald,"S8, S85, S9",Plänterwald,52.478611111111114,13.473333333333333,plaenterwald
+210,Podbielskiallee,U3,Dahlem,52.46416666666667,13.295833333333333,podbielskiallee
+211,Poelchaustraße,S7,Marzahn,52.535555555555554,13.535555555555556,poelchaustr
+212,Potsdam Hauptbahnhof,S7,Potsdam,52.391666666666666,13.066666666666666,potsdam hauptbahnhof
+213,Potsdamer Platz,"U2, S1, S2, S25, S26",Mitte,52.50944444444445,13.375833333333334,potsdamer platz
+214,Prenzlauer Allee,"S41, S42, S8, S85",PrenzlauerBerg,52.54472222222222,13.42611111111111,prenzlauer allee
+215,Priesterweg,"S2, S25, S26",Schöneberg,52.4601,13.3563,priesterweg
+216,Prinzenstraße,"U1, U3",Kreuzberg,52.498333333333335,13.405833333333334,prinzenstr
+217,Rahnsdorf,S3,Rahnsdorf,52.45166666666667,13.689722222222223,rahnsdorf
+218,Raoul-Wallenberg-Straße,S7,Marzahn,52.55083333333333,13.5475,raoul wallenberg str
+219,Rathaus Neukölln,U7,Neukölln,52.481944444444444,13.433055555555555,rathaus neukoelln
+220,Rathaus Reinickendorf,U8,Wittenau,52.58833333333334,13.325833333333334,rathaus reinickendorf
+221,Rathaus Schöneberg,U4,Schöneberg,52.48305555555556,13.341944444444445,rathaus schoeneberg
+222,Rathaus Spandau,U7,Spandau,52.53527777777778,13.199722222222222,rathaus spandau
+223,Rathaus Steglitz,"U9, S1",Steglitz,52.45611111111111,13.320833333333333,rathaus steglitz
+224,Rehberge,U6,Wedding,52.556666666666665,13.341111111111111,rehberge
+225,Reinickendorfer Straße,U6,Wedding,52.54,13.370277777777778,reinickendorfer str
+226,Residenzstraße,U8,Reinickendorf,52.571111111111115,13.360555555555555,residenzstr
+227,Richard-Wagner-Platz,U7,Charlottenburg,52.51583333333333,13.307500000000001,richard wagner platz
+228,Rohrdamm,U7,Siemensstadt,52.53722222222222,13.2625,rohrdamm
+229,Rosa-Luxemburg-Platz,U2,Mitte,52.52833333333333,13.410277777777779,rosa luxemburg platz
+230,Rosenthaler Platz,U8,Mitte,52.53,13.401111111111112,rosenthaler platz
+231,Rotes Rathaus,U5,Mitte,52.51861111111111,13.408333333333333,rotes rathaus
+232,Rudow,U7,Rudow,52.41611111111111,13.495277777777776,rudow
+233,Ruhleben,U2,Westend,52.525555555555556,13.241388888888888,ruhleben
+234,Rummelsburg,S3,Rummelsburg,52.50111111111111,13.47888888888889,rummelsburg
+235,Röntgental,S2,Panketal,52.64861111111111,13.513333333333334,roentgental
+236,Rüdesheimer Platz,U3,Wilmersdorf,52.473333333333336,13.314444444444446,ruedesheimer platz
+237,Samariterstraße,U5,Friedrichshain,52.514722222222225,13.464444444444444,samariterstr
+238,Savignyplatz,"S3, S5, S7, S9",Charlottenburg,52.505277777778,13.318888888889,savignyplatz
+239,Scharnweberstraße,U6,Reinickendorf,52.566944444444445,13.312777777777779,scharnweberstr
+240,Schichauweg,S2,Lichtenrade,52.398547,13.389372,schichauweg
+241,Schillingstraße,U5,Mitte,52.52027777777778,13.421666666666667,schillingstr
+242,Schlachtensee,S1,Nikolassee,52.44,13.215277777777777,schlachtensee
+243,Schlesisches Tor,"U1, U3",Kreuzberg,52.50083333333333,13.441666666666666,schlesisches tor
+244,Schloßstraße,"U9, U9",Steglitz,52.46083333333333,13.324444444444444,schlossstr
+245,Schulzendorf,S25,Heiligensee,52.61277777777778,13.245833333333332,schulzendorf
+246,Schwartzkopffstraße,U6,Mitte,52.53527777777778,13.377222222222223,schwartzkopffstr
+247,Schöneberg,"S1, S41, S42, S46",Schöneberg,52.47944444444445,13.351666666666667,schoeneberg
+248,Schöneweide,"S45, S46, S47, S8, S85, S9",Niederschöneweide,52.455000000000005,13.509444444444444,schoeneweide
+249,Schönfließ,S8,MühlenbeckerLand,52.664722222222224,13.340277777777779,schoenfliess
+250,Schönhauser Allee,"U2, S41, S42, S8, S85",Prenzlauer Berg,52.549166666666665,13.416111111111112,schoenhauser allee
+251,Schönholz,"S1, S25, S26",Reinickendorf,52.57138888888889,13.381388888888889,schoenholz
+252,Schönleinstraße,U8,Kreuzberg,52.49305555555556,13.421944444444444,schoenleinstr
+253,Seestraße,U6,Wedding,52.55,13.352777777777778,seestr
+254,Senefelderplatz,U2,Prenzlauer Berg,52.5325,13.4125,senefelderplatz
+255,Siemensdamm,U7,Siemensstadt,52.53666666666666,13.275555555555556,siemensdamm
+256,Sonnenallee,"S41, S42",Neukölln,52.47277777777778,13.455277777777777,sonnenallee
+257,Sophie-Charlotte-Platz,U2,Charlottenburg,52.51083333333333,13.296666666666667,sophie charlotte platz
+258,Spandau,"S3, S9",Spandau,52.53472222222222,13.195833333333333,spandau
+259,Spichernstraße,"U3, U9",Wilmersdorf,52.49666666666667,13.331111111111111,spichernstr
+260,Spindlersfeld,S47,Köpenick,52.447222222222216,13.561388888888889,spindlersfeld
+261,Spittelmarkt,U2,Mitte,52.51111111111111,13.403611111111111,spittelmarkt
+262,Springpfuhl,"S7, S75",Marzahn,52.52722222222222,13.536388888888888,springpfuhl
+263,Stadtmitte,"U2, U6",Mitte,52.51222222222222,13.389444444444443,stadtmitte
+264,Storkower Straße,"S41, S42, S8, S85",PrenzlauerBerg,52.52388888888889,13.464444444444444,storkower str
+265,Strausberg,S5,Strausberg,52.53194444444444,13.836944444444445,strausberg
+266,Strausberg Nord,S5,Strausberg,52.59027777777778,13.908333333333333,strausberg nord
+267,Strausberg Stadt,S5,Strausberg,52.57666666666667,13.887777777777778,strausberg stadt
+268,Strausberger Platz,U5,Friedrichshain,52.518055555555556,13.430833333333332,strausberger platz
+269,Stresow,"S3, S9",Spandau,52.53194444444444,13.208888888888888,stresow
+270,Sundgauer Straße,S1,Zehlendorf,52.436388888888885,13.273888888888889,sundgauer str
+271,Südende,"S25, S26",Steglitz,52.448117,13.353646,suedende
+272,Südkreuz,"S2, S25, S26, S41, S42, S45, S46",Schöneberg,52.47555555555556,13.364444444444445,suedkreuz
+273,Südstern,U7,Kreuzberg,52.489444444444445,13.407777777777778,suedstern
+274,Tegel,S25,Tegel,52.58861111111111,13.289444444444444,tegel
+275,Teltow Stadt,S25,Telt,52.396878,13.276392,teltow stadt
+276,Tempelhof,"U6, S41, S42, S45, S46",Tempelhof,52.47083333333334,13.385277777777777,tempelhof
+277,Theodor-Heuss-Platz,U2,Westend,52.50972222222222,13.273055555555556,theodor heuss platz
+278,Tiergarten,"S3, S5, S7, S9",Hansaviertel,52.51444,13.33649,tiergarten
+279,Tierpark,U5,Friedrichsfelde,52.49638888888889,13.523333333333333,tierpark
+280,Treptower Park,"S41, S42, S8, S85, S9",Alt-Treptow,52.49388888888889,13.461388888888887,treptower park
+281,Turmstraße,U9,Moabit,52.52583333333333,13.343333333333334,turmstr
+282,Uhlandstraße,U1,Charlottenburg,52.5025,13.325555555555555,uhlandstr
+283,Ullsteinstraße,U6,Tempelhof,52.45388888888889,13.384444444444444,ullsteinstr
+284,Unter den Linden,"U5, U6",Mitte,52.51694444444444,13.38888888888889,unter den linden
+285,Viktoria-Luise-Platz,U4,Schöneberg,52.49611111111111,13.342777777777778,viktoria luise platz
+286,Vinetastraße,U2,Pankow,52.55916666666666,13.413333333333334,vinetastr
+287,Voltastraße,U8,Gesundbrunnen,52.54222222222222,13.393055555555556,voltastr
+288,Waidmannslust,"S1, S26",Waidmannslust,52.60638888888889,13.321111111111112,waidmannslust
+289,Walther-Schreiber-Platz,U9,Friedenau,52.465,13.331666666666667,walther schreiber platz
+290,Wannsee,"S1, S7",Wannsee,52.421388888888885,13.179166666666665,wannsee
+291,Warschauer Straße,"U1, U3, S3, S5, S7, S75, S9",Friedrichshain,52.505694444444444,13.44972222222222,warschauer str
+292,Wartenberg,S75,Neu-Hohenschönhausen,52.573055555555555,13.50388888888889,wartenberg
+293,Waßmannsdorf,"S45, S9",WamannsdorfSchönefeld,52.36805555555556,13.463333333333333,wassmannsdorf
+294,Weberwiese,U5,Friedrichshain,52.516666666666666,13.445,weberwiese
+295,Wedding,"U6, S41, S42",Wedding,52.5425,13.366111111111111,wedding
+296,Weinmeisterstraße,U8,Mitte,52.525555555555556,13.405000000000001,weinmeisterstr
+297,Westend,"S41, S42, S46",Charlottenburg,52.518055555555556,13.284444444444444,westend
+298,Westhafen,"U9, S41, S42",Moabit,52.53638888888889,13.34388888888889,westhafen
+299,Westkreuz,"S3, S41, S42, S46, S5, S7, S9",Charlottenburg,52.50111111111111,13.283888888888889,westkreuz
+300,Westphalweg,U6,Mariendorf,52.44638888888888,13.385555555555555,westphalweg
+301,Wildau,S46,Wildau,52.32,13.633888888888889,wildau
+302,Wilhelmshagen,S3,Rahnsdorf,52.43861111111111,13.722222222222223,wilhelmshagen
+303,Wilhelmsruh,"S1, S26",Reinickendorf,52.581388888888895,13.363055555555555,wilhelmsruh
+304,Wilmersdorfer Straße,U7,Charlottenburg,52.50666666666667,13.306666666666667,wilmersdorfer str
+305,Wittenau,"U8, S1, S26",Wittenau,52.59583333333334,13.336666666666668,wittenau
+306,Wittenbergplatz,"U1, U2, U3",Schöneberg,52.50194444444445,13.343055555555557,wittenbergplatz
+307,Wollankstraße,"S1, S25, S26",Pankow,52.56527777777777,13.392222222222221,wollankstr
+308,Wuhletal,"U5, S5",Kaulsdorf,52.5125,13.575,wuhletal
+309,Wuhlheide,S3,Köpenick,52.46888888888889,13.553333333333335,wuhlheide
+310,Wutzkyallee,U7,Gropiusstadt,52.42333333333333,13.474722222222223,wutzkyallee
+311,Yorckstraße,"U7, S2, S25, S26, S1",Schöneberg,52.49250000000001,13.370277777777778,yorckstr
+312,Zehlendorf,S1,Zehlendorf,52.43083333333333,13.258333333333333,zehlendorf
+313,Zepernick,S2,Panketal,52.65972222222222,13.533888888888889,zepernick
+314,Zeuthen,S46,Zeuthen,52.34861111111111,13.627500000000001,zeuthen
+315,Zitadelle,U7,Haselhorst,52.53777777777778,13.217777777777778,zitadelle
+316,Zoologischer Garten,"U2, U9, S3, S5, S7, S9",Charlottenburg,52.507222222222225,13.3325,zoo
+317,Zwickauer Damm,U7,Gropiusstadt,52.42333333333333,13.483888888888888,zwickauer damm

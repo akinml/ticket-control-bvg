@@ -39,7 +39,7 @@ def main():
     st.map(data=public_stations, zoom=10, color="color", size=50)
 
     #Minutes slider
-    st.slider('Minutes', 0, 60, 0)
+    #st.slider('Minutes', 0, 60, 0)
 
     #Select day of week
     option = st.selectbox(

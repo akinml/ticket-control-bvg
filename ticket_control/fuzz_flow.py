@@ -9,8 +9,8 @@ import re
 
 
 
-from data_cleaning import data_preprocessing
-from params import path_to_data
+from ticket_control.data_cleaning import data_preprocessing
+from ticket_control.params import path_to_data
 
 import matplotlib.pyplot as plt
 
@@ -23,22 +23,10 @@ def fuzz_flow():
     # Load STATIONS DATAFRAME
     df = pd.read_csv(str(path_to_data)+'/s_u_stations_fixed_with_keys_20230830.csv')  # Replace with the path to your database file
 
-
-    # df = pd.read_csv('s_u_stations_fixed_with_keys_20230830.csv')  # Replace with the path to your database file
-    df = df.copy()
-    stations_full = list(df['keys'].values)
-    # create a dictionary where U/S bahn line names are the keys and the respective stations are the values incl. lat & lon
-    output = {'station_key': [], 'line': []}
-    for idx,row in df.iterrows():
-        line_split = row['lines'].split(', ')
-        for i in line_split:
-            output['station_key'].append(row['keys'])
-            output['line'].append(i)
-    station_to_line = pd.DataFrame(output)
-    station_to_line = station_to_line.drop_duplicates()
+    station_to_line = create_station_to_line_df(df)
 
     lines_un = list(station_to_line['line'].unique())
-
+    stations_full = list(df['keys'].values)
     def identify_station_precise(some_string, confidence_first=80, confidence_second=90):
         res1 = None
         res2 = None
@@ -70,3 +58,19 @@ def fuzz_flow():
     full_df.drop(columns="keys", inplace=True)
     full_df = full_df.sort_index(ascending=True)
     return full_df
+
+
+def create_station_to_line_df(df):
+    # df = pd.read_csv('s_u_stations_fixed_with_keys_20230830.csv')  # Replace with the path to your database file
+    df = df.copy()
+
+    # create a dictionary where U/S bahn line names are the keys and the respective stations are the values incl. lat & lon
+    output = {'station_key': [], 'line': []}
+    for idx,row in df.iterrows():
+        line_split = row['lines'].split(', ')
+        for i in line_split:
+            output['station_key'].append(row['keys'])
+            output['line'].append(i)
+    station_to_line = pd.DataFrame(output)
+    station_to_line = station_to_line.drop_duplicates()
+    return station_to_line

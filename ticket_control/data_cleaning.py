@@ -8,7 +8,7 @@ from nltk.corpus import stopwords
 from nltk import word_tokenize
 import nltk
 nltk.download('punkt')
-from params import path_to_data
+from ticket_control.params import path_to_data
 
 
 

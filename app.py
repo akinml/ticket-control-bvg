@@ -1,9 +1,10 @@
+from prefect import flow
 import streamlit as st
 import pandas as pd
 import time
 import random
 
-
+@flow
 # Optional change Mapbox map to plotly Map. https://plotly.com/python/scattermapbox/
 def generate_random_coordinates():
     min_lat, max_lat = 52.392166, 52.639004

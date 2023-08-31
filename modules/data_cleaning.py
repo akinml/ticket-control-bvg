@@ -6,12 +6,13 @@ import string
 from datetime import timedelta
 from nltk.corpus import stopwords
 from nltk import word_tokenize
+from params import path_to_data
 
 
 
 def data_preprocessing():
     # Load your existing database into a DataFrame
-    data = pd.read_csv('/home/yannik/ticket-control-bvg/data/telegram_data.csv')  # Replace with the path to your database file
+    data = pd.read_csv(str(path_to_data)+'/telegram_data.csv')  # Replace with the path to your database file
     # Notice the .copy() to copy the values
     data = data.copy()
 

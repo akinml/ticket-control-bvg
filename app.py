@@ -24,8 +24,10 @@ def generate_random_coordinates_list(num_samples=100):
     return lat_list, lon_list
 
 
-public_stations = pd.read_csv("datanew_map2.csv")
+public_stations = pd.read_csv("station_bahn1.csv")
 data1 = pd.read_csv('data/s_u_stations_fixed.csv')
+
+
 
 
 
@@ -34,6 +36,7 @@ def main():
     lat_list, lon_list = generate_random_coordinates_list()
     data = {"Location": ["Berlin"] * 100, "LAT": lat_list, "LON": lon_list}
     berlin_df = pd.DataFrame(data)
+
     datetimenow = time.strftime("%H:%M:%S")
     st.title(f"BVG Controllers Berlin - {datetimenow}")
     st.map(data=public_stations, zoom=10, color="color", size=50)

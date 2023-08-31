@@ -29,16 +29,30 @@ pull:
 
 # the deployments section allows you to provide configuration for deploying flows
 deployments:
-- name: null
-  version: null
+- name:
+  version:
   tags: []
-  description: null
+  description:
   schedule: {}
-  flow_name: null
-  entrypoint: null
+  flow_name:
+  entrypoint:
   parameters: {}
   work_pool:
-    name: null
-    work_queue_name: null
+    name:
+    work_queue_name:
     job_variables:
       image: '{{ build_image.image }}'
+- name: test
+  version:
+  tags: []
+  description:
+  entrypoint: flows/app.py:generate_random_coordinates
+  parameters: {}
+  work_pool:
+    name: test
+    work_queue_name:
+    job_variables: {}
+  schedule:
+    interval: 10.0
+    anchor_date: '2023-08-31T09:36:56.721394+00:00'
+    timezone: UTC

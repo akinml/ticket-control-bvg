@@ -4,4 +4,4 @@ RUN pip install -r requirements.txt --trusted-host pypi.python.org --no-cache-di
 ADD flows flows
 
 # Specify the command to execute when the container starts
-CMD ["python", "your_script.py"]
+CMD ["python", "app.py"]

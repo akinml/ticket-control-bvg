@@ -27,7 +27,7 @@ line_colors = {
 }
 
 
-def random():
+def random_ticket():
     new_map.to_csv('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data-newmap.csv')
     new_map.fillna("", inplace=True)
     new_map.loc[new_map["Location"].str.contains(""), "Location"] = new_map["lines"]

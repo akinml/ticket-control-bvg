@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import time
 import random
+from datetime import datetime, timedelta
 
 
 # Optional change Mapbox map to plotly Map. https://plotly.com/python/scattermapbox/
@@ -24,6 +25,9 @@ def generate_random_coordinates_list(num_samples=100):
 
 
 public_stations = pd.read_csv("datanew_map2.csv")
+data1 = pd.read_csv('data/s_u_stations_fixed.csv')
+
+
 
 
 def main():
@@ -34,9 +38,43 @@ def main():
     st.title(f"BVG Controllers Berlin - {datetimenow}")
     st.map(data=public_stations, zoom=10, color="color", size=50)
 
+    #Minutes slider
+    st.slider('Minutes', 0, 60, 0)
+
+    #Select day of week
+    option = st.selectbox(
+    'Day of week',
+    ('None', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', "Sunday"))
+    st.write('You selected:', option)
+
+
+    #Select month
+    option1 = st.selectbox(
+    'Month',
+    ('None', 'January', 'Febraury', 'March', 'April', 'June', 'July', "August",'September','October', 'November', 'December'))
+    st.write('You selected:', option1)
+
+
+    #Date range
+    five_years_ago = datetime.today() - timedelta(days=5*365)
+
+    date_range = st.date_input(
+    "Select your datet range:",
+    value=(datetime.today(), datetime.today() + timedelta(days=0)),
+    min_value=five_years_ago,
+    max_value=datetime.today()
+)
+
+    st.write("Your date range is:", date_range)
+
+    #Select Stations
+    selected_options = st.multiselect("Select Station(s):", data1["station name"])
+    st.write("You selected:", selected_options)
+
     # Add a refresh button
     st.table(berlin_df)
     output = st.empty()
+
 
     while True:
         current_time = time.strftime("%Y-%m-%d %H:%M:%S")

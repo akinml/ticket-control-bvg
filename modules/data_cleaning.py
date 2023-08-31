@@ -86,7 +86,7 @@ def data_preprocessing():
     stop_words = set(stopwords.words('german'))
 
     # add multiple words using 'update'
-    new_words_to_add = ['männlich', 'weiblich', 'gelesen','weste','westen', 'shirt', 'pulli', 'jacke', 'jacken', 'ticket', 'tickets', 'eingestiegen', 'ausgestiegen', 'steigen', 'schwarze', 'schwarz', 'männer', 'haare', 'the', 'stehen', 'gelesene', 'blaue', 'with']
+    new_words_to_add = ['männlich', 'maennlich', 'weiblich', 'gelesen','weste','westen', 'shirt', 'pulli', 'jacke', 'jacken', 'ticket', 'tickets', 'eingestiegen', 'ausgestiegen', 'steigen', 'schwarze', 'schwarz', 'männer', 'maenner', 'haare', 'the', 'stehen', 'gelesene', 'blaue', 'with', 'sicher', 'blauwesten','sicherheitswesten', 'ungenau', 'tshirt','genau', 'wegen', 'fahrgäste', 'fahrgaeste', 'fahrgästen', 'fahrgaesten', 'warnwesten', 'warnweste', 'gelbwesten', 'besten', 'wertend', 'abwertend', 'wesen']
     stop_words.update(new_words_to_add)
 
     # Remove unwanted stopwords

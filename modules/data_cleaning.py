@@ -6,6 +6,8 @@ import string
 from datetime import timedelta
 from nltk.corpus import stopwords
 from nltk import word_tokenize
+import nltk
+nltk.download('punkt')
 from params import path_to_data
 
 
@@ -83,26 +85,13 @@ def data_preprocessing():
     # generating list of default stop words
     stop_words = set(stopwords.words('german'))
 
-    # Customizing a list of stopwords
-    my_stopwords = stop_words.copy()  # Create a copy of the stop_words list
-
-    # Add other stopwords
-    my_stopwords.add('männlich')
-    my_stopwords.add('weiblich')
-    my_stopwords.add('gelesen')
-    my_stopwords.add('weste')
-    my_stopwords.add('shirt')
-    my_stopwords.add('pulli')
-    my_stopwords.add('jacke')
-    my_stopwords.add('jacken')
-    my_stopwords.add('westen')
-    my_stopwords.add('ticket')
-    my_stopwords.add('tickets')
-    my_stopwords.add('eingestiegen')
+    # add multiple words using 'update'
+    new_words_to_add = ['männlich', 'weiblich', 'gelesen','weste','westen', 'shirt', 'pulli', 'jacke', 'jacken', 'ticket', 'tickets', 'eingestiegen', 'ausgestiegen', 'steigen', 'schwarze', 'schwarz', 'männer', 'haare', 'the', 'stehen', 'gelesene', 'blaue', 'with']
+    stop_words.update(new_words_to_add)
 
     # Remove unwanted stopwords
     my_wanted_words = ['nach', 'bei', 'von', 'vom' 'zum', 'über', 'bis']
-    final_stopwords = my_stopwords - set(my_wanted_words)
+    final_stopwords = stop_words - set(my_wanted_words)
 
     def stopword(text):
         word_tokens = word_tokenize(text)

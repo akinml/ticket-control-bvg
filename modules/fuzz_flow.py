@@ -1,3 +1,5 @@
+
+
 import pandas as pd
 import numpy as np
 from datetime import timedelta
@@ -5,16 +7,23 @@ from thefuzz import process
 from thefuzz import fuzz
 import re
 
+
+
+from data_cleaning import data_preprocessing
+from params import path_to_data
+
 import matplotlib.pyplot as plt
 
-def fuzz_flow(stations, data_telegram):
+def fuzz_flow():
 
     # data3 = pd.read_csv('./data/data_handover_for_team.csv') # insert path
-    data3 = data_telegram
+    data3 = data_preprocessing()
     data3 = data3.copy()
 
     # Load STATIONS DATAFRAME
-    stations = df
+    df = pd.read_csv(str(path_to_data)+'/s_u_stations_fixed_with_keys_20230830.csv')  # Replace with the path to your database file
+
+
     # df = pd.read_csv('s_u_stations_fixed_with_keys_20230830.csv')  # Replace with the path to your database file
     df = df.copy()
     stations_full = list(df['keys'].values)

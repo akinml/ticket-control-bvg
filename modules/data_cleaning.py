@@ -12,6 +12,7 @@ from params import path_to_data
 
 def data_preprocessing():
     # Load your existing database into a DataFrame
+    # Use flexible path so that it works on everyone's environment
     data = pd.read_csv(str(path_to_data)+'/telegram_data.csv')  # Replace with the path to your database file
     # Notice the .copy() to copy the values
     data = data.copy()

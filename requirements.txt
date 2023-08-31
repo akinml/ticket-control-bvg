@@ -5,6 +5,7 @@ alembic==1.11.3
 altair==5.1.0
 annotated-types==0.5.0
 anyio==3.7.1
+appnope==0.1.3
 apprise==1.5.0
 argon2-cffi==23.1.0
 argon2-cffi-bindings==21.2.0
@@ -74,6 +75,8 @@ iniconfig==2.0.0
 ipdb==0.13.13
 ipykernel==6.25.1
 ipython==8.14.0
+ipython-genutils==0.2.0
+ipywidgets==8.1.0
 isoduration==20.11.0
 isort==5.12.0
 jedi==0.19.0
@@ -84,6 +87,8 @@ jsonpatch==1.33
 jsonpointer==2.4
 jsonschema==4.19.0
 jsonschema-specifications==2023.7.1
+jupyter==1.0.0
+jupyter-console==6.6.3
 jupyter-events==0.7.0
 jupyter-lsp==2.2.0
 jupyter_client==8.3.0
@@ -92,6 +97,7 @@ jupyter_server==2.7.2
 jupyter_server_terminals==0.4.4
 jupyterlab==4.0.5
 jupyterlab-pygments==0.2.2
+jupyterlab-widgets==3.0.8
 jupyterlab_server==2.24.0
 kiwisolver==1.4.5
 kubernetes==27.2.0
@@ -116,6 +122,8 @@ nbclient==0.8.0
 nbconvert==7.7.4
 nbformat==5.9.2
 nest-asyncio==1.5.7
+nltk==3.8.1
+notebook==7.0.3
 notebook_shim==0.2.3
 numexpr==2.8.5
 numpy==1.25.2
@@ -163,6 +171,9 @@ pytz-deprecation-shim==0.1.0.post0
 pytzdata==2020.1
 PyYAML==6.0.1
 pyzmq==25.1.1
+qtconsole==5.4.3
+QtPy==2.4.0
+rapidfuzz==3.2.0
 readchar==4.0.5
 referencing==0.30.2
 regex==2023.8.8
@@ -196,6 +207,7 @@ Telethon==1.29.3
 tenacity==8.2.3
 terminado==0.17.1
 text-unidecode==1.3
+thefuzz==0.20.0
 thinc==8.1.12
 threadpoolctl==3.2.0
 tinycss2==1.2.1
@@ -222,6 +234,7 @@ webcolors==1.13
 webencodings==0.5.1
 websocket-client==1.6.2
 websockets==11.0.3
+widgetsnbextension==4.0.8
 wrapt==1.15.0
 yarl==1.9.2
 zipp==3.16.2

@@ -43,6 +43,8 @@ def fuzz_flow(df_for_fuzzy_matching: pd.DataFrame, station_to_line: pd.DataFrame
     # Load STATIONS DATAFRAME
     station_to_line = station_to_line.copy()
 
+    df = pd.read_csv(str(path_to_data) + "/s_u_stations_fixed_with_keys_20230830.csv")
+
     lines_un = list(station_to_line["line"].unique())
     stations_full = list(df["keys"].values)
 

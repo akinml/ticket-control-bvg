@@ -30,8 +30,8 @@ def data_preprocessing(data: pd.DataFrame):
     # replace sender type with str type
     data["sender"] = data["sender"].astype(str)
 
-    # convert date to datetime format
-    data["date"] = pd.to_datetime(data["date"])
+    data["date"] = data["date"].str.strip("+00:00").str[0:16]
+    data["date"] = pd.to_datetime(data["date"], errors="coerce")
 
     # first round of cleaning na/empty strings/...
     data = data[data["text"].notna()]

@@ -18,7 +18,17 @@ def main():
     # Load your existing database into a DataFrame
     data = pd.read_csv("data/preprocessed_database_telegram.csv")  # Replace with the path to your database file
     # Notice the .copy() to copy the values
+    # Streamlit app
+    st.title("Data Analysis")
     df = data.copy()
+    df = df.set_index("date")
+    df.index = pd.to_datetime(df.index)
+
+    day = df.resample('d')['station_key'].count()
+    st.line_chart(day)
+
+    week = df.resample('w')['station_key'].count()
+    st.line_chart(week)
 
     # Streamlit app
     st.title("Data Analysis")
@@ -54,14 +64,28 @@ def main():
         ))
 
 
-    st.map(df, size=20, color='#0044ff')
-    st.map(df,
-        latitude='latitude',
-        longitude='longitude',
-        size='col3',
-        color='col4')
-
-
-
 if __name__ == "__main__":
     main()
+
+
+
+
+
+"""
+
+def main():
+    # Load your existing database into a DataFrame
+    data = pd.read_csv("data/preprocessed_database_telegram.csv")  # Replace with the path to your database file
+    # Notice the .copy() to copy the values
+    df = data.copy()
+    # Streamlit app
+    st.title("Data Analysis")
+
+    day = df.resample('d')['station_key'].count()
+    n = pd.to_datetime(df.index)
+
+    df_test = get_line_chart_data()
+    st.line_chart(df_test)
+
+if __name__ == "__main__":
+    main()"""

@@ -7,17 +7,23 @@ from datetime import timedelta
 from nltk.corpus import stopwords
 from nltk import word_tokenize
 import nltk
-nltk.download('punkt')
+
+nltk.download("punkt")
 nltk.download("stopwords")
 from ticket_control.params import path_to_data
 
+# Load your existing database into a DataFrame
+# Use flexible path so that it works on everyone's environment
 
-def data_preprocessing():
-    # Load your existing database into a DataFrame
-    # Use flexible path so that it works on everyone's environment
-    data = pd.read_csv(
-        str(path_to_data) + "/telegram_data.csv"
-    )  # Replace with the path to your database file
+# Chris Notes: Functions are applied on data. Not good practice to load the data inside of functions.
+data = pd.read_csv(str(path_to_data) + "/database_telegram.csv")
+
+
+##Chris Notes: Define the input of functions and declare their datatype.
+def data_preprocessing(data: pd.DataFrame):
+    # Provide a Doc String why we have this function and what it does in simple terms.
+    """This function is the first step in our Datapreprocessing pipeline. It takes the Telegram Database with the columns...."""
+
     # Notice the .copy() to copy the values
     data = data.copy()
 
@@ -47,7 +53,7 @@ def data_preprocessing():
     )
 
     data_clean["sender"] = data_clean["sender"].astype(str)
-
+    # Chris Notes: Always import at the start of the Module.
     import re
 
     def remove_emojis(data):
@@ -124,6 +130,7 @@ def data_preprocessing():
     my_wanted_words = ["nach", "bei", "von", "vom" "zum", "über", "bis"]
     final_stopwords = stop_words - set(my_wanted_words)
 
+    # Chris Notes: Not best practice to define functions inside of funcitons. Better to keep the definition separate and call the function within other functions.
     def stopword(text):
         word_tokens = word_tokenize(text)
         text = [
@@ -160,6 +167,7 @@ def data_preprocessing():
     data_clean = data_clean.sort_values(by=["date", "sender"])
 
     # converting into "handover" file
-    data_handover = data_clean.drop("time_diff", axis=1)
+    ##Chris Notes: Assign you objects names that indicate their type and state in the process.
+    df_for_fuzzy_matching = data_clean.drop("time_diff", axis=1)
 
-    return data_handover
+    return df_for_fuzzy_matching

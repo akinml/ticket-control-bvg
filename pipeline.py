@@ -15,6 +15,7 @@ github_credentials_block = GitHubCredentials.load("github")
 
 @flow
 def pipeline():
+    print('Pipeline Started!')
     df_station_mapping = pd.read_csv(
         str(path_to_data) + "/s_u_stations_fixed_with_keys_20230830.csv"
     )
@@ -37,9 +38,9 @@ def pipeline():
     )
     output_df = pd.concat([df_to_be_updadet, update_df]).drop_duplicates(keep="last")
     output_df.to_csv(str(path_to_data) + "/preprocessed_database_telegram.csv")
+    print('Pipeline Completed!')
     return output_df
 
 
 if __name__ == "__main__":
-    print('Pipeline Started!')
     pipeline()

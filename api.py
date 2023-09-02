@@ -1,13 +1,10 @@
 import streamlit as st
 import pandas as pd
 import requests
-from fastapi import FastAPI, Depends
-from fastapi.middleware.cors import CORSMiddleware
-from datetime import datetime
-import pandas as pd
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+# uvicorn api:app --host 0.0.0.0 --port 8000 --reload
 
 # Api for reporting Data to Backend
 app = FastAPI()
@@ -35,10 +32,6 @@ def save_report(report_station: str):
         "date": report_datetime,
     }
     return report_dict
-
-
-data1 = pd.read_csv("data/s_u_stations_fixed_with_keys_20230830.csv")
-database_telegram = pd.read_csv("data/database_telegram.csv")
 
 
 def main():

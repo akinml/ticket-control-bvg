@@ -1,83 +1,166 @@
 import streamlit as st
 import pandas as pd
 import time
-import random
+import requests
+from pathlib import Path
 from datetime import datetime, timedelta
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+path_to_main = Path(__file__).parent
 
 
-# Optional change Mapbox map to plotly Map. https://plotly.com/python/scattermapbox/
-def generate_random_coordinates():
-    min_lat, max_lat = 52.392166, 52.639004
-    min_lon, max_lon = 13.215260, 13.770269
-    random_lat = random.uniform(min_lat, max_lat)
-    random_lon = random.uniform(min_lon, max_lon)
-    return random_lat, random_lon
+def update_station_colors(
+    reports: pd.DataFrame, stations: pd.DataFrame, from_date: str, to_date: str
+) -> pd.DataFrame:
+    """This functions returns the Dataframe for the Map of the Streamlit App.
+    It takes the input preprocessed Database that is filtered on user input date
+    range and returns the reports form the relevant time period.
+    All reported stations will appear red on the Map.
+    The from and to dateformat ,e.g., from_date='2023-08-30 11:55:00'
+    to_date='2023-08-30 12:01:00'."""
+    # Read data from CSV files
+    # Filter reports based on date
+    reports = reports.copy()
+    stations = stations.copy()
+    reports_filtered = reports[
+        (reports["date"] >= from_date) & (reports["date"] <= to_date)
+    ]
+    # Loop through unique station names in the filtered reports
+    for report_station in reports_filtered["station name"].unique():
+        # Update the 'color' column for matching stations to '#FF0000'
+        stations.loc[stations["station name"] == report_station, "color"] = "#FF0000"
+    return stations
 
 
-def generate_random_coordinates_list(num_samples=100):
-    lat_list = []
-    lon_list = []
-    for x in range(num_samples):
-        random_lat, random_lon = generate_random_coordinates()
-        lat_list.append(random_lat)
-        lon_list.append(random_lon)
-    return lat_list, lon_list
+# uvicorn api:app --host 0.0.0.0 --port 8000 --reload
+# Api for reporting Data to Backend
+app = FastAPI()
+# Allowing all middleware is optional, but good practice for dev purposes
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
-public_stations = pd.read_csv("station_bahn1.csv")
-data1 = pd.read_csv('data/s_u_stations_fixed.csv')
+# If someone sends a report through our streamlit app, this API will save it to our preprocessed dataframe
+@app.get("/report")
+def save_report(report_station: str):
+    print("Receiving a new Alarm!🚨")
+    report_station = report_station
+    report_datetime = pd.Timestamp.now()
+    report_dict = {
+        "sender": "unknown",
+        "group": "website",
+        "text": report_station,
+        "date": report_datetime,
+    }
+    return report_dict
 
 
-
-
-
-
+# DEFINING THE APP INTERFACE AND ANALYSIS
 def main():
-    lat_list, lon_list = generate_random_coordinates_list()
-    data = {"Location": ["Berlin"] * 100, "LAT": lat_list, "LON": lon_list}
-    berlin_df = pd.DataFrame(data)
+    # LOADING DATAFRAMES FOR APP
+    data1 = pd.read_csv("data/s_u_stations_fixed_with_keys_20230830.csv")
+    reports = pd.read_csv(
+        str(path_to_main) + "/data/preprocessed_database_telegram.csv"
+    )
+    stations = pd.read_csv(str(path_to_main) + "/data/datanew_map2.csv")
 
+    # MAP WITH TIME
     datetimenow = time.strftime("%H:%M:%S")
     st.title(f"BVG Controllers Berlin - {datetimenow}")
-    st.map(data=public_stations, zoom=10, color="color", size=50)
+    selected_station_report = st.selectbox("Select Station(s):", data1["station name"])
+    # CODE BLOCK REPORT
+    if st.button("Report BVG Controller. 👮"):
+        response = requests.get(
+            f"http://0.0.0.0:8000/report?report_station={selected_station_report}"
+        )
 
-    #Minutes slider
-    #st.slider('Minutes', 0, 60, 0)
+        if response.status_code == 200:
+            st.write("Report Sent!👌❤️😍")
+            # Concatenate the report data with preprocessed_database_telegram
+            report_data = response.json()
+            report_df = pd.DataFrame([report_data])
+            database_telegram = pd.read_csv("data/database_telegram.csv")
+            database_telegram = pd.concat([database_telegram, report_df])
+            database_telegram.to_csv("data/database_telegram.csv")
+        else:
+            st.write("Failed to send the report. 🚨")
 
-    #Select day of week
+    else:
+        st.write("Awaiting Report. 🚨")
+
+    # Call Function to show Map with alerts:
+    df_filtered_map = update_station_colors(
+        stations=stations,
+        reports=reports,
+        from_date="2023-08-28 12:28:00",
+        to_date="2023-08-29 10:28:00",
+    )
+    st.map(data=df_filtered_map, zoom=10, color="color", size=50)
+
+    # Minutes slider
+    # st.slider('Minutes', 0, 60, 0)
+
+    # Select day of week
     option = st.selectbox(
-    'Day of week',
-    ('None', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', "Sunday"))
-    st.write('You selected:', option)
+        "Day of week",
+        (
+            "None",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday",
+        ),
+    )
+    st.write("You selected:", option)
 
-
-    #Select month
+    # Select month
     option1 = st.selectbox(
-    'Month',
-    ('None', 'January', 'Febraury', 'March', 'April', 'June', 'July', "August",'September','October', 'November', 'December'))
-    st.write('You selected:', option1)
+        "Month",
+        (
+            "None",
+            "January",
+            "Febraury",
+            "March",
+            "April",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+        ),
+    )
+    st.write("You selected:", option1)
 
-
-    #Date range
-    five_years_ago = datetime.today() - timedelta(days=5*365)
+    # Date range
+    five_years_ago = datetime.today() - timedelta(days=5 * 365)
 
     date_range = st.date_input(
-    "Select your datet range:",
-    value=(datetime.today(), datetime.today() + timedelta(days=0)),
-    min_value=five_years_ago,
-    max_value=datetime.today()
-)
+        "Select your date range:",
+        value=(datetime.today(), datetime.today() + timedelta(days=0)),
+        min_value=five_years_ago,
+        max_value=datetime.today(),
+    )
 
     st.write("Your date range is:", date_range)
 
-    #Select Stations
+    # Select Stations
     selected_options = st.multiselect("Select Station(s):", data1["station name"])
     st.write("You selected:", selected_options)
 
     # Add a refresh button
     st.table(berlin_df)
     output = st.empty()
-
 
     while True:
         current_time = time.strftime("%Y-%m-%d %H:%M:%S")

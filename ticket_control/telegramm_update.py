@@ -1,7 +1,7 @@
 from telethon.sync import TelegramClient
 import datetime
 import pandas as pd
-from params import path_to_data
+from ticket_control.params import path_to_data
 
 
 def get_update():
@@ -27,7 +27,7 @@ def get_update():
                 temp_df = pd.DataFrame(data, index=[1])
                 update_df = pd.concat([update_df, temp_df], axis=0)
 
-    database = pd.read_csv(str(path_to_data) + "/telegram_data.csv")
+    database = pd.read_csv(str(path_to_data) + "/database_telegram.csv")
     database["comp_key"] = (
         str(database["sender"]) + database["text"] + str(database["date"])
     )

@@ -16,21 +16,20 @@ push: null
 pull:
 - prefect.deployments.steps.git_clone:
     repository: git@github.com:akinml/ticket-control-bvg.git
-    branch: infrastructure
+    branch: clean_up_chris
+    access_token: null
 
 # the deployments section allows you to provide configuration for deploying flows
 deployments:
-- name: test
+- name: null
   version: null
   tags: []
   description: null
-  entrypoint: webapp/app.py:main
+  schedule: {}
+  flow_name: null
+  entrypoint: null
   parameters: {}
   work_pool:
-    name: my-process-pool
+    name: null
     work_queue_name: null
     job_variables: {}
-  schedule:
-    interval: 5.0
-    anchor_date: '2023-08-30T04:49:05.869461+00:00'
-    timezone: UTC

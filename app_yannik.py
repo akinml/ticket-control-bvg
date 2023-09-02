@@ -30,20 +30,23 @@ def generate_random_coordinates_list(num_samples=100):
 
 
 public_stations = pd.read_csv("/home/yannik/ticket-control-bvg/data/datanew_map2.csv")
-data1 = pd.read_csv('/home/yannik/ticket-control-bvg/data/s_u_stations_fixed_with_keys_20230830.csv')
+data1 = pd.read_csv(
+    "/home/yannik/ticket-control-bvg/data/s_u_stations_fixed_with_keys_20230830.csv"
+)
 
 
 # Page 1 landing page
 def page_1_landing_page():
-
     lat_list, lon_list = generate_random_coordinates_list()
     data = {"Location": ["Berlin"] * 100, "LAT": lat_list, "LON": lon_list}
     berlin_df = pd.DataFrame(data)
     datetimenow = time.strftime("%H:%M:%S")
-    st.title(f"Welcome to BVG Controllers BER 👋", )
+    st.title(
+        f"Welcome to BVG Controllers BER 👋",
+    )
     st.map(data=public_stations, zoom=10, color="color", size=50)
 
-    #Select Stations
+    # Select Stations
     selected_options = st.multiselect("Select Station(s):", data1["station name"])
     st.write("You selected:", selected_options)
 
@@ -56,26 +59,32 @@ def page_1_landing_page():
         output.text(f"Last Update: {current_time}")
         time.sleep(10)
 
+
 # Load your existing database into a DataFrame
-data = pd.read_csv('/home/yannik/ticket-control-bvg/data/preprocessed_database_telegram.csv')  # Replace with the path to your database file
+data = pd.read_csv(
+    "/home/yannik/ticket-control-bvg/data/preprocessed_database_telegram.csv"
+)  # Replace with the path to your database file
 # Notice the .copy() to copy the values
 df = data.copy()
-df['date'] = pd.to_datetime(df['date'])
+df["date"] = pd.to_datetime(df["date"])
+
 
 # Page 2: Control Statistics
 def page_2_control_statistics():
-
     # Streamlit app
     st.title("Control Statistics")
 
     # description
-    min_date = df['date'].iloc[0]
+    min_date = df["date"].iloc[0]
 
-    max_date = df['date'].iloc[-1]
+    max_date = df["date"].iloc[-1]
 
-    user_date_ranges = st.date_input('Enter a range of two dates or leave default',
-                  (min_date, max_date),
-                  min_value=min_date, max_value=max_date)
+    user_date_ranges = st.date_input(
+        "Enter a range of two dates or leave default",
+        (min_date, max_date),
+        min_value=min_date,
+        max_value=max_date,
+    )
 
     # year_start, year_end = int(year_start), int(year_end)
     # month_start, month_end = int(month_start), int(month_end)
@@ -111,7 +120,9 @@ def page_2_control_statistics():
 
     # User input for number of top items to display
     top_n_areas = st.selectbox("Select the number of areas to display:", [10, 25, 50])
-    top_n_stations = st.selectbox("Select the number of station names to display:", [10, 25, 50])
+    top_n_stations = st.selectbox(
+        "Select the number of station names to display:", [10, 25, 50]
+    )
     top_n_lines = st.selectbox("Select the number of lines to display:", [5, 10, 20])
 
     # Arrange tables side by side
@@ -119,58 +130,75 @@ def page_2_control_statistics():
     col1, col2, col3 = st.columns(3)
     with col1:
         st.write(f"{top_n_areas} Most controlled areas:")
-        area_counts = df[(df["date"] >= pd.to_datetime(user_date_ranges[0])) & (df["date"] <= pd.to_datetime(user_date_ranges[1]))]['area'].value_counts()
+        area_counts = df[
+            (df["date"] >= pd.to_datetime(user_date_ranges[0]))
+            & (df["date"] <= pd.to_datetime(user_date_ranges[1]))
+        ]["area"].value_counts()
         st.write(area_counts.head(top_n_areas))
 
     with col2:
         st.write(f"{top_n_stations} Most controlled stations:")
-        station_counts = df[(df["date"] >= pd.to_datetime(user_date_ranges[0])) & (df["date"] <= pd.to_datetime(user_date_ranges[1]))]['station name'].value_counts()
+        station_counts = df[
+            (df["date"] >= pd.to_datetime(user_date_ranges[0]))
+            & (df["date"] <= pd.to_datetime(user_date_ranges[1]))
+        ]["station name"].value_counts()
         st.write(station_counts.head(top_n_stations))
 
     with col3:
         st.write(f"{top_n_lines} Most controlled lines:")
-        lines_counts = df[(df["date"] >= pd.to_datetime(user_date_ranges[0])) & (df["date"] <= pd.to_datetime(user_date_ranges[1]))]['lines'].value_counts()
+        lines_counts = df[
+            (df["date"] >= pd.to_datetime(user_date_ranges[0]))
+            & (df["date"] <= pd.to_datetime(user_date_ranges[1]))
+        ]["lines"].value_counts()
         st.write(lines_counts.head(top_n_lines))
-
 
     # Areas
     st.title("Areas, stations & lines visualization")
 
     # Calculate area frequencies using data ranges selected by user
-    area_counts = df[(df["date"] >= pd.to_datetime(user_date_ranges[0])) & (df["date"] <= pd.to_datetime(user_date_ranges[1]))]['area'].value_counts()
+    area_counts = df[
+        (df["date"] >= pd.to_datetime(user_date_ranges[0]))
+        & (df["date"] <= pd.to_datetime(user_date_ranges[1]))
+    ]["area"].value_counts()
 
     # Create a plotly map
     fig1 = px.treemap(
         names=area_counts.index,
-        parents=[''] * len(area_counts),
+        parents=[""] * len(area_counts),
         values=area_counts.values,
-        title="Area Visualization"
+        title="Area Visualization",
     )
 
     # Display the figure
     st.plotly_chart(fig1)
 
     # Calculate station frequencies
-    station_counts = df[(df["date"] >= pd.to_datetime(user_date_ranges[0])) & (df["date"] <= pd.to_datetime(user_date_ranges[1]))]['station name'].value_counts()
+    station_counts = df[
+        (df["date"] >= pd.to_datetime(user_date_ranges[0]))
+        & (df["date"] <= pd.to_datetime(user_date_ranges[1]))
+    ]["station name"].value_counts()
     # Create a plotly map
     fig2 = px.treemap(
         names=station_counts.index,
-        parents=[''] * len(station_counts),
+        parents=[""] * len(station_counts),
         values=station_counts.values,
-        title="Station Visualization"
+        title="Station Visualization",
     )
 
     # Display the figure
     st.plotly_chart(fig2)
 
     # Calculate lines frequencies
-    lines_counts = df[(df["date"] >= pd.to_datetime(user_date_ranges[0])) & (df["date"] <= pd.to_datetime(user_date_ranges[1]))]['lines'].value_counts()
+    lines_counts = df[
+        (df["date"] >= pd.to_datetime(user_date_ranges[0]))
+        & (df["date"] <= pd.to_datetime(user_date_ranges[1]))
+    ]["lines"].value_counts()
     # Create a plotly mapp
     fig3 = px.treemap(
         names=lines_counts.index,
-        parents=[''] * len(lines_counts),
+        parents=[""] * len(lines_counts),
         values=lines_counts.values,
-        title="Lines Visualization"
+        title="Lines Visualization",
     )
 
     # Display the figure
@@ -204,21 +232,22 @@ def page_2_control_statistics():
 
     # st.pyplot(fig4)
 
+
 # Main app
 def main():
     st.sidebar.title("Navigation")
-    page = st.sidebar.radio("Go to:", ("Check Controls :rainbow:", "Control Statistics :dart:"))
+    page = st.sidebar.radio(
+        "Go to:", ("Check Controls :rainbow:", "Control Statistics :dart:")
+    )
 
     if page == "Check Controls :rainbow:":
         page_1_landing_page()
     elif page == "Control Statistics :dart:":
         page_2_control_statistics()
 
+
 if __name__ == "__main__":
     main()
-
-
-
 
 
 # # Title and description

@@ -6,7 +6,9 @@ from ticket_control.telegramm_update import get_update
 import pandas as pd
 from prefect_github import GitHubCredentials
 from prefect.filesystems import GitHub
+from prefect_github.repository import GitHubRepository
 
+github_repository_block = GitHubRepository.load("github-repo2")
 github_block = GitHub.load("github-repo")
 github_credentials_block = GitHubCredentials.load("github")
 

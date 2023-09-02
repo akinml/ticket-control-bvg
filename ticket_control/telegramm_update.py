@@ -17,7 +17,6 @@ def get_update():
             for message in client.iter_messages(
                 chat, offset_date=yesterday, reverse=True
             ):
-                print(message)
                 data = {
                     "group": chat,
                     "sender": message.sender_id,
@@ -36,7 +35,6 @@ def get_update():
     )
     for key in update_df["comp_key"]:
         if key not in list(database["comp_key"]):
-            print(f"Message Update:{key}")
             database = pd.concat(
                 [database, update_df[update_df["comp_key"] == key]], axis=0
             )

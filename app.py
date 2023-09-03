@@ -103,6 +103,12 @@ def main():
     )
     st.map(data=df_filtered_map, zoom=10, color="color", size=50)
 
+    start_color, end_color = st.select_slider(
+        "Select a range of color wavelength",
+        options=["red", "orange", "yellow", "green", "blue", "indigo", "violet"],
+        value=("red", "blue"),
+    )
+
     # Minutes slider
     # st.slider('Minutes', 0, 60, 0)
 

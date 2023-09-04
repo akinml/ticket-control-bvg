@@ -8,6 +8,7 @@ path_main = Path(__file__).parent.parent
 path_to_data = path_main / "data/"
 
 
+@flow(name="get_update()")
 def get_update():
     """This function gets the newest data from the telegram Channel and saves it to our database."""
     print("\033[1;32m 💽 Database update started 💽 ")

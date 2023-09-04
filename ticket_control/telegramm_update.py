@@ -5,7 +5,7 @@ from pathlib import Path
 from prefect import flow
 from prefect_gcp import GcpCredentials
 
-gcp_credentials_block = GcpCredentials.load("gcp")
+gcp_credentials_block = GcpCredentials.load("prefect")
 
 path_main = Path(__file__).parent.parent
 path_to_data = path_main / "data/"

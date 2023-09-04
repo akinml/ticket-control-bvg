@@ -77,7 +77,7 @@ def main():
 
     # Call Function to show Map with alerts:
     df_filtered_map = update_station_colors(
-        from_date="2023-08-28 12:28:00",  # Insert Sliders Dates here!
+        from_date="2023-01-28 12:28:00",  # Insert Sliders Dates here!
         to_date="2023-10-29 10:28:00",  # Insert Sliders Dates here!
     )
 
@@ -103,7 +103,7 @@ def main():
             )
             pipeline()
             df_filtered_map = update_station_colors(
-                from_date="2023-08-28 12:28:00",  # Insert Sliders Dates here!
+                from_date="2023-01-28 12:28:00",  # Insert Sliders Dates here!
                 to_date="2023-10-29 10:28:00",  # Insert Sliders Dates here!
             )
         else:

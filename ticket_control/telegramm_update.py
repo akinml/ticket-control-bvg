@@ -1,10 +1,15 @@
 from telethon.sync import TelegramClient
 import datetime
 import pandas as pd
-from params import path_to_data
+from pathlib import Path
+
+path_main = Path(__file__).parent.parent
+path_to_data = path_main / "data/"
 
 
 def get_update():
+    """This function gets the newest data from the telegram Channel and saves it to our database."""
+    print("\033[1;32m 💽 Database update started 💽 \n")
     api_id = 24420176
     api_hash = "9350869041f1e13cb10ecadcb8331367"
 
@@ -17,7 +22,6 @@ def get_update():
             for message in client.iter_messages(
                 chat, offset_date=yesterday, reverse=True
             ):
-                print(message)
                 data = {
                     "group": chat,
                     "sender": message.sender_id,
@@ -27,7 +31,7 @@ def get_update():
                 temp_df = pd.DataFrame(data, index=[1])
                 update_df = pd.concat([update_df, temp_df], axis=0)
 
-    database = pd.read_csv(str(path_to_data) + "/telegram_data.csv")
+    database = pd.read_csv(str(path_to_data) + "/database_telegram.csv")
     database["comp_key"] = (
         str(database["sender"]) + database["text"] + str(database["date"])
     )
@@ -36,12 +40,12 @@ def get_update():
     )
     for key in update_df["comp_key"]:
         if key not in list(database["comp_key"]):
-            print(f"Message Update:{key}")
             database = pd.concat(
                 [database, update_df[update_df["comp_key"] == key]], axis=0
             )
     database.drop(["Unnamed: 0", "comp_key"], inplace=True, axis=1, errors="ignore")
     database.to_csv(str(path_to_data) + "/database_telegram.csv")
+    print("\n 💽 Database update finished 💽")
     return database
 
 

@@ -1,11 +1,13 @@
-from prefect import flow
-from ticket_control.data_preprocessing import *
-from ticket_control.fuzz_flow import *
-from ticket_control.params import path_to_data
-import pandas as pd
 from prefect_github import GitHubCredentials
 from prefect.filesystems import GitHub
 from prefect_github.repository import GitHubRepository
+from prefect import flow
+
+from ticket_control.data_preprocessing import *
+from ticket_control.fuzz_flow import *
+from ticket_control.params import path_to_data
+
+import pandas as pd
 from pathlib import Path
 
 github_repository_block = GitHubRepository.load("github-repo2")
@@ -26,7 +28,6 @@ def pipeline():
     # Reducing the number of rows to be preprocessed significantly speeds up the process. Going from ~1:30 Minutes to below 2 secs.
     raw_data = raw_data.iloc[-1000:, :]
     df_for_fuzzy_matching = data_preprocessing(raw_data)
-    print(df_for_fuzzy_matching)
     # 2. Step in our preprocessing Doing the Fuzzy Matching with the output of Step 1 and the station mapping df
     df_station_mapping = create_station_to_line_df(
         df_station_mapping=df_station_mapping

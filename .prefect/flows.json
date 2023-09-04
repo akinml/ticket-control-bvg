@@ -1,3 +1,4 @@
 {
+  "get_update()": "ticket_control/telegramm_update.py:get_update",
   "pipeline": "pipeline.py:pipeline"
 }

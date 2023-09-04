@@ -2,6 +2,7 @@ from telethon.sync import TelegramClient
 import datetime
 import pandas as pd
 from pathlib import Path
+from prefect import flow
 
 path_main = Path(__file__).parent.parent
 path_to_data = path_main / "data/"
@@ -9,7 +10,7 @@ path_to_data = path_main / "data/"
 
 def get_update():
     """This function gets the newest data from the telegram Channel and saves it to our database."""
-    print("\033[1;32m 💽 Database update started 💽 \n")
+    print("\033[1;32m 💽 Database update started 💽 ")
     api_id = 24420176
     api_hash = "9350869041f1e13cb10ecadcb8331367"
 
@@ -44,9 +45,9 @@ def get_update():
                 [database, update_df[update_df["comp_key"] == key]], axis=0
             )
     database.drop(["Unnamed: 0", "comp_key"], inplace=True, axis=1, errors="ignore")
-    database.to_csv(str(path_to_data) + "/database_telegram.csv")
-    print("\n 💽 Database update finished 💽")
-    return database
+    database.to_csv(str(path_to_data) + "/database_telegram1.csv")
+    print("💽 Database update finished 💽")
+    return update_df
 
 
 if __name__ == "__main__":

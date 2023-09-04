@@ -86,7 +86,6 @@ def fuzz_flow(df_for_fuzzy_matching: pd.DataFrame, station_to_line: pd.DataFrame
     df_chat["text"] = data3["text"]
     df_chat.dropna(subset="station_key", inplace=True)
     full_df = df_chat.merge(df, left_on="station_key", right_on="keys")
-    full_df = full_df.set_index("date")
     full_df.drop(columns="Unnamed: 0", inplace=True)
     full_df.drop(columns="keys", inplace=True)
     full_df = full_df.sort_index(ascending=True)

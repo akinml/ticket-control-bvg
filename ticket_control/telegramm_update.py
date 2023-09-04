@@ -9,7 +9,7 @@ path_to_data = path_main / "data/"
 
 def get_update():
     """This function gets the newest data from the telegram Channel and saves it to our database."""
-    print("Database update started 💽")
+    print("\033[1;32m 💽 Database update started 💽 \n")
     api_id = 24420176
     api_hash = "9350869041f1e13cb10ecadcb8331367"
 
@@ -45,7 +45,7 @@ def get_update():
             )
     database.drop(["Unnamed: 0", "comp_key"], inplace=True, axis=1, errors="ignore")
     database.to_csv(str(path_to_data) + "/database_telegram.csv")
-    print("Database update finished 💽")
+    print("\n 💽 Database update finished 💽")
     return database
 
 

@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import time
 import requests
+from pipeline import pipeline
 from pathlib import Path
 from datetime import datetime, timedelta
 from fastapi import FastAPI
@@ -10,9 +11,7 @@ from fastapi.middleware.cors import CORSMiddleware
 path_to_main = Path(__file__).parent
 
 
-def update_station_colors(
-    reports: pd.DataFrame, stations: pd.DataFrame, from_date: str, to_date: str
-) -> pd.DataFrame:
+def update_station_colors(from_date: str, to_date: str) -> pd.DataFrame:
     """This functions returns the Dataframe for the Map of the Streamlit App.
     It takes the input preprocessed Database that is filtered on user input date
     range and returns the reports form the relevant time period.
@@ -20,6 +19,10 @@ def update_station_colors(
     The from and to dateformat ,e.g., from_date='2023-08-30 11:55:00'
     to_date='2023-08-30 12:01:00'."""
     # Read data from CSV files
+    reports = pd.read_csv(
+        str(path_to_main) + "/data/preprocessed_database_telegram.csv"
+    )
+    stations = pd.read_csv(str(path_to_main) + "/data/datanew_map2.csv")
     # Filter reports based on date
     reports = reports.copy()
     stations = stations.copy()
@@ -33,7 +36,7 @@ def update_station_colors(
     return stations
 
 
-# uvicorn api:app --host 0.0.0.0 --port 8000 --reload
+# uvicorn app:app --host 0.0.0.0 --port 8000 --reload
 # Api for reporting Data to Backend
 app = FastAPI()
 # Allowing all middleware is optional, but good practice for dev purposes
@@ -47,16 +50,18 @@ app.add_middleware(
 
 
 # If someone sends a report through our streamlit app, this API will save it to our preprocessed dataframe
+
+
 @app.get("/report")
 def save_report(report_station: str):
     print("Receiving a new Alarm!🚨")
     report_station = report_station
     report_datetime = pd.Timestamp.now()
     report_dict = {
-        "sender": "unknown",
+        "sender": str(report_datetime)[0:19],
         "group": "website",
         "text": report_station,
-        "date": report_datetime,
+        "date": str(report_datetime)[0:19],
     }
     return report_dict
 
@@ -69,6 +74,12 @@ def main():
         str(path_to_main) + "/data/preprocessed_database_telegram.csv"
     )
     stations = pd.read_csv(str(path_to_main) + "/data/datanew_map2.csv")
+
+    # Call Function to show Map with alerts:
+    df_filtered_map = update_station_colors(
+        from_date="2023-08-28 12:28:00",  # Insert Sliders Dates here!
+        to_date="2023-10-29 10:28:00",  # Insert Sliders Dates here!
+    )
 
     # MAP WITH TIME
     datetimenow = time.strftime("%H:%M:%S")
@@ -87,20 +98,20 @@ def main():
             report_df = pd.DataFrame([report_data])
             database_telegram = pd.read_csv("data/database_telegram.csv")
             database_telegram = pd.concat([database_telegram, report_df])
-            database_telegram.to_csv("data/database_telegram.csv")
+            database_telegram[["group", "sender", "text", "date"]].to_csv(
+                "data/database_telegram.csv"
+            )
+            pipeline()
+            df_filtered_map = update_station_colors(
+                from_date="2023-08-28 12:28:00",  # Insert Sliders Dates here!
+                to_date="2023-10-29 10:28:00",  # Insert Sliders Dates here!
+            )
         else:
             st.write("Failed to send the report. 🚨")
 
     else:
         st.write("Awaiting Report. 🚨")
 
-    # Call Function to show Map with alerts:
-    df_filtered_map = update_station_colors(
-        stations=stations,
-        reports=reports,
-        from_date="2023-08-28 12:28:00",
-        to_date="2023-08-29 10:28:00",
-    )
     st.map(data=df_filtered_map, zoom=10, color="color", size=50)
 
     start_color, end_color = st.select_slider(

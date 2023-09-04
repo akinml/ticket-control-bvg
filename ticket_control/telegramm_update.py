@@ -3,6 +3,9 @@ import datetime
 import pandas as pd
 from pathlib import Path
 from prefect import flow
+from prefect_gcp import GcpCredentials
+
+gcp_credentials_block = GcpCredentials.load("gcp")
 
 path_main = Path(__file__).parent.parent
 path_to_data = path_main / "data/"
@@ -16,7 +19,7 @@ def get_update():
     api_hash = "9350869041f1e13cb10ecadcb8331367"
 
     chats = ["freifahren_BE"]
-    yesterday = datetime.date.today() - datetime.timedelta(days=1)
+    yesterday = datetime.date.today() - datetime.timedelta(hours=1)
     # Create a single client instance
     with TelegramClient("test", api_id, api_hash) as client:
         update_df = pd.DataFrame()

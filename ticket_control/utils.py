@@ -93,4 +93,6 @@ bezirke = {'Charlottenburg-Wilmersdorf': ['Charlottenburg',
   'Rahnsdorf',
   'Grünau',
   'Müggelheim',
-  'Schmöckwitz']}
+  'Schmöckwitz'],
+    'Brandenburg': []
+ }

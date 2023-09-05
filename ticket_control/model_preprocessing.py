@@ -5,11 +5,9 @@ import datetime as dt
 import numpy as np
 
 from sklearn.preprocessing import OneHotEncoder
-from sklearn.ensemble import RandomForestRegressor
 
 import holidays
-from utils import bezirke
-
+from ticket_control.utils import bezirke
 
 def get_data():
     data = pd.read_csv("../data/preprocessed_database_telegram_git.csv")
@@ -151,3 +149,30 @@ def encode_target(some_y):
     if some_y == 0:
         return 0
     return 1
+
+
+def get_station_latlon(station):
+    data = pd.read_csv("../data/s_u_stations_fixed_with_keys_20230830.csv")
+    data = data.copy()
+    row = data[data["station name"] == station]
+    return row[["area","latitude","longitude"]].values
+
+def preprocess_input(station):
+    X_pred = pd.DataFrame({
+        'date': [dt.datetime.now()],
+        'station name': [station]
+    })
+    X_pred = X_pred.set_index('date')
+    X_pred[['area', 'latitude', 'longitude']] = get_station_latlon(station)
+    X_pred = get_time(X_pred)
+    X_pred = cyclic_features(X_pred)
+    X_pred = add_holiday(X_pred)
+    X_pred = covid(X_pred)
+    X_pred = get_bezirke(X_pred)
+    # OneHotEncoding Bezirke
+    encoder=OneHotEncoder(sparse = False, categories=[list(bezirke.keys())])
+    X_pred[encoder.get_feature_names_out()] = encoder.fit_transform(X_pred[["bezirk"]])
+    X_pred[["local_0", "local_1", "local_2"]] = 5 ### TODO: this is dummy, use actual values
+    # drpping columns
+    X_pred = X_pred.drop(columns = ['station name', 'area', 'bezirk', 'month', 'weekday', 'hour'])
+    return X_pred

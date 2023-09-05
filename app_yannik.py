@@ -8,6 +8,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.express as px
+from ticket_control.params import path_to_data
+import requests
+from streamlit_lottie import st_lottie
+import plotly.figure_factory as ff
+import pydeck as pdk
+
 
 
 # Optional change Mapbox map to plotly Map. https://plotly.com/python/scattermapbox/
@@ -28,12 +34,11 @@ def generate_random_coordinates_list(num_samples=100):
         lon_list.append(random_lon)
     return lat_list, lon_list
 
-
-public_stations = pd.read_csv("/home/yannik/ticket-control-bvg/data/datanew_map2.csv")
+public_stations = pd.read_csv(str(path_to_data) + "/datanew_map2.csv")
 data1 = pd.read_csv(
-    "/home/yannik/ticket-control-bvg/data/s_u_stations_fixed_with_keys_20230830.csv"
+    str(path_to_data) + "/s_u_stations_fixed_with_keys_20230830.csv"
 )
-
+st.set_page_config(layout="wide")
 
 # Page 1 landing page
 def page_1_landing_page():
@@ -41,93 +46,67 @@ def page_1_landing_page():
     data = {"Location": ["Berlin"] * 100, "LAT": lat_list, "LON": lon_list}
     berlin_df = pd.DataFrame(data)
     datetimenow = time.strftime("%H:%M:%S")
-    st.title(
-        f"Welcome to BVG Controllers BER 👋",
-    )
+    st.title("Welcome to BVG Controls👋")
     st.map(data=public_stations, zoom=10, color="color", size=50)
 
     # Select Stations
-    selected_options = st.multiselect("Select Station(s):", data1["station name"])
+    selected_options = st.multiselect("Select station(s):", data1["station name"])
     st.write("You selected:", selected_options)
 
     # Add a refresh button
     st.table(berlin_df)
     output = st.empty()
 
-    while True:
-        current_time = time.strftime("%Y-%m-%d %H:%M:%S")
-        output.text(f"Last Update: {current_time}")
-        time.sleep(10)
-
-
 # Load your existing database into a DataFrame
 data = pd.read_csv(
-    "/home/yannik/ticket-control-bvg/data/preprocessed_database_telegram.csv"
+    str(path_to_data) + "/preprocessed_database_telegram.csv"
 )  # Replace with the path to your database file
 # Notice the .copy() to copy the values
 df = data.copy()
 df["date"] = pd.to_datetime(df["date"])
 
-
 # Page 2: Control Statistics
 def page_2_control_statistics():
     # Streamlit app
-    st.title("Control Statistics")
+    st.title("View statistics:mag_right:")
 
     # description
     min_date = df["date"].iloc[0]
 
     max_date = df["date"].iloc[-1]
 
-    user_date_ranges = st.date_input(
-        "Enter a range of two dates or leave default",
+    def load_animation(url):
+        r = requests.get(url)
+        if r.status_code != 200:
+            return None
+        return r.json()
+
+    train_animation = load_animation("https://lottie.host/aec64339-af7e-4713-95ad-2c11b57a4bc5/UdfXkvXrvL.json")
+
+
+    left_column, right_column = st.columns(2)
+
+    with left_column:
+        user_date_ranges = st.date_input(
+        "Enter a range of two dates or leave blank",
         (min_date, max_date),
         min_value=min_date,
         max_value=max_date,
     )
 
-    # year_start, year_end = int(year_start), int(year_end)
-    # month_start, month_end = int(month_start), int(month_end)
-    # weekday_start, weekday_end = int(weekday_start), int(weekday_end)
+        # User input for number of top items to display
+        top_n_areas = st.selectbox("Select the number of areas to display:", [10, 25, 50])
+        top_n_stations = st.selectbox(
+            "Select the number of station names to display:", [10, 25, 50]
+        )
+        top_n_lines = st.selectbox("Select the number of lines to display:", [10,15,25])
 
-    # # Filter the DataFrame based on user selections
-    # df['year'] = pd.DatetimeIndex(df['date']).year
-    # df['month'] = pd.DatetimeIndex(df['date']).month
-    # df['day'] = pd.DatetimeIndex(df['date']).day
-
-    # filtered_data = df[
-    #     (df['date']>=datetime.date(year_start,month_start, weekday_start)) &
-    #     (df['date']<=datetime.date(year_end,month_end, weekday_end))
-    #     ]
-
-    # # Naming the weekdays
-    # weekdays = {0: "Monday", 1: "Tuesday", 2: "Wednesday", 3: "Thursday", 4: "Friday", 5: "Saturday", 6: "Sunday"}
-    # # Applying the naming
-    # df["weekday"] = df["day"].map(weekdays)
-
-    # day_labels = df['weekday'].unique()
-    # day_sizes = df['day'].value_counts()
-
-    # # Create a bar chart from the filtered data
-    # range_fig, ax = plt.subplots()
-    # ax.bar(filtered_data['date'], filtered_data['station name'])
-    # plt.xlabel("Date")
-    # plt.ylabel("Counter")
-    # plt.title("Bar Chart Based on Selected Ranges")
-
-    # # Display the bar chart
-    # st.pyplot(range_fig)
-
-    # User input for number of top items to display
-    top_n_areas = st.selectbox("Select the number of areas to display:", [10, 25, 50])
-    top_n_stations = st.selectbox(
-        "Select the number of station names to display:", [10, 25, 50]
-    )
-    top_n_lines = st.selectbox("Select the number of lines to display:", [5, 10, 20])
+    with right_column:
+        st_lottie(train_animation, height=300, key='train_animation')
 
     # Arrange tables side by side
     st.write("Control Statistics:")
-    col1, col2, col3 = st.columns(3)
+    col1, col2, col3 = st.columns([0.33, 0.33, 0.33], gap='small')
     with col1:
         st.write(f"{top_n_areas} Most controlled areas:")
         area_counts = df[
@@ -149,11 +128,15 @@ def page_2_control_statistics():
         lines_counts = df[
             (df["date"] >= pd.to_datetime(user_date_ranges[0]))
             & (df["date"] <= pd.to_datetime(user_date_ranges[1]))
-        ]["lines"].value_counts()
+        ]["lines"].str.split(', ').explode().value_counts()
         st.write(lines_counts.head(top_n_lines))
 
+    st.write("---")
+
     # Areas
-    st.title("Areas, stations & lines visualization")
+    st.title("Areas, stations & lines visualization:tram:" )
+
+    st.write('Areas visualization')
 
     # Calculate area frequencies using data ranges selected by user
     area_counts = df[
@@ -165,12 +148,13 @@ def page_2_control_statistics():
     fig1 = px.treemap(
         names=area_counts.index,
         parents=[""] * len(area_counts),
-        values=area_counts.values,
-        title="Area Visualization",
+        values=area_counts.values
     )
 
     # Display the figure
     st.plotly_chart(fig1)
+
+    st.write('Stations visualization')
 
     # Calculate station frequencies
     station_counts = df[
@@ -181,112 +165,143 @@ def page_2_control_statistics():
     fig2 = px.treemap(
         names=station_counts.index,
         parents=[""] * len(station_counts),
-        values=station_counts.values,
-        title="Station Visualization",
+        values=station_counts.values
     )
 
     # Display the figure
     st.plotly_chart(fig2)
 
+    st.write('Lines visualization')
     # Calculate lines frequencies
     lines_counts = df[
         (df["date"] >= pd.to_datetime(user_date_ranges[0]))
         & (df["date"] <= pd.to_datetime(user_date_ranges[1]))
-    ]["lines"].value_counts()
+    ]["lines"].str.split(', ').explode().value_counts()
     # Create a plotly mapp
     fig3 = px.treemap(
         names=lines_counts.index,
         parents=[""] * len(lines_counts),
-        values=lines_counts.values,
-        title="Lines Visualization",
+        values=lines_counts.values
     )
 
     # Display the figure
     st.plotly_chart(fig3)
 
-    # Pie charts for year, month, day:
+    st.write("---")
 
-    st.title("Time visualization")
+    st.title("Time statistics:hourglass:")
 
-    # df['year'] = pd.DatetimeIndex(df['date']).year
-    # df['month'] = pd.DatetimeIndex(df['date']).month
-    # df['day'] = pd.DatetimeIndex(df['date']).day
+    # reating time columns for the differenct categories year, month, weekday, hour
+    df['year'] = pd.DatetimeIndex(df['date']).year
+    df['month'] = pd.DatetimeIndex(df['date']).month
+    df['day'] = pd.DatetimeIndex(df['date']).weekday
+    df['hour'] = df['date'].dt.hour
 
-    # # Naming the weekdays
-    # weekdays = {0: "Monday", 1: "Tuesday", 2: "Wednesday", 3: "Thursday", 4: "Friday", 5: "Saturday", 6: "Sunday"}
-    # # Applying the naming
-    # df["weekday"] = df["day"].map(weekdays)
+    # Naming the weekdays
+    weekdays = {0: "Mon", 1: "Tue", 2: "Wed", 3: "Thu", 4: "Fri", 5: "Sat", 6: "Sun"}
+    # Applying the naming
+    df["weekday"] = df['day'].map(weekdays)
+    # Doing the same for months
+    months = {1: 'Jan', 2: 'Feb', 3: 'Mar', 4: 'Apr', 5: 'May', 6: 'Jun', 7: 'Jul', 8: 'Aug', 9: 'Sep', 10: 'Okt', 11: 'Nov', 12: 'Dec'}
+    df["month_name"] = df['month'].map(months)
 
-    # day_labels = df['weekday'].unique()
-    # day_sizes = df['day'].value_counts()
+    weekday_order = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+    month_order = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"]
 
-    # fig4, ax4 = plt.subplots()
-    # plt.title('Weekdays')
-    # ax4.pie(
-    #     x=day_sizes,
-    #     labels=day_labels,
-    #     autopct='%1.1f%%',
-    #     startangle=90
-    #     )
-    # ax4.axis('equal')
 
-    # st.pyplot(fig4)
+    st.write('Distribution of annual controls')
+    fig4 = px.histogram(df, x="year", color_discrete_sequence=['#4048BF'],
+                        opacity=1)
 
+    st.plotly_chart(fig4, use_container_width=False)
+
+    st.write('Distribution of monthly controls')
+    fig5 = px.histogram(df, x="month_name", color_discrete_sequence=['#4048BF'],
+                        opacity=1, category_orders={"month_name": month_order})
+
+    st.plotly_chart(fig5, use_container_width=False)
+
+
+    st.write('Distribution of daily controls')
+    fig6 = px.histogram(df, x="weekday", color_discrete_sequence=['#4048BF'],
+                        opacity=1, category_orders={"weekday": weekday_order})
+
+    st.plotly_chart(fig6, use_container_width=False)
+
+
+    st.write('Distribution of hourly controls')
+    fig7 = px.histogram(df, x="hour", color_discrete_sequence=['#4048BF'],
+                        opacity=1)
+
+    st.plotly_chart(fig7, use_container_width=False)
+
+    # Load your existing database into a DataFrame
+    data = pd.read_csv("data/preprocessed_database_telegram.csv")  # Replace with the path to your database file
+    # Notice the .copy() to copy the values
+    # Streamlit app
+    st.title("Time Series")
+    df2 = data.copy()
+    df3= df2.copy()
+    df2 = df2.set_index("date")
+    df3["date"] = pd.to_datetime(df3["date"])
+    df2.index = pd.to_datetime(df2.index)
+
+    day = df2.resample('d')['station_key'].count()
+
+    st.write("Timeseries of daily controls")
+    st.line_chart(day, color="#4048BF")
+
+    week = df2.resample('w')['station_key'].count()
+
+    st.write("Timeseries of weekly controls")
+    st.line_chart(week, color="#4048BF", use_container_width=True)
+
+    # Streamlit app
+    st.title("Explore Berlin")
+
+    st.write("Controls across Berlin")
+    chart_data = df3.loc[user_date_ranges[0]:user_date_ranges[1] , "station name"].value_counts()
+    st.pydeck_chart(pdk.Deck(
+        map_style=None,
+        initial_view_state=pdk.ViewState(
+            latitude=52.507222,
+            longitude=13.332500,
+            zoom=11,
+            pitch=50,
+            ),
+        layers=[
+            pdk.Layer(
+                'HexagonLayer',
+                data=chart_data,
+                get_position='[longitude, latitude]',
+                radius=200,
+                elevation_scale=4,
+                elevation_range=[0, 1000],
+                pickable=True,
+                extruded=True,
+                ),
+            pdk.Layer(
+                'ScatterplotLayer',
+                data=chart_data,
+                get_position='[longitude, latitude]',
+                get_color='[200, 30, 0, 160]',
+                get_radius=200,
+                ),
+            ],
+        ))
 
 # Main app
 def main():
     st.sidebar.title("Navigation")
     page = st.sidebar.radio(
-        "Go to:", ("Check Controls :rainbow:", "Control Statistics :dart:")
+        "Go to:", (":one: Check & Predict Controls", ":two: View Statistics")
     )
 
-    if page == "Check Controls :rainbow:":
+    if page == ":one: Check & Predict Controls":
         page_1_landing_page()
-    elif page == "Control Statistics :dart:":
+    elif page == ":two: View Statistics":
         page_2_control_statistics()
 
 
 if __name__ == "__main__":
     main()
-
-
-# # Title and description
-# st.title("Date Range Selector")
-# st.write("Select a range of years, months, and weekdays using sliders:")
-
-# # Year range selection with full range by default
-# year_start, year_end = st.slider("Select the range of years:", 2018, 2023, (2018, 2023))
-
-# # Month range selection with full range by default
-# month_start, month_end = st.slider("Select the range of months:", 1, 12, (1, 12))
-
-# # Weekday range selection with full range by default
-# weekday_start, weekday_end = st.slider("Select the range of weekdays:", 0, 6, (0, 6))
-
-# # Generate sample data for demonstration (replace with your own data)
-# data = pd.DataFrame({
-#     'Date': pd.date_range(start=f'{year_start}-{month_start}-01', end=f'{year_end}-{month_end}-{calendar.monthrange(year_end, month_end)[1]}'),
-#     'Value': [i for i in range((year_end - year_start + 1) * (month_end - month_start + 1) * (weekday_end - weekday_start + 1))]
-# })
-
-# # Filter the DataFrame based on user selections
-# filtered_data = data[
-#     (data['Date'].dt.year >= year_start) & (data['Date'].dt.year <= year_end) &
-#     (data['Date'].dt.month >= month_start) & (data['Date'].dt.month <= month_end) &
-#     (data['Date'].dt.weekday >= weekday_start) & (data['Date'].dt.weekday <= weekday_end)
-# ]
-
-# # Create a bar chart from the filtered data
-# fig, ax = plt.subplots()
-# ax.bar(filtered_data['Date'], filtered_data['Value'])
-# plt.xlabel("Date")
-# plt.ylabel("Value")
-# plt.title("Bar Chart Based on Selected Ranges")
-
-# # Display the bar chart
-# st.pyplot(fig)
-
-# # Display selected date ranges
-# st.write(f"Selected Year Range: {year_start} - {year_end}")
-# st.write(f"Selected Month Range: {calendar.month_name[month_start]} - {calendar.month_name[month_end]}")
-# st.write(f"Selected Weekday Range: {calendar.day_name[weekday_start]} - {calendar.day_name[weekday_end]}")

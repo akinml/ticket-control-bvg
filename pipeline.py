@@ -1,9 +1,19 @@
-import pandas as pd
+from prefect import flow
 from ticket_control.data_preprocessing import *
 from ticket_control.fuzz_flow import *
 from ticket_control.params import path_to_data
+import pandas as pd
+from prefect_github import GitHubCredentials
+from prefect.filesystems import GitHub
+from prefect_github.repository import GitHubRepository
+from pathlib import Path
 
-raw_data = pd.read_csv(str(path_to_data) + "/database_telegram.csv")
+github_repository_block = GitHubRepository.load("github-repo2")
+github_block = GitHub.load("github-repo")
+github_credentials_block = GitHubCredentials.load("github")
+
+path_main = Path(__file__).parent
+path_to_data = path_main / "data/"
 
 
 def pipeline(raw_data):

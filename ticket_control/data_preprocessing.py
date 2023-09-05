@@ -16,12 +16,7 @@ from ticket_control.params import path_to_data
 # Use flexible path so that it works on everyone's environment
 
 # Chris Notes: Functions are applied on data. Not good practice to load the data inside of functions.
-<<<<<<< HEAD
 data = pd.read_csv(str(path_to_data) + "/database_telegram.csv", low_memory=False)
-=======
-print(str(path_to_data) + "/database_telegram.csv")
-data = pd.read_csv(str(path_to_data) + "/database_telegram.csv")
->>>>>>> cee7723 (Tried to create a legend for streamlit but it's not very pretty)
 
 
 

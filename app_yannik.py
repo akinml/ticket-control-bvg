@@ -12,6 +12,7 @@ from ticket_control.params import path_to_data
 import requests
 from streamlit_lottie import st_lottie
 import plotly.figure_factory as ff
+import pydeck as pdk
 
 
 
@@ -37,7 +38,7 @@ public_stations = pd.read_csv(str(path_to_data) + "/datanew_map2.csv")
 data1 = pd.read_csv(
     str(path_to_data) + "/s_u_stations_fixed_with_keys_20230830.csv"
 )
-
+st.set_page_config(layout="wide")
 
 # Page 1 landing page
 def page_1_landing_page():
@@ -45,7 +46,7 @@ def page_1_landing_page():
     data = {"Location": ["Berlin"] * 100, "LAT": lat_list, "LON": lon_list}
     berlin_df = pd.DataFrame(data)
     datetimenow = time.strftime("%H:%M:%S")
-    st.title("Welcome to BVG Controllers BER 👋")
+    st.title("Welcome to BVG Controls👋")
     st.map(data=public_stations, zoom=10, color="color", size=50)
 
     # Select Stations
@@ -56,14 +57,6 @@ def page_1_landing_page():
     st.table(berlin_df)
     output = st.empty()
 
-
-
-    while True:
-        current_time = time.strftime("%Y-%m-%d %H:%M:%S")
-        output.text(f"Last Update: {current_time}")
-        time.sleep(10)
-
-
 # Load your existing database into a DataFrame
 data = pd.read_csv(
     str(path_to_data) + "/preprocessed_database_telegram.csv"
@@ -73,30 +66,9 @@ df = data.copy()
 df["date"] = pd.to_datetime(df["date"])
 
 # Page 2: Control Statistics
-def page_2_control_prediction():
+def page_2_control_statistics():
     # Streamlit app
-    st.title("Predict controls")
-
-    # Select Stations
-    selected_options = st.multiselect("Select station(s):", data1["station name"])
-    st.write("You selected:", selected_options)
-
-
-    def load_animation(url):
-        r = requests.get(url)
-        if r.status_code != 200:
-            return None
-        return r.json()
-
-    ticket_animation = load_animation("https://lottie.host/22c81fab-c863-457a-ae03-67719eef76e0/T31UETDsXa.json")
-
-    st_lottie(ticket_animation, height=300, key='ticket_animation')
-
-
-# Page 3: Control Statistics
-def page_3_control_statistics():
-    # Streamlit app
-    st.title("View statistics")
+    st.title("View statistics:mag_right:")
 
     # description
     min_date = df["date"].iloc[0]
@@ -127,14 +99,14 @@ def page_3_control_statistics():
         top_n_stations = st.selectbox(
             "Select the number of station names to display:", [10, 25, 50]
         )
-        top_n_lines = st.selectbox("Select the number of lines to display:", [5, 10, 20])
+        top_n_lines = st.selectbox("Select the number of lines to display:", [10,15,25])
 
     with right_column:
         st_lottie(train_animation, height=300, key='train_animation')
 
     # Arrange tables side by side
     st.write("Control Statistics:")
-    col1, col2, col3 = st.columns(3)
+    col1, col2, col3 = st.columns([0.33, 0.33, 0.33], gap='small')
     with col1:
         st.write(f"{top_n_areas} Most controlled areas:")
         area_counts = df[
@@ -156,13 +128,13 @@ def page_3_control_statistics():
         lines_counts = df[
             (df["date"] >= pd.to_datetime(user_date_ranges[0]))
             & (df["date"] <= pd.to_datetime(user_date_ranges[1]))
-        ]["lines"].value_counts()
+        ]["lines"].str.split(', ').explode().value_counts()
         st.write(lines_counts.head(top_n_lines))
 
     st.write("---")
 
     # Areas
-    st.title("Areas, stations & lines visualization")
+    st.title("Areas, stations & lines visualization:tram:" )
 
     st.write('Areas visualization')
 
@@ -204,7 +176,7 @@ def page_3_control_statistics():
     lines_counts = df[
         (df["date"] >= pd.to_datetime(user_date_ranges[0]))
         & (df["date"] <= pd.to_datetime(user_date_ranges[1]))
-    ]["lines"].value_counts()
+    ]["lines"].str.split(', ').explode().value_counts()
     # Create a plotly mapp
     fig3 = px.treemap(
         names=lines_counts.index,
@@ -217,9 +189,9 @@ def page_3_control_statistics():
 
     st.write("---")
 
-    st.title("Time statistics")
+    st.title("Time statistics:hourglass:")
 
-    # creating time columns for the differenct categories year, month, weekday, hour
+    # reating time columns for the differenct categories year, month, weekday, hour
     df['year'] = pd.DatetimeIndex(df['date']).year
     df['month'] = pd.DatetimeIndex(df['date']).month
     df['day'] = pd.DatetimeIndex(df['date']).weekday
@@ -233,7 +205,9 @@ def page_3_control_statistics():
     months = {1: 'Jan', 2: 'Feb', 3: 'Mar', 4: 'Apr', 5: 'May', 6: 'Jun', 7: 'Jul', 8: 'Aug', 9: 'Sep', 10: 'Okt', 11: 'Nov', 12: 'Dec'}
     df["month_name"] = df['month'].map(months)
 
-    # Option 1: Seaborn
+    weekday_order = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+    month_order = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"]
+
 
     st.write('Distribution of annual controls')
     fig4 = px.histogram(df, x="year", color_discrete_sequence=['#4048BF'],
@@ -242,45 +216,91 @@ def page_3_control_statistics():
     st.plotly_chart(fig4, use_container_width=False)
 
     st.write('Distribution of monthly controls')
-    fig4 = px.histogram(df, x="month_name", color_discrete_sequence=['#4048BF'],
-                        opacity=1)
+    fig5 = px.histogram(df, x="month_name", color_discrete_sequence=['#4048BF'],
+                        opacity=1, category_orders={"month_name": month_order})
 
-    st.plotly_chart(fig4, use_container_width=False)
+    st.plotly_chart(fig5, use_container_width=False)
 
 
     st.write('Distribution of daily controls')
-    fig4 = px.histogram(df, x="weekday", color_discrete_sequence=['#4048BF'],
-                        opacity=1)
+    fig6 = px.histogram(df, x="weekday", color_discrete_sequence=['#4048BF'],
+                        opacity=1, category_orders={"weekday": weekday_order})
 
-    st.plotly_chart(fig4, use_container_width=False)
+    st.plotly_chart(fig6, use_container_width=False)
 
 
     st.write('Distribution of hourly controls')
-    fig4 = px.histogram(df, x="hour", color_discrete_sequence=['#4048BF'],
+    fig7 = px.histogram(df, x="hour", color_discrete_sequence=['#4048BF'],
                         opacity=1)
 
-    st.plotly_chart(fig4, use_container_width=False)
+    st.plotly_chart(fig7, use_container_width=False)
 
+    # Load your existing database into a DataFrame
+    data = pd.read_csv("data/preprocessed_database_telegram.csv")  # Replace with the path to your database file
+    # Notice the .copy() to copy the values
+    # Streamlit app
+    st.title("Time Series")
+    df2 = data.copy()
+    df3= df2.copy()
+    df2 = df2.set_index("date")
+    df3["date"] = pd.to_datetime(df3["date"])
+    df2.index = pd.to_datetime(df2.index)
 
+    day = df2.resample('d')['station_key'].count()
 
+    st.write("Timeseries of daily controls")
+    st.line_chart(day, color="#4048BF")
 
-    # Option 2: Plotly
-    # fig = px.histogram(df, x="weekday")
-    # fig.show()
+    week = df2.resample('w')['station_key'].count()
+
+    st.write("Timeseries of weekly controls")
+    st.line_chart(week, color="#4048BF", use_container_width=True)
+
+    # Streamlit app
+    st.title("Explore Berlin")
+
+    st.write("Controls across Berlin")
+    chart_data = df3.loc[user_date_ranges[0]:user_date_ranges[1] , "station name"].value_counts()
+    st.pydeck_chart(pdk.Deck(
+        map_style=None,
+        initial_view_state=pdk.ViewState(
+            latitude=52.507222,
+            longitude=13.332500,
+            zoom=11,
+            pitch=50,
+            ),
+        layers=[
+            pdk.Layer(
+                'HexagonLayer',
+                data=chart_data,
+                get_position='[longitude, latitude]',
+                radius=200,
+                elevation_scale=4,
+                elevation_range=[0, 1000],
+                pickable=True,
+                extruded=True,
+                ),
+            pdk.Layer(
+                'ScatterplotLayer',
+                data=chart_data,
+                get_position='[longitude, latitude]',
+                get_color='[200, 30, 0, 160]',
+                get_radius=200,
+                ),
+            ],
+        ))
 
 # Main app
 def main():
     st.sidebar.title("Navigation")
     page = st.sidebar.radio(
-        "Go to:", ("Check Controls :rainbow:", "Predict Controls :1234:", "View Statistics :dart:")
+        "Go to:", (":one: Check & Predict Controls", ":two: View Statistics")
     )
 
-    if page == "Check Controls :rainbow:":
+    if page == ":one: Check & Predict Controls":
         page_1_landing_page()
-    elif page == "Predict Controls :1234:":
-        page_2_control_prediction()
-    elif page == "View Statistics :dart:":
-        page_3_control_statistics()
+    elif page == ":two: View Statistics":
+        page_2_control_statistics()
 
 
 if __name__ == "__main__":

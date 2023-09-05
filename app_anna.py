@@ -16,7 +16,7 @@ import pydeck as pdk
 
 def main():
     # Load your existing database into a DataFrame
-    data = pd.read_csv("data/preprocessed_database_telegram.csv")  # Replace with the path to your database file
+    data = pd.read_csv("data/preprocessed_database_telegram_git.csv")  # Replace with the path to your database file
     # Notice the .copy() to copy the values
     # Streamlit app
     st.title("Data Analysis")
@@ -29,9 +29,6 @@ def main():
 
     week = df.resample('w')['station_key'].count()
     st.line_chart(week)
-
-    # Streamlit app
-    st.title("Data Analysis")
 
     chart_data = df
     st.pydeck_chart(pdk.Deck(

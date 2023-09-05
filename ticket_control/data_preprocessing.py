@@ -7,6 +7,7 @@ from datetime import timedelta
 from nltk.corpus import stopwords
 from nltk import word_tokenize
 import nltk
+import datetime as dt
 
 nltk.download("punkt")
 nltk.download("stopwords")
@@ -17,7 +18,6 @@ from ticket_control.params import path_to_data
 
 # Chris Notes: Functions are applied on data. Not good practice to load the data inside of functions.
 data = pd.read_csv(str(path_to_data) + "/database_telegram.csv", low_memory=False)
-
 
 
 ##Chris Notes: Define the input of functions and declare their datatype.
@@ -33,6 +33,10 @@ def data_preprocessing(data: pd.DataFrame):
     data["date"] = data["date"].str.strip("+00:00").str[0:16]
     data["date"] = pd.to_datetime(data["date"], errors="coerce")
     print(data.iloc[-1:, :])
+
+    # Only consider most recent values, cut time in the beginning of the group
+    start_date = dt.date(2019, 11, 1)
+    data = data.loc[start_date:]
 
     # first round of cleaning na/empty strings/...
     data = data[data["text"].notna()]

@@ -1,4 +1,4 @@
-import pandas as pd
+from prefect import flow
 from ticket_control.data_preprocessing import *
 from ticket_control.fuzz_flow import *
 from ticket_control.params import path_to_data
@@ -6,8 +6,7 @@ import pandas as pd
 from pathlib import Path
 
 path_main = Path(__file__).parent
-
-raw_data = pd.read_csv(str(path_to_data) + "/database_telegram.csv")
+raw_data = pd.read_csv(str(path_to_data) + "database_telegram.csv")
 
 
 def pipeline(raw_data):

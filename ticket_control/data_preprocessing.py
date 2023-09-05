@@ -19,7 +19,6 @@ from ticket_control.params import path_to_data
 # Chris Notes: Functions are applied on data. Not good practice to load the data inside of functions.
 data = pd.read_csv(str(path_to_data) + "/database_telegram.csv", low_memory=False)
 
-
 ##Chris Notes: Define the input of functions and declare their datatype.
 def data_preprocessing(data: pd.DataFrame):
     # Provide a Doc String why we have this function and what it does in simple terms.

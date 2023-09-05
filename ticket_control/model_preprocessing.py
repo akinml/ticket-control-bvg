@@ -8,6 +8,8 @@ from sklearn.preprocessing import OneHotEncoder
 
 import holidays
 from ticket_control.utils import bezirke
+from sklearn.ensemble import RandomForestRegressor
+
 
 def get_data():
     data = pd.read_csv("../data/preprocessed_database_telegram_git.csv")
@@ -149,6 +151,7 @@ def encode_target(some_y):
     if some_y == 0:
         return 0
     return 1
+<<<<<<< HEAD
 
 
 def get_station_latlon(station):
@@ -176,3 +179,5 @@ def preprocess_input(station):
     # drpping columns
     X_pred = X_pred.drop(columns = ['station name', 'area', 'bezirk', 'month', 'weekday', 'hour'])
     return X_pred
+=======
+>>>>>>> 9a3a759 (added py file and notebook for random forest model, saved model as pickle, added requirements etc.)

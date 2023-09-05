@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "bvg-controller",
+  "private_key_id": "a5a989d34b1d30b25702db51a3b5af96a90e92bf",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCyykQIPwz3UtEL\n68bflFNgndtrk6zLD5OTJdOGk9Jvlmp/9i6IctELsSULyqugjnyCNZm5R1JqTqAV\n+K8aEnn8DQTy9iNIUhcrr0yNOSFc28MGN/LCEGwIA2AiMjSrruRfKCNlx9yGWdpo\naX6v9sTLqetYsKnVGrgSBRpkoB27H91JrRkjCu34e3VyuM7sPsrQDEMgVA2zD0wJ\nfGrTZCT1a4Rc5aeVwUcokGsyxFPCGKZAIVdosN+XX4/awFPKdtBRtH4MNJpPVlCe\nmUluCQZkJKbFWVE1BXhiuyskmcWs6N37ECeotjed0DLStmCnoPDX3Ff3lGfnm9Jx\nkpi0qU/ZAgMBAAECggEAApcyebfkKbSYxhEOsezD/9lymPlIiWazbxrJmQQ3potG\nPscyIqMCYIoo8/tJh67f+DOyvFxfl0iitDCTOkjDQLqnV8KR0t0OFsiRMjpv+ENs\n7NWkXiB/WDxhLJvlSrQ4NegZXzSQcS1BWTBLBl2WgL4VDzGmyozeZSXIHYKXUQbW\ndgkbgqc/9BHpiX1Qwvi38rYe/yzP7f460K2tUtZYdrzoj86da3gnrSI0wFGG6Abp\n5TERUvk3Qu2++7s9osWatX/JobseBeCGLsHN5nE/XEXuJhR4E6g4KC+0/TgsMCmL\n7FCKA3jaQ2RXVSZEzw3WtbrQRulqSwVWbExExeJd6wKBgQDi37oLUWV+4B/Lhj2f\n4nGA+HlY0289uSGMTg8aMYQooHunKAlgDWarf69viO7jPcwRd/QQNn//3cHLwTd3\n1F7cWf6c3KPdqjtirLE0FVUuN5tS+Q5EgjX80MKnhGk1veWaC/LAvtg/Scn0A/B+\nvCgoEa69RhsqaDYrKpxer6kggwKBgQDJvkA3rxWVBTGjw8imwtTu767Z1fgHjFCW\nld34eXd0pgqTs6McguHXDhwCESEWS+KBfkahNgd5cFjpN/PBUGJohRQItG7hbgHq\nvS0soQQdIxFLKyetRtJ34Z/kvaK2CNCH1O4yPJ7al9Obm2ek6CMa7xLeY1E6Bnfp\nEGjECQlncwKBgELEYsUn7D29ib3kwMgH5S12cofQmaFJlXTsGAe2YNVv/VQBNVke\nOIPqLOAfJWac7iyJ57rJvzu2sGzdbQyH5G7m0UaqrFL04Us11WSljo7ucHinsSo6\nQ9cmPNL95dSaETMXpxZQU+W0OonkiudRSmQYaBttwVrmlmJ3xNMc0SIvAoGAHolt\nrwARhD0FBoTcGmHjWUducAqzQHE8wY5tyu6X5lA7yZ+nUOl+xc6c7rMpDvbtkixL\nBJvpBbi7vJF7lAdW3ftGzQqCvhyorZ909wxoUwC73WTq3I+bzAma6kTKHEO5TNYu\nN+x1HyFcJnGffpakua72bDMcWGwiOmUBdqrngYECgYEA3uxJfSgs4yddif6TWTOU\nNvkiMRbbIDlcODxc9OT3pLvNXV2W+ft7ksQz884+rIubKcwW4/pVGvmOYaJm2iuc\ngWVYJFElAXP5aboe3tldbvz3jBHWwy0HNMCp9eZwdMxAbbLqMZNTskD8QUeb2cx2\ncAze8thQ0Q8sNr1bQ5MwKhc=\n-----END PRIVATE KEY-----\n",
+  "client_email": "bvg-controller-test@bvg-controller.iam.gserviceaccount.com",
+  "client_id": "107302761053165069462",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/bvg-controller-test%40bvg-controller.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

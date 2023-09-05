@@ -7,6 +7,7 @@ from datetime import timedelta
 from nltk.corpus import stopwords
 from nltk import word_tokenize
 import nltk
+import datetime as dt
 
 nltk.download("punkt")
 nltk.download("stopwords")
@@ -23,7 +24,6 @@ data = pd.read_csv(str(path_to_data) + "/database_telegram.csv")
 >>>>>>> cee7723 (Tried to create a legend for streamlit but it's not very pretty)
 
 
-
 ##Chris Notes: Define the input of functions and declare their datatype.
 def data_preprocessing(data: pd.DataFrame):
     # Provide a Doc String why we have this function and what it does in simple terms.
@@ -37,6 +37,10 @@ def data_preprocessing(data: pd.DataFrame):
     data["date"] = data["date"].astype(str).str.strip("+00:00").str[0:16]
     data["date"] = pd.to_datetime(data["date"], errors="coerce")
     print(data.iloc[-1:, :])
+
+    # Only consider most recent values, cut time in the beginning of the group
+    start_date = dt.date(2019, 11, 1)
+    data = data.loc[start_date:]
 
     # first round of cleaning na/empty strings/...
     data = data[data["text"].notna()]

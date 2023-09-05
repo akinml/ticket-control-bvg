@@ -199,4 +199,3 @@ websockets==11.0.3
 widgetsnbextension==4.0.8
 wrapt==1.15.0
 yarl==1.9.2
-zipp==3.16.2

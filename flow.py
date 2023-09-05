@@ -5,6 +5,9 @@ from ticket_control.big_query_upload_raw import *
 from ticket_control.big_query_download_processed import *
 from ticket_control.big_query_upload_processed import *
 from ticket_control.telegramm_update_prod import *
+from prefect_gcp import GcpCredentials
+
+gcp_credentials_block = GcpCredentials.load("prefect")
 
 
 @flow(name="pipeline")

@@ -16,13 +16,9 @@ from ticket_control.params import path_to_data
 # Use flexible path so that it works on everyone's environment
 
 # Chris Notes: Functions are applied on data. Not good practice to load the data inside of functions.
-<<<<<<< HEAD
 data = pd.read_csv(str(path_to_data) + "/database_telegram.csv", low_memory=False)
-=======
 print(str(path_to_data) + "/database_telegram.csv")
 data = pd.read_csv(str(path_to_data) + "/database_telegram.csv")
->>>>>>> cee7723 (Tried to create a legend for streamlit but it's not very pretty)
-
 
 
 ##Chris Notes: Define the input of functions and declare their datatype.
@@ -35,7 +31,7 @@ def data_preprocessing(data: pd.DataFrame):
 
     # replace sender type with str type
     data["sender"] = data["sender"].astype(str)
-    data["date"] = data["date"].str.strip("+00:00").str[0:16]
+    data["date"] = data["date"].astype(str).str.strip("+00:00").str[0:16]
     data["date"] = pd.to_datetime(data["date"], errors="coerce")
     print(data.iloc[-1:, :])
 

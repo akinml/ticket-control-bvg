@@ -19,6 +19,7 @@ from PIL import Image
 from pipeline import pipeline
 from pathlib import Path
 
+
 # Optional change Mapbox map to plotly Map. https://plotly.com/python/scattermapbox/
 def generate_random_coordinates():
     min_lat, max_lat = 52.392166, 52.639004
@@ -37,17 +38,16 @@ def generate_random_coordinates_list(num_samples=100):
         lon_list.append(random_lon)
     return lat_list, lon_list
 
+
 public_stations = pd.read_csv(str(path_to_data) + "/datanew_map2.csv")
-data1 = pd.read_csv(
-    str(path_to_data) + "/s_u_stations_fixed_with_keys_20230830.csv"
-)
+data1 = pd.read_csv(str(path_to_data) + "/s_u_stations_fixed_with_keys_20230830.csv")
 
 
 # Page 1 landing page
 # def page_1_landing_page():
 #     lat_list, lon_list = generate_random_coordinates_list()
 #     data = {"Location": ["Berlin"] * 100, "LAT": lat_list, "LON": lon_list}
-#berlin_df = pd.DataFrame(data)
+# berlin_df = pd.DataFrame(data)
 
 
 #     # Select Stations
@@ -116,8 +116,6 @@ def save_report(report_station: str):
     return report_dict
 
 
-
-
 # DEFINING THE APP INTERFACE AND ANALYSIS
 def page_1_landing_page():
     # LOADING DATAFRAMES FOR APP
@@ -129,18 +127,24 @@ def page_1_landing_page():
 
     st.title("Welcome to BVG Controls:wave:")
 
+    # Streamlit app
+    st.title("Predict controls")
+
+    # Select Stations
+    selected_options = st.selectbox("Select station:", data1["station name"])
+
     # Create a slider widget and store the selected value in a variable
     min_minutes, max_minutes = st.select_slider(
-    'Select a time range in minutes',
-    options=list(range(0, 61)),  # List of options from 0 to 60 minutes
-    value=(0, 30)  # Default selected range from 0 to 60 minutes
-)
+        "Select a time range in minutes",
+        options=list(range(0, 61)),  # List of options from 0 to 60 minutes
+        value=(0, 30),  # Default selected range from 0 to 60 minutes
+    )
     min_timedelta = timedelta(minutes=min_minutes)
     max_timedelta = timedelta(minutes=max_minutes)
 
     selected_station_report = st.selectbox("Select Station:", data1["station name"])
 
-        # CODE BLOCK REPORT
+    # CODE BLOCK REPORT
     if st.button("Report BVG Controller. :cop:"):
         response = requests.get(
             f"http://0.0.0.0:8000/report?report_station={selected_station_report}"
@@ -159,7 +163,7 @@ def page_1_landing_page():
             pipeline()
             df_filtered_map = update_station_colors(
                 from_date="2023-08-28 12:28:00",  # Insert Sliders Dates here!
-                to_date="2023-10-29 10:28:00"  # Insert Sliders Dates here!
+                to_date="2023-10-29 10:28:00",  # Insert Sliders Dates here!
             )
         else:
             st.write("Failed to send the report. :rotating_light:")
@@ -167,38 +171,27 @@ def page_1_landing_page():
     else:
         st.write("Awaiting Report. :rotating_light:")
 
-
-
     datetimenow = time.strftime("%H:%M:%S")
 
-    #st.map(data=public_stations, zoom=10, color="color", size=50)
+    # st.map(data=public_stations, zoom=10, color="color", size=50)
 
     # Call Function to show Map with alerts:
     df_filtered_map = update_station_colors(
-        from_date=(datetime.now() - max_timedelta).strftime("%Y-%m-%d %H:%M:%S") ,  # Insert Sliders Dates here!
-        to_date=(datetime.now() - min_timedelta).strftime("%Y-%m-%d %H:%M:%S"),  # Insert Sliders Dates here!
+        from_date=(datetime.now() - max_timedelta).strftime(
+            "%Y-%m-%d %H:%M:%S"
+        ),  # Insert Sliders Dates here!
+        to_date=(datetime.now() - min_timedelta).strftime(
+            "%Y-%m-%d %H:%M:%S"
+        ),  # Insert Sliders Dates here!
     )
 
     st.map(data=df_filtered_map, zoom=10, color="color", size=50)
-    image = Image.open('/Users/alexhergert/Desktop/Screenshot 2023-09-04 at 5.07.42 PM.png')
-    st.image(image, caption='Legend', width=700)
-
-
-    # Streamlit app
-    st.title("Predict controls")
-
-    # Select Stations
-    selected_options = st.selectbox("Select station:", data1["station name"])
-
-
-
-
+    image = Image.open(str(path_to_data) + "/Screenshot 2023-09-04 at 5.07.42 PM.png")
+    st.image(image, caption="Legend", width=700)
 
     # MAP WITH TIME
     datetimenow = time.strftime("%H:%M:%S")
-    #st.title(f"BVG Controllers Berlin - {datetimenow}")
-
-
+    # st.title(f"BVG Controllers Berlin - {datetimenow}")
 
 
 # Load your existing database into a DataFrame
@@ -209,12 +202,13 @@ data = pd.read_csv(
 df = data.copy()
 df["date"] = pd.to_datetime(df["date"])
 
+
 # Page 2: Control Statistics
 def page_2_control_prediction():
-
-
-        # Load your existing database into a DataFrame
-    data = pd.read_csv("data/preprocessed_database_telegram.csv")  # Replace with the path to your database file
+    # Load your existing database into a DataFrame
+    data = pd.read_csv(
+        "data/preprocessed_database_telegram.csv"
+    )  # Replace with the path to your database file
     # Notice the .copy() to copy the values
     # Streamlit app
     st.title("Data Analysis")
@@ -222,12 +216,12 @@ def page_2_control_prediction():
     df = df.set_index("date")
     df.index = pd.to_datetime(df.index)
 
-    day = df.resample('d')['station_key'].count()
+    day = df.resample("d")["station_key"].count()
 
     st.write("Timeseries of daily controls")
     st.line_chart(day, color="#4048BF")
 
-    week = df.resample('w')['station_key'].count()
+    week = df.resample("w")["station_key"].count()
 
     st.write("Timeseries of weekly controls")
     st.line_chart(week, color="#4048BF", use_container_width=True)
@@ -237,34 +231,37 @@ def page_2_control_prediction():
 
     st.write("Controls across Berlin")
     chart_data = df
-    st.pydeck_chart(pdk.Deck(
-        map_style=None,
-        initial_view_state=pdk.ViewState(
-            latitude=52.507222,
-            longitude=13.332500,
-            zoom=11,
-            pitch=50,
+    st.pydeck_chart(
+        pdk.Deck(
+            map_style=None,
+            initial_view_state=pdk.ViewState(
+                latitude=52.507222,
+                longitude=13.332500,
+                zoom=11,
+                pitch=50,
             ),
-        layers=[
-            pdk.Layer(
-                'HexagonLayer',
-                data=chart_data,
-                get_position='[longitude, latitude]',
-                radius=200,
-                elevation_scale=4,
-                elevation_range=[0, 1000],
-                pickable=True,
-                extruded=True,
+            layers=[
+                pdk.Layer(
+                    "HexagonLayer",
+                    data=chart_data,
+                    get_position="[longitude, latitude]",
+                    radius=200,
+                    elevation_scale=4,
+                    elevation_range=[0, 1000],
+                    pickable=True,
+                    extruded=True,
                 ),
-            pdk.Layer(
-                'ScatterplotLayer',
-                data=chart_data,
-                get_position='[longitude, latitude]',
-                get_color='[200, 30, 0, 160]',
-                get_radius=200,
+                pdk.Layer(
+                    "ScatterplotLayer",
+                    data=chart_data,
+                    get_position="[longitude, latitude]",
+                    get_color="[200, 30, 0, 160]",
+                    get_radius=200,
                 ),
             ],
-        ))
+        )
+    )
+
 
 # Page 3: Control Statistics
 def page_3_control_statistics():
@@ -282,32 +279,37 @@ def page_3_control_statistics():
             return None
         return r.json()
 
-    train_animation = load_animation("https://lottie.host/aec64339-af7e-4713-95ad-2c11b57a4bc5/UdfXkvXrvL.json")
-
+    train_animation = load_animation(
+        "https://lottie.host/aec64339-af7e-4713-95ad-2c11b57a4bc5/UdfXkvXrvL.json"
+    )
 
     left_column, right_column = st.columns(2)
 
     with left_column:
         user_date_ranges = st.date_input(
-        "Enter a range of two dates or leave blank",
-        (min_date, max_date),
-        min_value=min_date,
-        max_value=max_date,
-    )
+            "Enter a range of two dates or leave blank",
+            (min_date, max_date),
+            min_value=min_date,
+            max_value=max_date,
+        )
 
         # User input for number of top items to display
-        top_n_areas = st.selectbox("Select the number of areas to display:", [10, 25, 50])
+        top_n_areas = st.selectbox(
+            "Select the number of areas to display:", [10, 25, 50]
+        )
         top_n_stations = st.selectbox(
             "Select the number of station names to display:", [10, 25, 50]
         )
-        top_n_lines = st.selectbox("Select the number of lines to display:", [10,15,25])
+        top_n_lines = st.selectbox(
+            "Select the number of lines to display:", [10, 15, 25]
+        )
 
     with right_column:
-        st_lottie(train_animation, height=300, key='train_animation')
+        st_lottie(train_animation, height=300, key="train_animation")
 
     # Arrange tables side by side
     st.write("Control Statistics:")
-    col1, col2, col3 = st.columns([0.4, 0.5, 0.33], gap='medium')
+    col1, col2, col3 = st.columns([0.4, 0.5, 0.33], gap="medium")
     with col1:
         st.write(f"{top_n_areas} Most controlled areas:")
         area_counts = df[
@@ -326,18 +328,23 @@ def page_3_control_statistics():
 
     with col3:
         st.write(f"{top_n_lines} Most controlled lines:")
-        lines_counts = df[
-            (df["date"] >= pd.to_datetime(user_date_ranges[0]))
-            & (df["date"] <= pd.to_datetime(user_date_ranges[1]))
-        ]["lines"].str.split(', ').explode().value_counts()
+        lines_counts = (
+            df[
+                (df["date"] >= pd.to_datetime(user_date_ranges[0]))
+                & (df["date"] <= pd.to_datetime(user_date_ranges[1]))
+            ]["lines"]
+            .str.split(", ")
+            .explode()
+            .value_counts()
+        )
         st.write(lines_counts.head(top_n_lines))
 
     st.write("---")
 
     # Areas
-    st.title("Areas, stations & lines visualization:tram:" )
+    st.title("Areas, stations & lines visualization:tram:")
 
-    st.write('Areas visualization')
+    st.write("Areas visualization")
 
     # Calculate area frequencies using data ranges selected by user
     area_counts = df[
@@ -349,13 +356,13 @@ def page_3_control_statistics():
     fig1 = px.treemap(
         names=area_counts.index,
         parents=[""] * len(area_counts),
-        values=area_counts.values
+        values=area_counts.values,
     )
 
     # Display the figure
     st.plotly_chart(fig1)
 
-    st.write('Stations visualization')
+    st.write("Stations visualization")
 
     # Calculate station frequencies
     station_counts = df[
@@ -366,23 +373,28 @@ def page_3_control_statistics():
     fig2 = px.treemap(
         names=station_counts.index,
         parents=[""] * len(station_counts),
-        values=station_counts.values
+        values=station_counts.values,
     )
 
     # Display the figure
     st.plotly_chart(fig2)
 
-    st.write('Lines visualization')
+    st.write("Lines visualization")
     # Calculate lines frequencies
-    lines_counts = df[
-        (df["date"] >= pd.to_datetime(user_date_ranges[0]))
-        & (df["date"] <= pd.to_datetime(user_date_ranges[1]))
-    ]["lines"].str.split(', ').explode().value_counts()
+    lines_counts = (
+        df[
+            (df["date"] >= pd.to_datetime(user_date_ranges[0]))
+            & (df["date"] <= pd.to_datetime(user_date_ranges[1]))
+        ]["lines"]
+        .str.split(", ")
+        .explode()
+        .value_counts()
+    )
     # Create a plotly mapp
     fig3 = px.treemap(
         names=lines_counts.index,
         parents=[""] * len(lines_counts),
-        values=lines_counts.values
+        values=lines_counts.values,
     )
 
     # Display the figure
@@ -393,51 +405,87 @@ def page_3_control_statistics():
     st.title("Time statistics:hourglass:")
 
     # Creating time columns for the differenct categories year, month, weekday, hour
-    df['year'] = pd.DatetimeIndex(df['date']).year
-    df['month'] = pd.DatetimeIndex(df['date']).month
-    df['day'] = pd.DatetimeIndex(df['date']).weekday
-    df['hour'] = df['date'].dt.hour
+    df["year"] = pd.DatetimeIndex(df["date"]).year
+    df["month"] = pd.DatetimeIndex(df["date"]).month
+    df["day"] = pd.DatetimeIndex(df["date"]).weekday
+    df["hour"] = df["date"].dt.hour
 
     # Naming the weekdays
     weekdays = {0: "Mon", 1: "Tue", 2: "Wed", 3: "Thu", 4: "Fri", 5: "Sat", 6: "Sun"}
     # Applying the naming
-    df["weekday"] = df['day'].map(weekdays)
+    df["weekday"] = df["day"].map(weekdays)
     # Doing the same for months
-    months = {1: 'Jan', 2: 'Feb', 3: 'Mar', 4: 'Apr', 5: 'May', 6: 'Jun', 7: 'Jul', 8: 'Aug', 9: 'Sep', 10: 'Okt', 11: 'Nov', 12: 'Dec'}
-    df["month_name"] = df['month'].map(months)
+    months = {
+        1: "Jan",
+        2: "Feb",
+        3: "Mar",
+        4: "Apr",
+        5: "May",
+        6: "Jun",
+        7: "Jul",
+        8: "Aug",
+        9: "Sep",
+        10: "Okt",
+        11: "Nov",
+        12: "Dec",
+    }
+    df["month_name"] = df["month"].map(months)
 
     weekday_order = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-    month_order = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"]
+    month_order = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Okt",
+        "Nov",
+        "Dec",
+    ]
 
-    st.write('Distribution of annual controls')
-    fig4 = px.histogram(df, x="year", color_discrete_sequence=['#4048BF'],
-                        opacity=1)
+    st.write("Distribution of annual controls")
+    fig4 = px.histogram(df, x="year", color_discrete_sequence=["#4048BF"], opacity=1)
 
     st.plotly_chart(fig4, use_container_width=False)
 
-    st.write('Distribution of monthly controls')
-    fig5 = px.histogram(df, x="month_name", color_discrete_sequence=['#4048BF'],
-                        opacity=1, category_orders={"month_name":month_order} )
+    st.write("Distribution of monthly controls")
+    fig5 = px.histogram(
+        df,
+        x="month_name",
+        color_discrete_sequence=["#4048BF"],
+        opacity=1,
+        category_orders={"month_name": month_order},
+    )
 
     st.plotly_chart(fig5, use_container_width=False)
 
-    st.write('Distribution of daily controls')
-    fig6 = px.histogram(df, x="weekday", color_discrete_sequence=['#4048BF'],
-                        opacity=1, category_orders={"weekday": weekday_order})
+    st.write("Distribution of daily controls")
+    fig6 = px.histogram(
+        df,
+        x="weekday",
+        color_discrete_sequence=["#4048BF"],
+        opacity=1,
+        category_orders={"weekday": weekday_order},
+    )
 
     st.plotly_chart(fig6, use_container_width=False)
 
-    st.write('Distribution of hourly controls')
-    fig7 = px.histogram(df, x="hour", color_discrete_sequence=['#4048BF'],
-                        opacity=1)
+    st.write("Distribution of hourly controls")
+    fig7 = px.histogram(df, x="hour", color_discrete_sequence=["#4048BF"], opacity=1)
 
     st.plotly_chart(fig7, use_container_width=False)
+
 
 # Main app
 def main():
     st.sidebar.title("Navigation")
     page = st.sidebar.radio(
-        "Go to:", (":one: Check Controls", ":two: Predict Controls", ":three: View Statistics")
+        "Go to:",
+        (":one: Check Controls", ":two: Predict Controls", ":three: View Statistics"),
     )
 
     if page == ":one: Check Controls":

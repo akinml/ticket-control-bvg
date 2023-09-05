@@ -6,5 +6,6 @@ __init__.cpython-310.pyc
 data_preprocessing.cpython-310.pyc
 fuzz_flow.cpython-310.pyc
 params.cpython-310.pyc
+ticket_control/__pycache__/params.cpython-310.pyc
 .DS_Store
 ticket_control.egg-info/

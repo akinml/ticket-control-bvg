@@ -1,8 +1,5 @@
-FROM python:3.10.6-buster
-WORKDIR /app
-COPY . /app
-RUN python -m pip install --upgrade pip
-RUN pip install -r requirements.txt
-#CMD uvicorn ticket-control-bvg.api.fast:app --host 0.0.0.0
-CMD streamlit run /app/webapp/app.py
-#Run the Prefect Server
+FROM prefecthq/prefect:2.11.5-python3.10
+COPY requirements.txt /opt/prefect/ticket-control-bvg/requirements.txt
+RUN python -m pip install -r /opt/prefect/ticket-control-bvg/requirements.txt
+COPY . /opt/prefect/ticket-control-bvg/
+WORKDIR /opt/prefect/ticket-control-bvg/

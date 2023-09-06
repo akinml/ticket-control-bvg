@@ -3,6 +3,7 @@ from ticket_control.data_preprocessing import *
 from ticket_control.fuzz_flow import *
 from ticket_control.params import path_to_data
 import pandas as pd
+from ticket_control.big_query_download_raw import download_big_query_raw
 
 # from prefect_github import GitHubCredentials
 # from prefect.filesystems import GitHub
@@ -15,6 +16,7 @@ from pathlib import Path
 
 path_main = Path(__file__).parent
 path_to_data = path_main / "data/"
+raw_data = download_big_query_raw()
 
 
 def pipeline(raw_data):
@@ -24,7 +26,6 @@ def pipeline(raw_data):
     )
     # 1. Step in our preprocessing: Cleaning the Strings
     # Reducing the number of rows to be preprocessed significantly speeds up the process. Going from ~1:30 Minutes to below 2 secs.
-    raw_data = raw_data.iloc[-1000:, :]
     df_for_fuzzy_matching = data_preprocessing(raw_data)
     # 2. Step in our preprocessing Doing the Fuzzy Matching with the output of Step 1 and the station mapping df
     df_station_mapping = create_station_to_line_df(
@@ -47,6 +48,7 @@ def pipeline(raw_data):
         ]
     ]
     print("\n 👷Pipeline Completed!👷")
+    print(output_df.info())
     return output_df
 
 

@@ -10,9 +10,23 @@ def upload_big_query_processed(df):
     dataset = bigquery.Dataset(dataset_id)
 
     table_id = "bvg-controller.bvg_test.processed"
+
+    # Define the schema for your BigQuery table
+    schema = [
+        bigquery.SchemaField("date", "TIMESTAMP"),
+        bigquery.SchemaField("station_key", "STRING"),
+        bigquery.SchemaField("text", "STRING"),
+        bigquery.SchemaField("station name", "STRING"),
+        bigquery.SchemaField("lines", "STRING"),
+        bigquery.SchemaField("area", "STRING"),
+        bigquery.SchemaField("latitude", "FLOAT64"),
+        bigquery.SchemaField("longitude", "FLOAT64"),
+    ]
+
     job_config = bigquery.LoadJobConfig(
-        autodetect=True, write_disposition="WRITE_APPEND"
+        autodetect=False, write_disposition="WRITE_APPEND", schema=schema
     )
+
     try:
         job = client.load_table_from_dataframe(df, table_id, job_config=job_config)
         job.result()
@@ -23,4 +37,7 @@ def upload_big_query_processed(df):
 
 
 if __name__ == "__main__":
-    upload_big_query_processed()
+    # Make sure to pass your DataFrame as an argument to the function
+    # For example, df = pd.read_csv("your_data.csv")
+    # Then call upload_big_query_processed(df)
+    pass

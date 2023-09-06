@@ -7,7 +7,7 @@ from ticket_control.big_query_upload_processed import *
 from ticket_control.telegramm_update_prod import *
 
 
-# @flow(name="pipeline")
+@flow(name="pipeline")
 def get_update_flow():
     return get_update()
 

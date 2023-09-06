@@ -8,5 +8,4 @@ COPY . /opt/prefect/ticket-control-bvg/
 # COPY bvg-controller-a5a989d34b1d.json /opt/prefect/ticket-control-bvg/bvg-controller-a5a989d34b1d.json
 ENV GOOGLE_APPLICATION_CREDENTIALS=/opt/prefect/ticket-control-bvg/bvg-controller-a5a989d34b1d.json
 #ENV GOOGLE_APPLICATION_CREDENTIALS=/opt/prefect/ticket-control-bvg/bvg-controller-a5a989d34b1d.json
-CMD uvicorn app.simple:app --host 0.0.0.0
 WORKDIR /opt/prefect/ticket-control-bvg/

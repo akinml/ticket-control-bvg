@@ -20,6 +20,7 @@ from ticket_control.pipeline import pipeline
 from pathlib import Path
 from pages._2_View_Statistics import page_2_control_statistics
 
+
 # Optional change Mapbox map to plotly Map. https://plotly.com/python/scattermapbox/
 def generate_random_coordinates():
     min_lat, max_lat = 52.392166, 52.639004
@@ -173,8 +174,89 @@ def page_1_landing_page():
     )
 
     st.map(data=df_filtered_map, zoom=10, color="color", size=50)
-    image = Image.open(str(path_to_data) + "/Screenshot 2023-09-04 at 5.07.42 PM.png")
-    st.image(image, caption="Legend", width=700)
+
+    #Legend
+
+
+    col1, col2, col3, col4, col5 = st.columns(5)
+
+
+    with col1:
+        S41 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/s41.png')
+        st.image(S41, width=30)
+        S5 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/s5.png')
+        st.image(S5, width=30)
+        S7 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/s7.png')
+        st.image(S7, width=30)
+        S8 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/s8.png')
+        st.image(S8, width=30)
+        S9 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/s9.png')
+        st.image(S9, width=30)
+    with col2:
+        S25 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/s25.png')
+        st.image(S25, width=30)
+        S47 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/s47.png')
+        st.image(S47, width=30)
+        S75 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/s75.png')
+        st.image(S75, width=30)
+        U1 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/U1.png')
+        st.image(U1, width=30)
+        U2 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/U2.png')
+        st.image(U2, width=30)
+    with col3:
+        U3 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/U3.png')
+        st.image(U3, width=30)
+        U4 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/U4.png')
+        st.image(U4, width=30)
+        U5 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/U5.png')
+        st.image(U5, width=30)
+        U6 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/U6.png')
+        st.image(U1, width=30)
+        U7 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/U7.png')
+        st.image(U7, width=30)
+    with col4:
+        U8 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/U8.png')
+        st.image(U8, width=30)
+        U9 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/U9.png')
+        st.image(U9, width=30)
+        reported_station = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/red_dot.png')
+        st.image(reported_station, width=30)
+        st.write("Reported Station")
+        u_bahn_hub = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/green_dot.png')
+        st.image(u_bahn_hub, width=30)
+        st.write("U Bahn Hub")
+        s_bahn_hub = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/teal_dot.png')
+        st.image(s_bahn_hub, width=30)
+        st.write("S Bahn Hub")
+    with col5:
+        u_and_s_bahn_hub = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/yellow_dot.png')
+        st.image(u_and_s_bahn_hub, width=30)
+        st.write("U and S Bahn Hub")
+
+
+        hide_img_fs = '''
+        <style>
+        button[title="View fullscreen"]{
+        visibility: hidden;}
+        </style>
+        '''
+
+        st.markdown(hide_img_fs, unsafe_allow_html=True)
+
+
+
+
+
+
+
+
+
+
+
+
+
+    #image = Image.open(str(path_to_data) + "/Screenshot 2023-09-04 at 5.07.42 PM.png")
+    #st.image(image, caption="Legend", width=700)
 
     # MAP WITH TIME
     datetimenow = time.strftime("%H:%M:%S")

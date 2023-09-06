@@ -12,7 +12,7 @@ def get_update():
     api_hash = "9350869041f1e13cb10ecadcb8331367"
 
     chats = ["freifahren_BE"]
-    yesterday = datetime.date.today() - datetime.timedelta(hours=0.25)
+    yesterday = datetime.date.today() - datetime.timedelta(hours=50)
     # Create a single client instance
     with TelegramClient("test", api_id, api_hash) as client:
         update_df = pd.DataFrame()

@@ -16,7 +16,7 @@ import pydeck as pdk
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from PIL import Image
-from pipeline import pipeline
+from ticket_control.pipeline import pipeline
 from pathlib import Path
 
 

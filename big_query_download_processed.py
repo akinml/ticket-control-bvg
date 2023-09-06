@@ -5,7 +5,9 @@ import pandas as pd
 
 def download_big_query_processed():
     print("\033[1;32m 👷Downloading from BigQuery Started! 👷\n")
-    client = bigquery.Client()
+    client = bigquery.Client.from_service_account_json(
+        "bvg-controller-a5a989d34b1d.json"
+    )
     query = """
     SELECT *
     FROM `bvg-controller.bvg_test.processed`

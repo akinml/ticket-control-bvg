@@ -125,16 +125,18 @@ def page_1_landing_page():
     # Output of the model:
     if st.button("Predict", type="primary"):
         response = requests.get(
-            f"http://0.0.0.0:8000/predict?station={station}"
+            f"https://api-fjupsu3szq-lz.a.run.app/predict?station={station}"
         )
         reply = response.json()
+
+        # TODO: add probability of prediction
+        #proba = reply["Probability"]
         if reply["control"] == 1:
             st.error('Control is predicted for the selected station in the next hour')
+            #st.caption('probability of this prediction is: ', proba)
         else:
             st.success('No control predicted for the selected station in the next hour')
-
-        st.caption('The Probability of control is:' )
-                   ## predict_proba e.g. reply_probability
+            #st.caption('probability of this prediction is: ', proba)
 
    # ###
     # Report control
@@ -145,7 +147,7 @@ def page_1_landing_page():
     # CODE BLOCK REPORT
     if st.button("Report BVG Controller. :cop:"):
         response = requests.get(
-            f"http://0.0.0.0:8000/report?report_station={selected_station_report}"
+            f"https://api-fjupsu3szq-lz.a.run.app/report?report_station={selected_station_report}"
         )
 
         if response.status_code == 200:
@@ -199,75 +201,74 @@ def page_1_landing_page():
         ),  # Insert Sliders Dates here!
     )
 
-    st.map(data=df_filtered_map, zoom=10, color="color", size=50)
+
 
     #Legend
 
+    column1, column2 = st.columns([8.5, 0.5])
+    with column1:
+        st.map(data=df_filtered_map, zoom=10, color="color", size=50)
 
-    col1, col2, col3, col4, col5 = st.columns(5)
-
-
-    with col1:
-        S41 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/s41.png')
+    with column2:
+        S41 = Image.open('../data/imgs/s41.png')
         st.image(S41, width=30)
-        S5 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/s5.png')
+        S5 = Image.open('../data/imgs/s5.png')
         st.image(S5, width=30)
-        S7 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/s7.png')
+        S7 = Image.open('../data/imgs/s7.png')
         st.image(S7, width=30)
-        S8 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/s8.png')
+        S8 = Image.open('../data/imgs/s8.png')
         st.image(S8, width=30)
-        S9 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/s9.png')
+        S9 = Image.open('../data/imgs/s9.png')
         st.image(S9, width=30)
-    with col2:
-        S25 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/s25.png')
+        S25 = Image.open('../data/imgs/s25.png')
         st.image(S25, width=30)
-        S47 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/s47.png')
+        S47 = Image.open('../data/imgs/s47.png')
         st.image(S47, width=30)
-        S75 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/s75.png')
+        S75 = Image.open('../data/imgs/s75.png')
         st.image(S75, width=30)
-        U1 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/U1.png')
+        U1 = Image.open('../data/imgs/U1.png')
         st.image(U1, width=30)
-        U2 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/U2.png')
+        U2 = Image.open('../data/imgs/U2.png')
         st.image(U2, width=30)
-    with col3:
-        U3 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/U3.png')
+        U3 = Image.open('../data/imgs/U3.png')
         st.image(U3, width=30)
-        U4 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/U4.png')
+        U4 = Image.open('../data/imgs/U4.png')
         st.image(U4, width=30)
-        U5 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/U5.png')
+        U5 = Image.open('../data/imgs/U5.png')
         st.image(U5, width=30)
-        U6 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/U6.png')
+        U6 = Image.open('../data/imgs/U6.png')
         st.image(U1, width=30)
-        U7 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/U7.png')
+        U7 = Image.open('../data/imgs/U7.png')
         st.image(U7, width=30)
-    with col4:
-        U8 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/U8.png')
+        U8 = Image.open('../data/imgs/U8.png')
         st.image(U8, width=30)
-        U9 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/U9.png')
+        U9 = Image.open('../data/imgs/U9.png')
         st.image(U9, width=30)
-        reported_station = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/red_dot.png')
-        st.image(reported_station, width=30)
+
+    col0, col1, col2, col3, col4, col5 = st.columns([1, 1, 1, 1, 1, 1])
+    with col1:
+        reported_station = Image.open('../data/imgs/red_dot.png')
+        st.image(reported_station, width=60)
         st.write("Reported Station")
-        u_bahn_hub = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/green_dot.png')
-        st.image(u_bahn_hub, width=30)
-        st.write("U Bahn Hub")
-        s_bahn_hub = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/teal_dot.png')
-        st.image(s_bahn_hub, width=30)
-        st.write("S Bahn Hub")
-    with col5:
-        u_and_s_bahn_hub = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/yellow_dot.png')
-        st.image(u_and_s_bahn_hub, width=30)
-        st.write("U and S Bahn Hub")
-
-
-        hide_img_fs = '''
-        <style>
-        button[title="View fullscreen"]{
-        visibility: hidden;}
-        </style>
-        '''
-
-        st.markdown(hide_img_fs, unsafe_allow_html=True)
+    with col2:
+        u_bahn_hub = Image.open('../data/imgs/green_dot.png')
+        st.image(u_bahn_hub, width=60)
+        st.write("U-Bahn Intersection")
+    with col3:
+        s_bahn_hub = Image.open('../data/imgs/teal_dot.png')
+        st.image(s_bahn_hub, width=60)
+        st.write("S-Bahn Intersection")
+    with col4:
+        u_and_s_bahn_hub = Image.open('../data/imgs/yellow_dot.png')
+        st.image(u_and_s_bahn_hub, width=60)
+        st.write("S- and U-Bahn Intersection")
+    hide_img_fs = '''
+            <style>
+            button[title="View fullscreen"]{
+            visibility: hidden;}
+            </style>
+            '''
+    st.markdown(hide_img_fs, unsafe_allow_html=True)
 
 
 

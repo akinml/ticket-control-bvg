@@ -6,8 +6,8 @@ with open("requirements.txt") as f:
 requirements = [x.strip() for x in content if "git+" not in x]
 
 setup(
-    name="ticket_control",
-    version="0.0.1",
+    name="ticket-control",
+    version="0.0.2",
     description="BVG Ticket control LeWagon Project",
     install_requires=requirements,
     packages=find_packages(),

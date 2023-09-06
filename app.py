@@ -18,7 +18,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from PIL import Image
 from pipeline import pipeline
 from pathlib import Path
-
+from ticket_control import *
+from ticket_control.model import *
 
 # Optional change Mapbox map to plotly Map. https://plotly.com/python/scattermapbox/
 def generate_random_coordinates():
@@ -127,20 +128,31 @@ def page_1_landing_page():
 
     st.title("Welcome to BVG Controls:wave:")
 
-    # Streamlit app
-    st.title("Predict controls")
+    # ###
+    # Prediction: RandomForestClassifier, output 0 or 1 > control / no control
+    st.header("Predict controls", divider='rainbow')
 
     # Select Stations
     selected_options = st.selectbox("Select station:", data1["station name"])
 
-    # Create a slider widget and store the selected value in a variable
-    min_minutes, max_minutes = st.select_slider(
-        "Select a time range in minutes",
-        options=list(range(0, 61)),  # List of options from 0 to 60 minutes
-        value=(0, 30),  # Default selected range from 0 to 60 minutes
-    )
-    min_timedelta = timedelta(minutes=min_minutes)
-    max_timedelta = timedelta(minutes=max_minutes)
+    # Output of the model:
+    st.button("Predict", type="primary")
+
+    col1, col2, col3 = st.columns([1, 1, 1])
+
+    with col1:
+        st.caption('Recall')
+        #recall
+    with col2:
+        st.caption('Precision')
+        #precision
+    with col3:
+        st.caption('Accuracy')
+        #accuracy
+
+    # ###
+    # Report control
+    st.header("Report control", divider='rainbow')
 
     selected_station_report = st.selectbox("Select Station:", data1["station name"])
 
@@ -173,7 +185,18 @@ def page_1_landing_page():
 
     datetimenow = time.strftime("%H:%M:%S")
 
+    # Ticket controllers detected in last hour
+    st.header("Latest update on ticket controls in Berlin", divider='rainbow')
+ # Create a slider widget and store the selected value in a variable
+    min_minutes, max_minutes = st.select_slider(
+        "Select a time range in minutes",
+        options=list(range(0, 61)),  # List of options from 0 to 60 minutes
+        value=(0, 30),  # Default selected range from 0 to 60 minutes
+    )
+    min_timedelta = timedelta(minutes=min_minutes)
+    max_timedelta = timedelta(minutes=max_minutes)
     # st.map(data=public_stations, zoom=10, color="color", size=50)
+    col1, col2 = st.columns([3, 1])
 
     # Call Function to show Map with alerts:
     df_filtered_map = update_station_colors(
@@ -184,10 +207,12 @@ def page_1_landing_page():
             "%Y-%m-%d %H:%M:%S"
         ),  # Insert Sliders Dates here!
     )
-
-    st.map(data=df_filtered_map, zoom=10, color="color", size=50)
+    with col1:
+        st.map(data=df_filtered_map, zoom=10, color="color", size=50)
     image = Image.open(str(path_to_data) + "/Screenshot 2023-09-04 at 5.07.42 PM.png")
-    st.image(image, caption="Legend", width=700)
+
+    with col2:
+        st.image(image, caption="Legend", width=700)
 
     # MAP WITH TIME
     datetimenow = time.strftime("%H:%M:%S")

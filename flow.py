@@ -1,5 +1,5 @@
 from prefect import flow
-from pipeline import *
+from ticket_control.pipeline import *
 from ticket_control.big_query_download_raw import *
 from ticket_control.big_query_upload_raw import *
 from ticket_control.big_query_download_processed import *

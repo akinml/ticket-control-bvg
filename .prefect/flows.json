@@ -1,3 +1,7 @@
 {
+<<<<<<< HEAD
   "pipeline": "flow.py:get_update_flow"
+=======
+  "pipeline": "flow.py:update_flow"
+>>>>>>> eb2c52c76584342a1dcb0df220d9d436d0a98cd0
 }

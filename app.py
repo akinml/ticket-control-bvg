@@ -125,6 +125,8 @@ def page_1_landing_page():
     )
     stations = pd.read_csv(str(path_to_main) + "/data/datanew_map2.csv")
 
+
+
     st.title("Welcome to BVG Controls:wave:")
 
     # Streamlit app
@@ -186,8 +188,31 @@ def page_1_landing_page():
     )
 
     st.map(data=df_filtered_map, zoom=10, color="color", size=50)
-    image = Image.open(str(path_to_data) + "/Screenshot 2023-09-04 at 5.07.42 PM.png")
-    st.image(image, caption="Legend", width=700)
+
+    #Legend
+    S41 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/s41.png')
+    st.image(S41, width=30)
+    S5 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/s5.png')
+    st.image(S5, width=30)
+    S7 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/s7.png')
+    st.image(S7, width=30)
+    S8 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/s8.png')
+    st.image(S8, width=30)
+    S9 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/s9.png')
+    st.image(S9, width=30)
+    S25 = Image.open('/Users/alexhergert/code/Xander78261/ticket-control-bvg/data/imgs/s25.png')
+    st.image(S25, width=30)
+
+
+
+
+
+
+
+
+
+    #image = Image.open(str(path_to_data) + "/Screenshot 2023-09-04 at 5.07.42 PM.png")
+    #st.image(image, caption="Legend", width=700)
 
     # MAP WITH TIME
     datetimenow = time.strftime("%H:%M:%S")

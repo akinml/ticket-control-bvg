@@ -3,61 +3,30 @@ import pandas as pd
 import time
 import random
 import calendar
-from datetime import datetime, timedelta, date
+import pickle
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.express as px
-from ticket_control.params import path_to_data
 import requests
-from streamlit_lottie import st_lottie
 import plotly.figure_factory as ff
 import pydeck as pdk
+
+from datetime import datetime, timedelta, date
+from ticket_control.params import path_to_data
+from streamlit_lottie import st_lottie
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from PIL import Image
 from pipeline import pipeline
 from pathlib import Path
-
-
-# Optional change Mapbox map to plotly Map. https://plotly.com/python/scattermapbox/
-def generate_random_coordinates():
-    min_lat, max_lat = 52.392166, 52.639004
-    min_lon, max_lon = 13.215260, 13.770269
-    random_lat = random.uniform(min_lat, max_lat)
-    random_lon = random.uniform(min_lon, max_lon)
-    return random_lat, random_lon
-
-
-def generate_random_coordinates_list(num_samples=100):
-    lat_list = []
-    lon_list = []
-    for x in range(num_samples):
-        random_lat, random_lon = generate_random_coordinates()
-        lat_list.append(random_lat)
-        lon_list.append(random_lon)
-    return lat_list, lon_list
+from ticket_control.model_preprocessing import *
+from ticket_control.utils import bezirke
+from sklearn.ensemble import RandomForestClassifier
 
 
 public_stations = pd.read_csv(str(path_to_data) + "/datanew_map2.csv")
 data1 = pd.read_csv(str(path_to_data) + "/s_u_stations_fixed_with_keys_20230830.csv")
-
-
-# Page 1 landing page
-# def page_1_landing_page():
-#     lat_list, lon_list = generate_random_coordinates_list()
-#     data = {"Location": ["Berlin"] * 100, "LAT": lat_list, "LON": lon_list}
-# berlin_df = pd.DataFrame(data)
-
-
-#     # Select Stations
-#     selected_options = st.multiselect("Select station(s):", data1["station name"])
-#     st.write("You selected:", selected_options)
-
-#     # Add a refresh button
-#     st.table(berlin_df)
-#     output = st.empty()
-
 path_to_main = Path(__file__).parent
 
 
@@ -114,6 +83,23 @@ def save_report(report_station: str):
         "date": str(report_datetime)[0:19],
     }
     return report_dict
+
+
+app.state.model = pickle.load(open("model.pkl", "rb"))
+
+
+@app.get("/predict")
+def predict(station: str):  # 1
+    X_pred = preprocess_input(station)
+    model = app.state.model
+    assert model is not None
+
+    y_pred = model.predict(X_pred[model.feature_names_in_])
+
+    # ⚠️ fastapi only accepts simple Python data types as a return value
+    # among them dict, list, str, int, float, bool
+    # in order to be able to convert the api response to JSON
+    return dict(control=float(y_pred))
 
 
 # DEFINING THE APP INTERFACE AND ANALYSIS

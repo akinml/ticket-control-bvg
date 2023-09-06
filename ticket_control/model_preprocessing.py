@@ -3,9 +3,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import datetime as dt
 import numpy as np
-
 from sklearn.preprocessing import OneHotEncoder
-
 import holidays
 from ticket_control.utils import bezirke
 from sklearn.ensemble import RandomForestRegressor

@@ -102,7 +102,7 @@ def save_report(report_station: str):
     return report_dict
 
 # setting config to "wide" so that charts and other elements are properly displayed
-st.set_page_config(layout="wide")
+#st.set_page_config(layout="wide")
 
 # DEFINING THE APP INTERFACE AND ANALYSIS
 def page_1_landing_page():

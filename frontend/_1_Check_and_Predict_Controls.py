@@ -114,20 +114,30 @@ def page_1_landing_page():
 
     st.title("Welcome to BVG Controls:wave:")
 
-    # Streamlit app
-    st.title("Predict controls")
+    # ###
+    # Prediction: RandomForestClassifier, output 0 or 1 > control / no control
+    st.header("Predict controls", divider='rainbow')
 
     # Select Stations
-    selected_options = st.selectbox("Select station:", data1["station name"])
+    station = st.selectbox("Select station:", data1["station name"])
 
-    # Create a slider widget and store the selected value in a variable
-    min_minutes, max_minutes = st.select_slider(
-        "Select a time range in minutes",
-        options=list(range(0, 61)),  # List of options from 0 to 60 minutes
-        value=(0, 30),  # Default selected range from 0 to 60 minutes
-    )
-    min_timedelta = timedelta(minutes=min_minutes)
-    max_timedelta = timedelta(minutes=max_minutes)
+    # Output of the model:
+    if st.button("Predict", type="primary"):
+        response = requests.get(
+            f"http://0.0.0.0:8000/predict?station={station}"
+        )
+        reply = response.json()
+        if reply["control"] == 1:
+            st.error('Control is predicted for the selected station in the next hour')
+        else:
+            st.success('No control predicted for the selected station in the next hour')
+
+        st.caption('The Probability of control is:' )
+                   ## predict_proba e.g. reply_probability
+
+   # ###
+    # Report control
+    st.header("Report control", divider='rainbow')
 
     selected_station_report = st.selectbox("Select Station:", data1["station name"])
 
@@ -161,6 +171,22 @@ def page_1_landing_page():
     datetimenow = time.strftime("%H:%M:%S")
 
     # st.map(data=public_stations, zoom=10, color="color", size=50)
+
+
+    # Ticket controllers detected in last hour
+    st.header("Latest update on ticket controls in Berlin", divider='rainbow')
+    # Create a slider widget and store the selected value in a variable
+    min_minutes, max_minutes = st.select_slider(
+        "Select a time range in minutes",
+        options=list(range(0, 61)),  # List of options from 0 to 60 minutes
+        value=(0, 30),  # Default selected range from 0 to 60 minutes
+    )
+    min_timedelta = timedelta(minutes=min_minutes)
+    max_timedelta = timedelta(minutes=max_minutes)
+
+    #selected_station_report = st.selectbox("Select Station:", data1["station name"])
+
+
 
     # Call Function to show Map with alerts:
     df_filtered_map = update_station_colors(

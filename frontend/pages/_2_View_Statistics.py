@@ -13,6 +13,10 @@ import requests
 from streamlit_lottie import st_lottie
 import plotly.figure_factory as ff
 import pydeck as pdk
+from ticket_control.model_preprocessing import *
+
+# setting config to "wide" so that charts and other elements are properly displayed
+st.set_page_config(layout="wide")
 
 # Load your existing database into a DataFrame
 data = pd.read_csv(
@@ -34,12 +38,15 @@ def page_2_control_statistics(df, user_date_ranges):
 
     train_animation = load_animation("https://lottie.host/aec64339-af7e-4713-95ad-2c11b57a4bc5/UdfXkvXrvL.json")
 
+    st.title("Welcome to BVG Controls:wave:")
+
     # Streamlit app headline as a combination of 1) title and 2) train animation
-    left_column, right_column = st.columns(2)
+    left_column, right_column = st.columns([5, 1])
     with left_column:
-        st.title("Control stats:mag_right:")
+        st.header("Statistics:mag_right:", divider='rainbow')
+        st.write("DISCLAIMER: given statistics are based on the user inputs of Telegram Channel and might not represent the actual controls")
     with right_column:
-        st_lottie(train_animation, height=300, key='train_animation')
+        st_lottie(train_animation, height=100, key='train_animation')
 
     # Creating min & max dates that are important for the filtering logic
     min_date = df.index[0]
@@ -47,23 +54,59 @@ def page_2_control_statistics(df, user_date_ranges):
 
     # applying the filter logic to the dataframe based on selected dates by user
     df = df.loc[user_date_ranges[0]:user_date_ranges[1]]
-    st.write("---")
 
     # Showing areas, stations and lines
-    st.title("Areas, stations & lines visualization:tram:" )
-    st.write('Areas visualization')
+    #st.subheader("Most controlled Areas :tram:") ## too much text
+
+    col1, col2 = st.columns([1, 1])
 
     # Calculate area frequencies using data ranges selected by user
+    # Figure for Bezike >>>
+    df_for_bezirk = get_bezirke(df)
+    bezirke_counts = df_for_bezirk["bezirk"].value_counts()
+    fig9 = px.pie(
+        df_for_bezirk,
+        values=bezirke_counts.values,
+        names=bezirke_counts.index,
+        title='Most controlled Districts')
+    st.plotly_chart(fig9, use_container_width=True)
+
+    # Figure for areas >>>
     area_counts = df["area"].value_counts()
     # Create a plotly map
     fig1 = px.treemap(
         names=area_counts.index,
         parents=[""] * len(area_counts),
-        values=area_counts.values
+        values=area_counts.values,
+        title='Most controlled Areas'
     )
-    # Display the figure
-    st.plotly_chart(fig1)
-    st.write('Stations visualization')
+    st.plotly_chart(fig1, use_container_width=True)
+
+    # Creating the exploratory chart of Berlin map
+    st.subheader("Counts of control per station")
+    chart_data = df
+    st.pydeck_chart(pdk.Deck(
+        map_style=None,
+        initial_view_state=pdk.ViewState(
+            latitude=52.507222,
+            longitude=13.332500,
+            zoom=11,
+            pitch=50,
+            ),
+        layers=[
+            pdk.Layer(
+                'HexagonLayer',
+                data=chart_data,
+                get_position='[longitude, latitude]',
+                radius=200,
+                elevation_scale=4,
+                elevation_range=[0, 1000],
+                pickable=True,
+                extruded=True,
+                ),
+            ],
+        ))
+
 
     # Calculate station frequencies
     station_counts = df["station name"].value_counts()
@@ -71,24 +114,37 @@ def page_2_control_statistics(df, user_date_ranges):
     fig2 = px.treemap(
         names=station_counts.index,
         parents=[""] * len(station_counts),
-        values=station_counts.values
+        values=station_counts.values,
+        title='Most controlled Stations'
     )
     # Display the figure
-    st.plotly_chart(fig2)
-    st.write('Lines visualization')
+    st.plotly_chart(fig2, use_container_width=True)
 
     # Calculate lines frequencies, but separating "joined" U&Sbahns to count them individually again
     lines_counts = df["lines"].str.split(', ').explode().value_counts()
-    # Create a plotly mapp
+
+    # Create a plotly map
     fig3 = px.treemap(
         names=lines_counts.index,
         parents=[""] * len(lines_counts),
-        values=lines_counts.values
+        values=lines_counts.values,
+        title='Most controlled Lines'
     )
     # Display the figure
-    st.plotly_chart(fig3)
-    st.write("---")
-    st.title("Time statistics:hourglass:")
+    #st.plotly_chart(fig3)
+
+    fig10 = px.pie(
+        values=lines_counts.values,
+        names=lines_counts.index,
+        title='Most controlled Lines')
+    st.plotly_chart(fig10, use_container_width=True)
+
+    #day = df.resample('d')['station_key'].count()
+    #st.write("Controls across Berlin per Day")
+    #st.line_chart(day, color="#4048BF")
+    week = df.resample('w')['station_key'].count()
+    st.write("Controls across Berlin per Week")
+    st.line_chart(week, color="#4048BF", use_container_width=True)
 
     # Creating time columns for the differenct categories year, month, weekday, hour
     df['year'] = df.index.year
@@ -136,72 +192,24 @@ def page_2_control_statistics(df, user_date_ranges):
                    "Nov",
                    "Dec"]
 
-    st.write('Distribution of annual controls')
+    fig6 = px.histogram(df, x="weekday", color_discrete_sequence=['#4048BF'],
+                        opacity=1, category_orders={"weekday": weekday_order}, title="Most controlled Days of the Week")
+    st.plotly_chart(fig6, use_container_width=True)
+
+    fig5 = px.histogram(df, x="month_name", color_discrete_sequence=['#4048BF'],
+                        opacity=1, category_orders={"month_name": month_order}, title="Most controlled Months")
+    st.plotly_chart(fig5, use_container_width=True)
+
+
+    fig7 = px.histogram(df, x="hour", color_discrete_sequence=['#4048BF'],
+                        opacity=1, title="Most controlled Hour")
+    st.plotly_chart(fig7, use_container_width=True)
+
+### Yearly Distribution >>> ### rather reflects the yerly activity on tg
     fig4 = px.histogram(df, x="year", color_discrete_sequence=['#4048BF'],
                         opacity=1)
-    st.plotly_chart(fig4, use_container_width=False)
-    st.write('Distribution of monthly controls')
-    fig5 = px.histogram(df, x="month_name", color_discrete_sequence=['#4048BF'],
-                        opacity=1, category_orders={"month_name": month_order})
-    st.plotly_chart(fig5, use_container_width=False)
+    #st.plotly_chart(fig4, use_container_width=False)
 
-    st.write('Distribution of daily controls')
-    fig6 = px.histogram(df, x="weekday", color_discrete_sequence=['#4048BF'],
-                        opacity=1, category_orders={"weekday": weekday_order})
-    st.plotly_chart(fig6, use_container_width=False)
-
-    st.write('Distribution of hourly controls')
-    fig7 = px.histogram(df, x="hour", color_discrete_sequence=['#4048BF'],
-                        opacity=1)
-    st.plotly_chart(fig7, use_container_width=False)
-
-    # CHECK IF THIS WORKS!!!! IF YES DELETE'
-    # CHECK IF THIS WORKS!!!! IF YES DELETE'
-    # CHECK IF THIS WORKS!!!! IF YES DELETE'
-    # CHECK IF THIS WORKS!!!! IF YES DELETE'
-    # # Load your existing database into a DataFrame
-    # data = pd.read_csv("data/preprocessed_database_telegram.csv")  # Replace with the path to your database file
-
-    st.title("Time Series")
-    day = df.resample('d')['station_key'].count()
-    st.write("Timeseries of daily controls")
-    st.line_chart(day, color="#4048BF")
-    week = df.resample('w')['station_key'].count()
-    st.write("Timeseries of weekly controls")
-    st.line_chart(week, color="#4048BF", use_container_width=True)
-
-    # Creating the exploratory chart of Berlin map
-    st.title("Explore Berlin")
-    st.write("Controls across Berlin")
-    chart_data = df
-    st.pydeck_chart(pdk.Deck(
-        map_style=None,
-        initial_view_state=pdk.ViewState(
-            latitude=52.507222,
-            longitude=13.332500,
-            zoom=11,
-            pitch=50,
-            ),
-        layers=[
-            pdk.Layer(
-                'HexagonLayer',
-                data=chart_data,
-                get_position='[longitude, latitude]',
-                radius=200,
-                elevation_scale=4,
-                elevation_range=[0, 1000],
-                pickable=True,
-                extruded=True,
-                ),
-            pdk.Layer(
-                'ScatterplotLayer',
-                data=chart_data,
-                get_position='[longitude, latitude]',
-                get_color='[200, 30, 0, 160]',
-                get_radius=200,
-                ),
-            ],
-        ))
 
 # Main app
 def main():

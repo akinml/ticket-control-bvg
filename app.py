@@ -19,11 +19,7 @@ from streamlit_lottie import st_lottie
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from PIL import Image
-<<<<<<< HEAD
 from ticket_control.pipeline import pipeline
-=======
-from pipeline import pipeline
->>>>>>> eb2c52c76584342a1dcb0df220d9d436d0a98cd0
 from pathlib import Path
 from ticket_control.model_preprocessing import *
 from ticket_control.big_query_download_processed import download_big_query_processed

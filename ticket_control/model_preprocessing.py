@@ -8,10 +8,14 @@ import holidays
 from ticket_control import big_query_download_processed
 from ticket_control.utils import bezirke
 from ticket_control.params import path_to_data
+import datetime
 
 
 def get_last_three_hours(bezirk):
-    data = big_query_download_processed.download_big_query_processed()
+    current_time = datetime.datetime.now()
+    data = big_query_download_processed.download_last_three_hours(current_time)
+    if data.empty:
+        return 0
     data["station name"] = data["station_key"]
     data["date"] = pd.to_datetime(data["date"])
     data = data.set_index("date")
@@ -20,6 +24,7 @@ def get_last_three_hours(bezirk):
     data = get_bezirke(data)
     data = count_matrix(data)
     filtered = data[data["bezirk"] == bezirk]
+    filtered.drop_duplicates(subset=["bezirk"], inplace=True)
     if filtered.empty:
         return 0
     return filtered[["local_0", "local_1", "local_2"]].values
@@ -248,7 +253,7 @@ def preprocess_input(station):
     X_pred[encoder.get_feature_names_out()] = encoder.fit_transform(X_pred[["bezirk"]])
     X_pred[["local_0", "local_1", "local_2"]] = get_last_three_hours(
         X_pred["bezirk"].item()
-    )  ### TODO: this is dummy, use actual values
+    )
     # drpping columns
     X_pred = X_pred.drop(
         columns=["station name", "area", "bezirk", "month", "weekday", "hour"]

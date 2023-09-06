@@ -6,6 +6,6 @@ COPY . /opt/prefect/ticket-control-bvg/
 
 # Set up credentials (replace with your own service account key if needed)
 # COPY bvg-controller-a5a989d34b1d.json /opt/prefect/ticket-control-bvg/bvg-controller-a5a989d34b1d.json
-ENV GOOGLE_APPLICATION_CREDENTIALS=/opt/prefect/ticket-control-bvg/bvg-controller-a5a989d34b1d.json
+# ENV GOOGLE_APPLICATION_CREDENTIALS=/opt/prefect/ticket-control-bvg/bvg-controller-a5a989d34b1d.json
 #ENV GOOGLE_APPLICATION_CREDENTIALS=/opt/prefect/ticket-control-bvg/bvg-controller-a5a989d34b1d.json
-WORKDIR /opt/prefect/ticket-control-bvg/
+CMD prefect worker start --pool bvg  

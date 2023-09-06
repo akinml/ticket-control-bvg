@@ -5,12 +5,28 @@ import datetime as dt
 import numpy as np
 from sklearn.preprocessing import OneHotEncoder
 import holidays
+from ticket_control import big_query_download_processed
 from ticket_control.utils import bezirke
-from sklearn.ensemble import RandomForestRegressor
+from ticket_control.params import path_to_data
+
+
+def get_last_three_hours(bezirk):
+    data = big_query_download_processed.download_big_query_processed()
+    data["station name"] = data["station_key"]
+    data["date"] = pd.to_datetime(data["date"])
+    data = data.set_index("date")
+    data = get_time(data)
+    data = get_bins(data)
+    data = get_bezirke(data)
+    data = count_matrix(data)
+    filtered = data[data["bezirk"] == bezirk]
+    if filtered.empty:
+        return 0
+    return filtered[["local_0", "local_1", "local_2"]].values
 
 
 def get_data():
-    data = pd.read_csv("../data/preprocessed_database_telegram_git.csv")
+    data = pd.read_csv(str(path_to_data) + "/preprocessed_database_telegram_git.csv")
     data = data.copy()
     # Fixing date to Datetime and setting it as an index
     data["date"] = pd.to_datetime(data["date"])
@@ -212,7 +228,7 @@ def encode_target(some_y):
 
 
 def get_station_latlon(station):
-    data = pd.read_csv("../data/s_u_stations_fixed_with_keys_20230830.csv")
+    data = pd.read_csv(str(path_to_data) + "/s_u_stations_fixed_with_keys_20230830.csv")
     data = data.copy()
     row = data[data["station name"] == station]
     return row[["area", "latitude", "longitude"]].values
@@ -230,9 +246,9 @@ def preprocess_input(station):
     # OneHotEncoding Bezirke
     encoder = OneHotEncoder(sparse=False, categories=[list(bezirke.keys())])
     X_pred[encoder.get_feature_names_out()] = encoder.fit_transform(X_pred[["bezirk"]])
-    X_pred[
-        ["local_0", "local_1", "local_2"]
-    ] = 5  ### TODO: this is dummy, use actual values
+    X_pred[["local_0", "local_1", "local_2"]] = get_last_three_hours(
+        X_pred["bezirk"].item()
+    )  ### TODO: this is dummy, use actual values
     # drpping columns
     X_pred = X_pred.drop(
         columns=["station name", "area", "bezirk", "month", "weekday", "hour"]

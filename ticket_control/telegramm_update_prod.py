@@ -6,7 +6,7 @@ import pandas as pd
 
 def get_update():
     """This function gets the newest data from the telegram Channel and saves it to our database."""
-    print("\033[1;32m 💽 Database update started 💽")
+    print("\033[1;32m 💽 Telegramm update started 💽")
 
     api_id = 24420176
     api_hash = "9350869041f1e13cb10ecadcb8331367"
@@ -27,8 +27,7 @@ def get_update():
                     "date": message.date,
                 }
                 update_df = pd.DataFrame(data, index=[1])
-    print("\n 💽 Database update finished 💽")
-    print(update_df)
+    print("💽 Telegramm update finished 💽")
     return update_df
 
 

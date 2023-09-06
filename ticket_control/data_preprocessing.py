@@ -32,11 +32,6 @@ def data_preprocessing(data: pd.DataFrame):
     data["sender"] = data["sender"].astype(str)
     data["date"] = data["date"].astype(str).str.strip("+00:00").str[0:16]
     data["date"] = pd.to_datetime(data["date"], errors="coerce")
-    print(data.iloc[-1:, :])
-
-    # Only consider most recent values, cut time in the beginning of the group
-    start_date = dt.date(2019, 11, 1)
-    data = data.loc[start_date:]
 
     # first round of cleaning na/empty strings/...
     data = data[data["text"].notna()]

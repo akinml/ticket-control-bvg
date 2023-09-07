@@ -23,10 +23,10 @@ def update_flow(df_tele_raw):
 
 
 @flow(name="pipeline")
-def update_flow_run():
+def get_update_flow():
     task1_future = flow_telegramm_update.submit()
     update_flow.submit(task1_future.result(), wait_for=[task1_future])
 
 
 if __name__ == "__main__":
-    update_flow_run()
+    get_update_flow()

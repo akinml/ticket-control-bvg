@@ -10,7 +10,7 @@ def download_big_query_processed():
     print("\033[1;32m 👷Downloading from BigQuery Started! 👷\n")
     client = bigquery.Client.from_service_account_info(gcp_credentials_block)
     query = """
-    SELECT *
+    SELECT DISTINCT *
     FROM `bvg-controller.bvg_test.processed`
     """
     query_job = client.query(query)
@@ -24,7 +24,7 @@ def download_last_three_hours(current_time):
     print("\033[1;32m 👷Downloading from BigQuery Started! 👷\n")
     client = bigquery.Client()
     query = f"""
-    SELECT *
+    SELECT DISTINCT *
     FROM `bvg-controller.bvg_test.processed`
     WHERE date >= '{str(cutoff)}'
     """

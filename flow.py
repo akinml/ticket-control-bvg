@@ -2,12 +2,13 @@ from prefect import flow
 from ticket_control.pipeline import *
 from ticket_control.big_query_download_raw import *
 from ticket_control.big_query_upload_raw import *
-from ticket_control.big_query_download_processed import *
+from big_query_download_processed import *
 from ticket_control.big_query_upload_processed import *
 from ticket_control.telegramm_update_prod import *
+from prefect.task_runners import SequentialTaskRunner
 
 
-@flow(name="pipeline")
+@flow(name="pipeline", task_runner=SequentialTaskRunner())
 def get_update_flow():
     return get_update()
 

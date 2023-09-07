@@ -9,13 +9,13 @@ from ticket_control.telegramm_update_prod import *
 import pandas as pd
 
 
-@task(name="download.csv")
+@task(name="Update Telegram Data")
 def flow_telegramm_update():
     df = get_update()
     return df
 
 
-@task(name="upload")
+@task(name="Upload and Preprocess")
 def update_flow(df_tele_raw):
     df_tele_processed = pipeline(df_tele_raw)
     upload_big_query_raw(df_tele_raw)

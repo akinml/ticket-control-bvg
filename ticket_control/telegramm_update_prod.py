@@ -2,6 +2,7 @@ from prefect import flow
 from telethon.sync import TelegramClient
 import datetime
 import pandas as pd
+import asyncio
 
 
 def get_update():
@@ -14,21 +15,33 @@ def get_update():
 
     chats = ["freifahren_BE"]
     yesterday = datetime.date.today() - datetime.timedelta(hours=50)
-    # Create a single client instance
-    with TelegramClient("test", api_id, api_hash) as client:
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    client = TelegramClient("test", api_id, api_hash, loop=loop)
+
+    async def get_messages():
         update_df = pd.DataFrame()
+        save_df = pd.DataFrame()
         for chat in chats:
-            for message in client.iter_messages(
+            async for message in client.iter_messages(
                 chat, offset_date=yesterday, reverse=True
             ):
                 data = {
                     "group": chat,
-                    "sender": message.sender_id,
+                    "sender": int(message.sender_id),
                     "text": message.text,
                     "date": message.date,
                 }
                 update_df = pd.DataFrame(data, index=[1])
                 save_df = pd.concat([save_df, update_df])
+        save_df["sender"] = save_df["sender"].astype("int32")
+        print(save_df)
+        return save_df
+
+    # Create a single client instance
+    with client:
+        save_df = client.loop.run_until_complete(get_messages())
+
     print("💽 Telegramm update finished 💽")
     return save_df
 

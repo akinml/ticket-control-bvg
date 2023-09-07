@@ -6,9 +6,8 @@ path_main = Path(__file__).parent.parent
 path_to_data = path_main / "data/"
 
 
-def upload_big_query():
+def upload_big_query(csv_path):
     print("\033[1;32m 👷Uploading to BigQuery Started! 👷\n")
-    csv_path = str(path_to_data) + "/preprocessed_database_telegram.csv"
     client = bigquery.Client()
 
     dataset_id = "bvg-controller.bvg_test"
@@ -45,4 +44,5 @@ def download_big_query():
 
 
 if __name__ == "__main__":
-    upload_big_query()
+    csv_path = str(path_to_data) + "/telegramm_update.csv"
+    upload_big_query(csv_path)

@@ -11,7 +11,6 @@ from ticket_control.big_query_download_raw import download_big_query_raw
 from pathlib import Path
 
 path_main = Path(__file__).parent
-raw_data = download_big_query_raw()
 
 
 def pipeline(raw_data):
@@ -48,4 +47,5 @@ def pipeline(raw_data):
 
 
 if __name__ == "__main__":
+    raw_data = download_big_query_raw()
     pipeline(raw_data)

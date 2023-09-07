@@ -16,9 +16,7 @@ import pydeck as pdk
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from PIL import Image
-from ticket_control.pipeline import pipeline
 from pathlib import Path
-from pages._2_View_Statistics import page_2_control_statistics
 
 st_path_to_data = st.secrets.get('PATH_TO_DATA', None)
 st.write(st_path_to_data)
@@ -155,19 +153,6 @@ def page_1_landing_page():
 
         if response.status_code == 200:
             st.write("Report Sent!:ok_hand::heart::heart_eyes:")
-            # Concatenate the report data with preprocessed_database_telegram
-            report_data = response.json()
-            report_df = pd.DataFrame([report_data])
-            database_telegram = pd.read_csv(str(path_to_data) + "/database_telegram.csv")
-            database_telegram = pd.concat([database_telegram, report_df])
-            database_telegram[["group", "sender", "text", "date"]].to_csv(
-                "data/database_telegram.csv"
-            )
-            pipeline()
-            df_filtered_map = update_station_colors(
-                from_date="2023-08-28 12:28:00",  # Insert Sliders Dates here!
-                to_date="2023-10-29 10:28:00",  # Insert Sliders Dates here!
-            )
         else:
             st.write("Failed to send the report. :rotating_light:")
 

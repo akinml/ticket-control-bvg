@@ -15,6 +15,11 @@ import plotly.figure_factory as ff
 import pydeck as pdk
 from ticket_control.model_preprocessing import *
 
+st_path_to_data = st.secrets.get('PATH_TO_DATA', None)
+
+if st_path_to_data is not None:
+    path_to_data = st_path_to_data
+
 # setting config to "wide" so that charts and other elements are properly displayed
 st.set_page_config(layout="wide")
 

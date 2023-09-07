@@ -20,7 +20,10 @@ from ticket_control.pipeline import pipeline
 from pathlib import Path
 from pages._2_View_Statistics import page_2_control_statistics
 
-
+st_path_to_data = st.secrets.get('PATH_TO_DATA', None)
+st.write(st_path_to_data)
+if st_path_to_data is not None:
+    path_to_data = st_path_to_data
 # Optional change Mapbox map to plotly Map. https://plotly.com/python/scattermapbox/
 def generate_random_coordinates():
     min_lat, max_lat = 52.392166, 52.639004

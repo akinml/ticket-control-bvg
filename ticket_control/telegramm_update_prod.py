@@ -14,7 +14,7 @@ def get_update():
     save_df = pd.DataFrame()
 
     chats = ["freifahren_BE"]
-    yesterday = datetime.date.today() - datetime.timedelta(days=2000)
+    yesterday = datetime.date.today() - datetime.timedelta(minutes=5)
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     client = TelegramClient("test", api_id, api_hash, loop=loop)

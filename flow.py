@@ -9,16 +9,12 @@ from prefect.task_runners import SequentialTaskRunner
 
 
 @flow(name="pipeline", task_runner=SequentialTaskRunner())
-def get_update_flow():
-    return get_update()
-
-
-def update_flow(df_tele_raw):
+def update_flow():
+    df_tele_raw = get_update()
     df_tele_processed = pipeline(df_tele_raw)
     upload_big_query_raw(df_tele_raw)
     upload_big_query_processed(df_tele_processed)
 
 
 if __name__ == "__main__":
-    raw = get_update_flow()
-    update_flow(raw)
+    update_flow()

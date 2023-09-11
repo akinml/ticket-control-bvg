@@ -9,7 +9,7 @@ setup(
     name="ticket-control",
     version="0.0.2",
     description="BVG Ticket control LeWagon Project",
-    install_requires=requirements,
+    install_requires=requirements[:-1],
     packages=find_packages(),
     test_suite="tests",
     include_package_data=True,

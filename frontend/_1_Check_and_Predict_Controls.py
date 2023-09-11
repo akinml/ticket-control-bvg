@@ -2,25 +2,17 @@ import streamlit as st
 import pandas as pd
 import time
 import random
-import calendar
-from datetime import datetime, timedelta, date
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-import plotly.express as px
+from datetime import datetime, timedelta
 from ticket_control.params import path_to_data
 import requests
-from streamlit_lottie import st_lottie
-import plotly.figure_factory as ff
-import pydeck as pdk
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from PIL import Image
-from ticket_control.pipeline import pipeline
 from pathlib import Path
-from pages._2_View_Statistics import page_2_control_statistics
 
-
+st_path_to_data = st.secrets.get('PATH_TO_DATA', None)
+if st_path_to_data is not None:
+    path_to_data = st_path_to_data
 # Optional change Mapbox map to plotly Map. https://plotly.com/python/scattermapbox/
 def generate_random_coordinates():
     min_lat, max_lat = 52.392166, 52.639004
@@ -152,19 +144,6 @@ def page_1_landing_page():
 
         if response.status_code == 200:
             st.write("Report Sent!:ok_hand::heart::heart_eyes:")
-            # Concatenate the report data with preprocessed_database_telegram
-            report_data = response.json()
-            report_df = pd.DataFrame([report_data])
-            database_telegram = pd.read_csv(str(path_to_data) + "/database_telegram.csv")
-            database_telegram = pd.concat([database_telegram, report_df])
-            database_telegram[["group", "sender", "text", "date"]].to_csv(
-                "data/database_telegram.csv"
-            )
-            pipeline()
-            df_filtered_map = update_station_colors(
-                from_date="2023-08-28 12:28:00",  # Insert Sliders Dates here!
-                to_date="2023-10-29 10:28:00",  # Insert Sliders Dates here!
-            )
         else:
             st.write("Failed to send the report. :rotating_light:")
 
@@ -210,56 +189,56 @@ def page_1_landing_page():
         st.map(data=df_filtered_map, zoom=10, color="color", size=50)
 
     with column2:
-        S41 = Image.open('../data/imgs/s41.png')
+        S41 = Image.open(str(path_to_data) + '/imgs/s41.png')
         st.image(S41, width=30)
-        S5 = Image.open('../data/imgs/s5.png')
+        S5 = Image.open(str(path_to_data) + '/imgs/s5.png')
         st.image(S5, width=30)
-        S7 = Image.open('../data/imgs/s7.png')
+        S7 = Image.open(str(path_to_data) + '/imgs/s7.png')
         st.image(S7, width=30)
-        S8 = Image.open('../data/imgs/s8.png')
+        S8 = Image.open(str(path_to_data) + '/imgs/s8.png')
         st.image(S8, width=30)
-        S9 = Image.open('../data/imgs/s9.png')
+        S9 = Image.open(str(path_to_data) + '/imgs/s9.png')
         st.image(S9, width=30)
-        S25 = Image.open('../data/imgs/s25.png')
+        S25 = Image.open(str(path_to_data) + '/imgs/s25.png')
         st.image(S25, width=30)
-        S47 = Image.open('../data/imgs/s47.png')
+        S47 = Image.open(str(path_to_data) + '/imgs/s47.png')
         st.image(S47, width=30)
-        S75 = Image.open('../data/imgs/s75.png')
+        S75 = Image.open(str(path_to_data) + '/imgs/s75.png')
         st.image(S75, width=30)
-        U1 = Image.open('../data/imgs/U1.png')
+        U1 = Image.open(str(path_to_data) + '/imgs/U1.png')
         st.image(U1, width=30)
-        U2 = Image.open('../data/imgs/U2.png')
+        U2 = Image.open(str(path_to_data) + '/imgs/U2.png')
         st.image(U2, width=30)
-        U3 = Image.open('../data/imgs/U3.png')
+        U3 = Image.open(str(path_to_data) + '/imgs/U3.png')
         st.image(U3, width=30)
-        U4 = Image.open('../data/imgs/U4.png')
+        U4 = Image.open(str(path_to_data) + '/imgs/U4.png')
         st.image(U4, width=30)
-        U5 = Image.open('../data/imgs/U5.png')
+        U5 = Image.open(str(path_to_data) + '/imgs/U5.png')
         st.image(U5, width=30)
-        U6 = Image.open('../data/imgs/U6.png')
+        U6 = Image.open(str(path_to_data) + '/imgs/U6.png')
         st.image(U1, width=30)
-        U7 = Image.open('../data/imgs/U7.png')
+        U7 = Image.open(str(path_to_data) + '/imgs/U7.png')
         st.image(U7, width=30)
-        U8 = Image.open('../data/imgs/U8.png')
+        U8 = Image.open(str(path_to_data) + '/imgs/U8.png')
         st.image(U8, width=30)
-        U9 = Image.open('../data/imgs/U9.png')
+        U9 = Image.open(str(path_to_data) + '/imgs/U9.png')
         st.image(U9, width=30)
 
     col0, col1, col2, col3, col4, col5 = st.columns([1, 1, 1, 1, 1, 1])
     with col1:
-        reported_station = Image.open('../data/imgs/red_dot.png')
+        reported_station = Image.open(str(path_to_data) + '/imgs/red_dot.png')
         st.image(reported_station, width=60)
         st.write("Reported Station")
     with col2:
-        u_bahn_hub = Image.open('../data/imgs/green_dot.png')
+        u_bahn_hub = Image.open(str(path_to_data) + '/imgs/green_dot.png')
         st.image(u_bahn_hub, width=60)
         st.write("U-Bahn Intersection")
     with col3:
-        s_bahn_hub = Image.open('../data/imgs/teal_dot.png')
+        s_bahn_hub = Image.open(str(path_to_data) + '/imgs/teal_dot.png')
         st.image(s_bahn_hub, width=60)
         st.write("S-Bahn Intersection")
     with col4:
-        u_and_s_bahn_hub = Image.open('../data/imgs/yellow_dot.png')
+        u_and_s_bahn_hub = Image.open(str(path_to_data) + '/imgs/yellow_dot.png')
         st.image(u_and_s_bahn_hub, width=60)
         st.write("S- and U-Bahn Intersection")
     hide_img_fs = '''

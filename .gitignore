@@ -9,3 +9,4 @@ params.cpython-310.pyc
 ticket_control/__pycache__/params.cpython-310.pyc
 .DS_Store
 ticket_control.egg-info/
+secrets.toml

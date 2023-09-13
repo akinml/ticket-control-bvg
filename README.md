@@ -10,5 +10,3 @@ Our workflow, in a nutshell consists of following steps:
 6. Integrating live updates (complex API built by Chris)
 
 Our code can be messy at times, but we did our best. If you have comments or suggestions for improvement, do reach out.
-
-p.s. With this project we do not promote any illegal activity. We support the idea of Zero-Fare Public Transport.
